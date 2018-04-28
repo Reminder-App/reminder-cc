@@ -13,7 +13,13 @@ import br.unb.cic.reminders2.R;
 
 public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 	public ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects) {
-		super(context, R.layout.reminder_row, objects);
+		super(context, 
+				//#ifdef staticCategory
+				R.layout.category_row,
+				//#else
+				R.layout.reminder_row,
+				//#endif
+				objects);
 	}
 
 	@Override
@@ -24,12 +30,28 @@ public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater vi;
 			vi = (LayoutInflater) getContext().getSystemService(inflater);
-			vi.inflate(R.layout.reminder_row, filterRow, true);
+			vi.inflate(
+					//#ifdef staticCategory
+					R.layout.category_row,
+					//#else
+					R.layout.reminder_row,
+					//#endif
+					filterRow, true);
 		} else {
 			filterRow = (LinearLayout) convertView;
 		}
-		TextView tvReminder = (TextView) filterRow.findViewById(R.id.txtReminder);
+		
+		//#ifdef staticCategory 
+	    TextView tvFilter = (TextView) filterRow.findViewById(R.id.row_categoryName); 
+	    tvFilter.setText(getItem(position).getName()); 
+	 
+	    TextView tvNumReminders = (TextView) filterRow.findViewById(R.id.row_categoryCounter); 
+	    tvNumReminders.setText(Integer.toString(getItem(position).getNumReminders())); 
+	    //#else
+	    TextView tvReminder = (TextView) filterRow.findViewById(R.id.txtReminder);
 		tvReminder.setText(getItem(position).getName());
+		//#endif
+		
 		return filterRow;
 	}
 }
