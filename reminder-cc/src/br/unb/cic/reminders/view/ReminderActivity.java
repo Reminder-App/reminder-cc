@@ -22,6 +22,10 @@ import br.unb.cic.reminders.model.InvalidDateException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+import br.unb.cic.reminders.controller.Controller;
+//#endif
 
 public abstract class ReminderActivity extends Activity {
 	protected Reminder reminder;
@@ -29,6 +33,49 @@ public abstract class ReminderActivity extends Activity {
 	protected EditText edtReminder, edtDetails, edtDate, edtTime;
 	protected Spinner spinnerDate, spinnerTime;
 	private Button btnSave, btnCancel;
+
+	//#ifdef staticCategory
+	protected Spinner spinnerCategory;
+
+	private void addListenerToSpinnerCategory() {
+		spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> parent) {
+				// well... do nothing
+			}
+		});
+	}
+
+	private Spinner getSpinnerCategory() throws Exception {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
+
+		SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
+
+		List<Category> categories = getCategories();
+
+		ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
+
+		spinner.setAdapter(adapter);
+
+		return spinner;
+	}
+
+	protected List<Category> getCategories() throws Exception {
+		return Controller.instance(getApplicationContext()).listCategories();
+	}
+
+	protected Spinner getSpinnerCategory(List<Category> categories) throws Exception {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
+
+		SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
+
+		spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
+
+		return spinner;
+	}
+	//#endif
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +95,13 @@ public abstract class ReminderActivity extends Activity {
 		edtDetails = (EditText) findViewById(R.id.edtDetails);
 		spinnerDate = getSpinnerDate();
 		spinnerTime = getSpinnerTime();
+		//#ifdef staticCategory
+		try {
+			spinnerCategory = getSpinnerCategory();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//#endif
 	}
 
 	private void initializeListeners() {
@@ -55,6 +109,9 @@ public abstract class ReminderActivity extends Activity {
 		addListenerToBtnCancel();
 		addListenerToSpinnerDate();
 		addListenerToSpinnerTime();
+		//#ifdef staticCategory 
+	    addListenerToSpinnerCategory(); 
+	    //#endif
 	}
 
 	protected abstract void initializeValues();
@@ -169,6 +226,9 @@ public abstract class ReminderActivity extends Activity {
 	private void setValuesOnReminder() throws Exception {
 		reminder.setDate(dateToString());
 		reminder.setHour(timeToString());
+		//#ifdef staticCategory 
+	    reminder.setCategory((Category) spinnerCategory.getSelectedItem()); 
+	    //#endif
 	}
 
 	private String dateToString() {
