@@ -2,15 +2,9 @@
 This project integrated the *Positivo Challenge*, a research and development project carried out by the *University of Brasília* (UnB) in partnership with *Positivo*.
 
 ### Features
-The features present in this project are:
+The features present in this release are:
 
-- Create a reminder;
-- Edit a reminder;
-- Delete a reminder;
-- List all reminders by category;
-- Share on google calendar;
-- Create category for reminder.
-
+![Feature Model](https://i.imgur.com/nmtGwK7.png)
 
 # Steps to run the project
 To run this project it is necessary to use the Eclipse IDE - we are using the [Eclipse for Android Developers](https://www.eclipse.org/downloads/packages/eclipse-android-developers/neonm6). Once you have the IDE installed, the steps that must be followed to import the project are:
