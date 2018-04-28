@@ -4,6 +4,10 @@ import android.content.Intent;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.model.Reminder;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+import java.util.List;
+//#endif 
 
 public class EditReminderActivity extends ReminderActivity {
 	@Override
@@ -29,14 +33,56 @@ public class EditReminderActivity extends ReminderActivity {
 		updateDateFromString(date);
 		updateSpinnerDateHour(spinnerTime, hour);
 		updateTimeFromString(hour);
+
+		//#ifdef staticCategory
+		String categoryName = intent.getStringExtra("category_name");
+		String categoryId = intent.getStringExtra("category_id");
+		Category category = new Category();
+		category.setId(Long.parseLong(categoryId));
+		category.setName(categoryName);
+		spinnerCategory.setSelection(categoryToIndex(category));
+		//#endif
 	}
 
 	@Override
 	protected void persist(Reminder reminder) {
+		//#ifdef staticCategory
+		try {
+			Category category = findCategory(reminder.getCategory());
+			reminder.setCategory(category);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//#endif
+
 		try {
 			Controller.instance(getApplicationContext()).updateReminder(reminder);
 		} catch (DBException e) {
 			e.printStackTrace();
 		}
 	}
+
+	//#ifdef staticCategory
+	private int categoryToIndex(Category category) throws Exception {
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+		int i = 0;
+		for (Category c : categories) {
+			if (c.getName().equals(category.getName())) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
+	}
+
+	private Category findCategory(Category category) throws Exception {
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+		for (Category c : categories) {
+			if (c.getName().equals(category.getName()))
+				return c;
+		}
+		return null;
+	}
+	//#endif
 }
