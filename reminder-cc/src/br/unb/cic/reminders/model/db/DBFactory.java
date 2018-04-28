@@ -14,4 +14,8 @@ public abstract class DBFactory {
 	}
 
 	public abstract ReminderDAO createReminderDAO();
+
+	//#ifdef staticCategory
+	public abstract CategoryDAO createCategoryDAO();
+	//#endif
 }
