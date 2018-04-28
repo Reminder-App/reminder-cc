@@ -1,8 +1,6 @@
 package br.unb.cic.reminders.view;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,40 +15,25 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import br.unb.cic.reminders.calendar.CalendarEventCreator;
-import br.unb.cic.reminders.controller.Controller;
-import br.unb.cic.reminders.model.CalendarNotFoundException;
-import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders.model.InvalidDateException;
 import br.unb.cic.reminders.model.InvalidTextException;
-import br.unb.cic.reminders.model.Priority;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
 
 public abstract class ReminderActivity extends Activity {
-
-	// private Category selectedCategory;
-	private Priority selectedPriority;
-	private CalendarEventCreator creator;
 	protected Reminder reminder;
 	protected Calendar date, time;
-
 	protected EditText edtReminder, edtDetails, edtDate, edtTime;
-	protected Spinner spinnerDate, spinnerTime, spinnerPriority, spinnerCategory;
+	protected Spinner spinnerDate, spinnerTime;
 	private Button btnSave, btnCancel;
-	private CheckBox cbCalendar;
-
-	// TODO: Rename XML from reminder_add to reminder_form.
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.reminder_add);
-
 		if (reminder == null)
 			reminder = new Reminder();
 		initializeFields();
@@ -65,17 +48,6 @@ public abstract class ReminderActivity extends Activity {
 		edtDetails = (EditText) findViewById(R.id.edtDetails);
 		spinnerDate = getSpinnerDate();
 		spinnerTime = getSpinnerTime();
-		// edtDate = (EditText) findViewById(R.id.selectedDate);
-		// edtTime = (EditText) findViewById(R.id.selectedTime);
-		spinnerPriority = getSpinnerPriority();
-		cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);
-		try {
-			spinnerCategory = getSpinnerCategory();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 
 	private void initializeListeners() {
@@ -83,8 +55,6 @@ public abstract class ReminderActivity extends Activity {
 		addListenerToBtnCancel();
 		addListenerToSpinnerDate();
 		addListenerToSpinnerTime();
-		addListenerToSpinnerPriority();
-		addListenerToSpinnerCategory();
 	}
 
 	protected abstract void initializeValues();
@@ -101,7 +71,6 @@ public abstract class ReminderActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
-
 		});
 	}
 
@@ -114,58 +83,20 @@ public abstract class ReminderActivity extends Activity {
 	}
 
 	private void addListenerToSpinnerDate() {
-
-		/* DO NOT DELETE THESE COMMENTS! (Alexandre) */
-		/*
-		 * They work and give a different behaviour to the spinner! Maybe we
-		 * need this for the next sprint, depending on the Designer.
-		 */
-		// spinnerDate.setOnTouchListener(new View.OnTouchListener() {
-		// @SuppressWarnings("unchecked")
-		// public boolean onTouch(View v, MotionEvent event) {
-		// if(spinnerDate.getAdapter().getCount() > 2) {
-		// spinnerDate.setTag((String) spinnerDate.getSelectedItem());
-		// ArrayAdapter<String> adapter = (ArrayAdapter<String>)
-		// spinnerDate.getAdapter();
-		// adapter.remove((String) spinnerDate.getSelectedItem());
-		// spinnerDate.setSelection(0);
-		// }
-		// return false;
-		// }
-		// });
-		//
-		// spinnerDate.setOnKeyListener(new View.OnKeyListener() {
-		// @SuppressWarnings("unchecked")
-		// public boolean onKey(View v, int keyCode, KeyEvent event) {
-		// if(spinnerDate.getAdapter().getCount() > 2) {
-		// spinnerDate.setTag((String) spinnerDate.getSelectedItem());
-		// ArrayAdapter<String> adapter = (ArrayAdapter<String>)
-		// spinnerDate.getAdapter();
-		// adapter.remove((String) spinnerDate.getSelectedItem());
-		// spinnerDate.setSelection(0);
-		// }
-		// return false;
-		// }
-		// });
-
 		spinnerDate.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				spinnerDate = getSpinnerDate();
 				return false;
 			}
 		});
-
 		spinnerDate.setOnKeyListener(new View.OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				spinnerDate = getSpinnerDate();
 				return false;
 			}
 		});
-
 		spinnerDate.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
 				switch (pos) {
 				case 0:
 					date = null;
@@ -180,33 +111,26 @@ public abstract class ReminderActivity extends Activity {
 				}
 			}
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// Well, do nothing...
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
 			}
-
 		});
 	}
 
 	private void addListenerToSpinnerTime() {
-
 		spinnerTime.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				spinnerTime = getSpinnerTime();
 				return false;
 			}
 		});
-
 		spinnerTime.setOnKeyListener(new View.OnKeyListener() {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				spinnerTime = getSpinnerTime();
 				return false;
 			}
 		});
-
 		spinnerTime.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
 				switch (pos) {
 				case 0:
 					time = null;
@@ -221,75 +145,30 @@ public abstract class ReminderActivity extends Activity {
 				}
 			}
 
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// Well, do nothing...
-			}
-
-		});
-
-	}
-
-	private void addListenerToSpinnerPriority() {
-		spinnerPriority.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				selectedPriority = (Priority) parent.getItemAtPosition(pos);
-			}
-
-			public void onNothingSelected(AdapterView<?> parent) {
-				// well... do nothing
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
 			}
 		});
 	}
 
-	private void addListenerToSpinnerCategory() {
-		spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-				// if user clicked "+ Category"
-				if (pos == (spinnerCategory.getCount() - 1)) {
-					DialogFragment newFragment = AddCategoryDialogFragment.newInstance(spinnerCategory);
-					newFragment.show(getFragmentManager(), "" + R.string.dialog_addcategory_title);
-				}
-
-			}
-
-			public void onNothingSelected(AdapterView<?> parent) {
-				// well... do nothing
-			}
-		});
-	}
-
-	/**
-	 * Just an auxiliary method to create reminders from the UI data.
-	 * 
-	 * @return a new reminder with the ui values.
-	 **/
 	private void createReminder() {
 		try {
 			reminder.setText(edtReminder.getText().toString());
 			reminder.setDetails(edtDetails.getText().toString());
-			reminder.setDate(dateToString());
-			reminder.setHour(timeToString());
-			reminder.setPriority(selectedPriority);
-			reminder.setCategory((Category) spinnerCategory.getSelectedItem());
-			if (cbCalendar.isChecked()) {
-				creator = new CalendarEventCreator();
-				creator.addEventCalendar(reminder, getApplicationContext());
-			}
+			setValuesOnReminder();
 		} catch (InvalidTextException e) {
-			// This catch is handling both Reminder's Text and Details.
-			Toast.makeText(getApplicationContext(), "Texto inválido.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Invalid text.", Toast.LENGTH_SHORT).show();
 		} catch (InvalidDateException e) {
-			Toast.makeText(getApplicationContext(), "Data inválida.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Invalid date.", Toast.LENGTH_SHORT).show();
 		} catch (InvalidHourException e) {
-			Toast.makeText(getApplicationContext(), "Hora inválida.", Toast.LENGTH_SHORT).show();
-		} catch (CalendarNotFoundException e) {
-			Toast.makeText(getApplicationContext(), "Não foi encontrado um Google Calendar", Toast.LENGTH_SHORT).show();
-		} catch (ParseException e) {
-			Toast.makeText(getApplicationContext(), "Transformação incorreta de data", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Invalid time.", Toast.LENGTH_SHORT).show();
 		} catch (Exception e) {
-			// this is an exceptional case that needs to be studied
-			Toast.makeText(getApplicationContext(), "Erro grave.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "Serious error.", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private void setValuesOnReminder() throws Exception {
+		reminder.setDate(dateToString());
+		reminder.setHour(timeToString());
 	}
 
 	private String dateToString() {
@@ -350,44 +229,14 @@ public abstract class ReminderActivity extends Activity {
 		time.set(Calendar.HOUR_OF_DAY, hour);
 	}
 
-	private Spinner getSpinnerCategory() throws Exception {
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-
-		SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-
-		List<Category> categories = getCategories();
-
-		ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
-
-		// We do not persist this! It's just to show the add category dialog.
-		Category temp = new Category();
-		temp.setName("+ Categoria");
-		adapter.add(temp);
-
-		spinner.setAdapter(adapter);
-
-		return spinner;
-	}
-
-	protected List<Category> getCategories() throws Exception {
-		return Controller.instance(getApplicationContext()).listCategories();
-	}
-
-	/*
-	 * Utility method which inserts a new date into the last position of the
-	 * spinner.
-	 */
 	@SuppressWarnings("unchecked")
 	protected void updateSpinnerDateHour(Spinner spinner, String dateOrHour) {
 		if (dateOrHour == null)
 			return;
-
 		ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinner.getAdapter();
-
 		int count = adapter.getCount();
 		if (count > 2) {
 			for (int i = 2; i < count; ++i)
-				// Date and Time Spinners can have max of 3 elements.
 				adapter.remove(adapter.getItem(i));
 		}
 		adapter.add(dateOrHour);
@@ -396,60 +245,23 @@ public abstract class ReminderActivity extends Activity {
 
 	private Spinner getSpinnerDate() {
 		Spinner spinner = (Spinner) findViewById(R.id.spinnerDate);
-
 		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
-
 		List<String> items = new ArrayList<String>();
-		// TODO: Move these to XML.
-		items.add("Sem data");
-		items.add("+ Selecionar");
-
+		items.add("No date");
+		items.add("+ Select");
 		spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
-
 		return spinner;
 	}
 
 	private Spinner getSpinnerTime() {
 		Spinner spinner = (Spinner) findViewById(R.id.spinnerTime);
-
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
-
 		List<String> items = new ArrayList<String>();
-		// TODO: Move these to XML.
-		items.add("Sem horário");
-		items.add("+ Selecionar");
-
+		items.add("No time");
+		items.add("+ Select");
 		spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
-
-		return spinner;
-	}
-
-	protected Spinner getSpinnerCategory(List<Category> categories) throws Exception {
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
-
-		SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
-
-		spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
-
-		return spinner;
-	}
-
-	private Spinner getSpinnerPriority() {
-		Spinner spinner = (Spinner) findViewById(R.id.spinnerPriorities);
-
-		SpinnerAdapterGenerator<Priority> adapterPriorityGenerator = new SpinnerAdapterGenerator<Priority>();
-
-		List<Priority> priorityValues = Arrays.asList(Priority.values());
-
-		ArrayAdapter<Priority> priorityArrayAdapter = adapterPriorityGenerator.getSpinnerAdapter(priorityValues, this);
-
-		spinner.setAdapter(priorityArrayAdapter);
-
-		spinner.setSelection(Priority.NORMAL.getCode());
-
 		return spinner;
 	}
 
 	protected abstract void persist(Reminder reminder);
-
 }

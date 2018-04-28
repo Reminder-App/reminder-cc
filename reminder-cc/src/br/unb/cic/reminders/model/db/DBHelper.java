@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
-
 	public DBHelper(Context context, String name, CursorFactory factory, int version) {
 		super(context, name, factory, version);
 	}
@@ -23,11 +22,6 @@ public class DBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		try {
 			for (String sql : DBConstants.CREATE_TABLE_STATEMENTS) {
-				Log.i(DBHelper.class.getCanonicalName(), sql);
-				db.execSQL(sql);
-			}
-
-			for (String sql : DBConstants.PREDEFINED_CATEGORIES) {
 				Log.i(DBHelper.class.getCanonicalName(), sql);
 				db.execSQL(sql);
 			}
@@ -47,5 +41,4 @@ public class DBHelper extends SQLiteOpenHelper {
 			Log.v(DBHelper.class.getName(), e.getMessage());
 		}
 	}
-
 }

@@ -2,44 +2,24 @@ package br.unb.cic.reminders.model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import util.Patterns;
 import br.unb.cic.framework.persistence.DBTypes;
 import br.unb.cic.framework.persistence.annotations.Column;
 import br.unb.cic.framework.persistence.annotations.Entity;
-import br.unb.cic.framework.persistence.annotations.ForeignKey;
 import br.unb.cic.reminders.view.InvalidHourException;
 
-/**
- * This class provides basic representation of a reminder.
- * 
- * @author rbonifacio
- */
 @Entity(table = "REMINDER")
 public class Reminder {
-
 	@Column(column = "PK", primaryKey = true, type = DBTypes.LONG)
 	private Long id;
-
 	@Column(column = "TEXT", type = DBTypes.TEXT)
 	private String text;
-
 	@Column(column = "DETAILS", type = DBTypes.TEXT)
 	private String details;
-
-	@Column(column = "FK_CATEGORY", type = DBTypes.LONG)
-	@ForeignKey(mappedBy = "id")
-	private Category category;
-
 	@Column(column = "DATE", type = DBTypes.TEXT)
-	private String date; // it must be in the YYYY-MM-DD format
-
+	private String date;
 	@Column(column = "HOUR", type = DBTypes.TEXT)
-	private String hour; // it must be in the HH:mm format
-
-	@Column(column = "PRIORITY", type = DBTypes.INT)
-	private Priority priority;
-
+	private String hour;
 	@Column(column = "DONE", type = DBTypes.INT)
 	private boolean done;
 
@@ -75,7 +55,6 @@ public class Reminder {
 	}
 
 	public void setDetails(String details) {
-		// Details are optional.
 		if (details == null || details.trim().equals("")) {
 			this.details = null;
 		} else {
@@ -83,20 +62,11 @@ public class Reminder {
 		}
 	}
 
-	public Category getCategory() {
-		return category;
-	}
-
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
 	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
-		// We allow reminders to have no date associated.
 		if (!(date == null || date.equals("")) && !checkFormat(date, Patterns.DATE_PATTERN)) {
 			throw new InvalidDateException(date);
 		}
@@ -108,7 +78,6 @@ public class Reminder {
 	}
 
 	public void setHour(String hour) {
-		// We allow reminders to have no hour associated.
 		if (!(hour == null || hour.equals("")) && !checkFormat(hour, Patterns.HOUR_PATTERN)) {
 			throw new InvalidHourException(hour);
 		}
@@ -121,16 +90,8 @@ public class Reminder {
 		return m.matches();
 	}
 
-	public int getPriority() {
-		return priority.getCode();
-	}
-
-	public void setPriority(Priority priority) {
-		this.priority = priority;
-	}
-
 	public boolean isValid() {
-		return (text != null && category != null && date != null && hour != null && priority != null);
+		return (text != null && date != null && hour != null);
 	}
 
 	public boolean isDone() {
@@ -141,7 +102,6 @@ public class Reminder {
 		this.done = done;
 	}
 
-	/* DB getter & setter */
 	public int getDone() {
 		return done ? 1 : 0;
 	}
@@ -149,5 +109,4 @@ public class Reminder {
 	public void setDone(int done) {
 		this.done = (done == 0 ? false : true);
 	}
-
 }

@@ -2,12 +2,10 @@ package br.unb.cic.reminders.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import br.unb.cic.reminders.model.Reminder;
 
 public abstract class ReminderFilter {
-
 	private List<Reminder> reminders;
 	private Context context;
 
@@ -28,16 +26,11 @@ public abstract class ReminderFilter {
 	private void updateReminders() {
 		reminders = new ArrayList<Reminder>();
 		List<Reminder> allReminders = null;
-
 		try {
-			// Get all reminders
 			allReminders = Controller.instance(context).listReminders();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// Filter the reminders
 		for (Reminder r : allReminders) {
 			if (selectReminder(r)) {
 				reminders.add(r);

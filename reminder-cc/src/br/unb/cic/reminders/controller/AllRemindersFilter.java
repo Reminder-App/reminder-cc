@@ -4,8 +4,7 @@ import android.content.Context;
 import br.unb.cic.reminders.model.Reminder;
 
 public class AllRemindersFilter extends ReminderFilter {
-
-	private final String name = "Todos";
+	private final String name = "All";
 
 	public AllRemindersFilter(Context context) {
 		super(context);
@@ -20,5 +19,4 @@ public class AllRemindersFilter extends ReminderFilter {
 	public String getName() {
 		return name;
 	}
-
 }
