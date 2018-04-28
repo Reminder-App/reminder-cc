@@ -13,6 +13,11 @@ import br.unb.cic.framework.persistence.annotations.Entity;
 import br.unb.cic.framework.persistence.annotations.ForeignKey;
 import br.unb.cic.reminders.model.db.DBHelper;
 
+//#if staticCategory
+import br.unb.cic.reminders.model.db.DefaultCategoryDAO;
+import android.util.Log;
+//#endif
+
 public class GenericDAO<T> {
 	protected Context context;
 	protected SQLiteDatabase db;
@@ -71,6 +76,9 @@ public class GenericDAO<T> {
 			return id;
 		} catch (Exception e) {
 			e.printStackTrace();
+			//#ifdef staticCategory 
+		    Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage()); 
+		    //#endif
 			throw new DBException();
 		} finally {
 			if (db.inTransaction()) {
