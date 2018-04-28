@@ -9,6 +9,10 @@ import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.framework.persistence.DBInvalidEntityException;
 import br.unb.cic.framework.persistence.GenericDAO;
 import br.unb.cic.reminders.model.Reminder;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+import android.util.Log;
+//#endif 
 
 public class DefaultReminderDAO extends GenericDAO<Reminder> implements ReminderDAO {
 	public DefaultReminderDAO(Context c) {
@@ -29,6 +33,9 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 			Cursor cursor = db.rawQuery(DBConstants.SELECT_REMINDERS, null);
 			return remindersFromCursor(cursor);
 		} catch (Exception e) {
+			//#ifdef staticCategory
+			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+			//#endif
 			throw new DBException();
 		} finally {
 			db.close();
@@ -52,6 +59,9 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 			db = dbHelper.getWritableDatabase();
 			db.delete(DBConstants.REMINDER_TABLE, DBConstants.REMINDER_PK_COLUMN + "=" + reminder.getId(), null);
 		} catch (SQLiteException e) {
+			//#ifdef staticCategory
+			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+			//#endif
 			throw new DBException();
 		} finally {
 			db.close();
@@ -80,6 +90,13 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		reminder.setDetails(details);
 		reminder.setId(pk);
 		reminder.setDone(done);
+
+		//#ifdef staticCategory
+		Long categoryId = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_FK_CATEGORY_COLUMN));
+		Category category = DBFactory.factory(context).createCategoryDAO().findCategoryById(categoryId);
+		reminder.setCategory(category);
+		//#endif
+
 		return reminder;
 	}
 
@@ -103,4 +120,22 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		cursor.close();
 		return reminders;
 	}
+
+	//#ifdef staticCategory
+	public List<Reminder> listRemindersByCategory(Category category) throws DBException {
+		try {
+			db = dbHelper.getReadableDatabase();
+			Cursor cursor = db.rawQuery(DBConstants.SELECT_REMINDERS_BY_CATEGORY,
+					new String[] { category.getId().toString() });
+
+			return remindersFromCursor(cursor);
+		} catch (Exception e) {
+			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+			throw new DBException();
+		} finally {
+			db.close();
+			dbHelper.close();
+		}
+	}
+	//#endif
 }
