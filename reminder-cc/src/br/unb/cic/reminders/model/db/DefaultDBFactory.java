@@ -11,4 +11,11 @@ public class DefaultDBFactory extends DBFactory {
 	public ReminderDAO createReminderDAO() {
 		return new DefaultReminderDAO(context);
 	}
+
+	//#ifdef staticCategory
+	@Override
+	public CategoryDAO createCategoryDAO() {
+		return new DefaultCategoryDAO(context);
+	}
+	//#endif
 }
