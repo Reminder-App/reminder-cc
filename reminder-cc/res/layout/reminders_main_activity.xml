@@ -4,14 +4,27 @@
     android:layout_height="fill_parent"
     android:background="#999999"
     android:orientation="vertical" >
-    
+
+    //#ifdef category
+    <LinearLayout
+        android:id="@+id/listCategories"
+        android:layout_width="160dp"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="0dp"
+        android:background="#DBDBDB"
+        android:orientation="vertical" >
+    </LinearLayout>
+    //#endif
+
     <LinearLayout
         android:id="@+id/listReminders"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        //#ifdef category
+        android:layout_toRightOf="@id/listCategories"
+        //#endif
         android:layout_marginLeft="1dp"
         android:background="#FFFFFF"
         android:orientation="vertical" >
     </LinearLayout>
-    
 </RelativeLayout>
