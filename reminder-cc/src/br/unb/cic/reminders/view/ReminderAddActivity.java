@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.Toast;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.model.InvalidDateException;
@@ -14,12 +15,61 @@ import br.unb.cic.reminders.model.InvalidFormatException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+import android.widget.Spinner;
+import java.util.List;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+//#endif
 
 public class ReminderAddActivity extends Activity {
 	private EditText edtReminder, edtDetails, edtDate, edtHour;
 	private Button btnSave, btnCancel;
 	private boolean editingReminder;
 	private Long previewReminderId;
+
+	//#ifdef staticCategory
+	private Category selectedCategory;
+	private Spinner spinnerCategory;
+
+	private void addListenerToSpinnerCategory() {
+		spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+				// get the category from the spinner
+				selectedCategory = (Category) parent.getItemAtPosition(pos);
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> parent) {
+				// well... do nothing
+			}
+		});
+	}
+
+	private Spinner getSpinnerCategory() throws Exception {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerCategories);
+
+		SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
+
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+
+		spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
+
+		return spinner;
+	}
+
+	private int categoryToIndex(Category category) throws Exception {
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+		int i = 0;
+		for (Category c : categories) {
+			if (c.getName().equals(category.getName())) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
+	}
+	//#endif
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +90,9 @@ public class ReminderAddActivity extends Activity {
 	private void configureActionListener() {
 		addListenerToBtnSave();
 		addListenerToBtnCancel();
+		//#ifdef staticCategory
+		addListenerToSpinnerCategory();
+		//#endif
 	}
 
 	private void addListenerToBtnSave() {
@@ -90,6 +143,9 @@ public class ReminderAddActivity extends Activity {
 		Reminder reminder = new Reminder();
 		reminder.setDate(edtDate.getText().toString());
 		reminder.setHour(edtHour.getText().toString());
+		//#ifdef staticCategory
+		reminder.setCategory(selectedCategory);
+		//#endif
 		return reminder;
 	}
 
@@ -114,6 +170,14 @@ public class ReminderAddActivity extends Activity {
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#ifdef staticCategory
+		String categoryName = intent.getStringExtra("category_name");
+		String categoryId = intent.getStringExtra("category_id");
+		Category category = new Category();
+		category.setName(categoryName);
+		category.setId(Long.parseLong(categoryId));
+		reminder.setCategory(category);
+		//#endif
 		return reminder;
 	}
 
@@ -145,6 +209,14 @@ public class ReminderAddActivity extends Activity {
 	}
 
 	private void initialize(Reminder reminder) {
+		//#ifdef staticCategory
+		try {
+			spinnerCategory = getSpinnerCategory();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		//#endif
+
 		try {
 			edtReminder = (EditText) findViewById(R.id.edtReminder);
 			edtDetails = (EditText) findViewById(R.id.edtDetails);
@@ -163,5 +235,8 @@ public class ReminderAddActivity extends Activity {
 		edtDetails.setText(reminder.getDetails());
 		edtDate.setText(reminder.getDate());
 		edtHour.setText(reminder.getHour());
+		//#ifdef staticCategory 
+	    spinnerCategory.setSelection(categoryToIndex(reminder.getCategory())); 
+	    //#endif 
 	}
 }
