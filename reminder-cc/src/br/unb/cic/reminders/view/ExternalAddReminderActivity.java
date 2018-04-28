@@ -5,8 +5,55 @@ import android.os.Bundle;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.model.Reminder;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+import java.util.List;
+//#endif 
 
 public class ExternalAddReminderActivity extends ReminderActivity {
+
+	//#ifdef staticCategory
+	private Category newCategory = null;
+
+	private void setNewCategory(Intent intent) throws Exception {
+		String categoryName = intent.getStringExtra("category_name");
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+		for (Category c : categories) {
+			if (c.getName().equals(categoryName)) {
+				newCategory = c;
+				break;
+			}
+		}
+	}
+
+	@Override
+	protected List<Category> getCategories() throws Exception {
+		List<Category> categories = super.getCategories();
+		return categories;
+	}
+
+	private Category findCategory(Category category) throws Exception {
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+		for (Category c : categories) {
+			if (c.getName().equals(category.getName()))
+				return c;
+		}
+		return null;
+	}
+
+	private int categoryToIndex(Category category) throws Exception {
+		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
+		int i = 0;
+		for (Category c : categories) {
+			if (c.getName().equals(category.getName())) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
+	}
+	//#endif
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		reminder = new Reminder();
@@ -39,6 +86,10 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#ifdef staticCategory 
+	    setNewCategory(intent); 
+	    reminder.setCategory(newCategory); 
+	    //#endif 
 	}
 
 	@Override
@@ -59,6 +110,9 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		updateDateFromString(reminder.getDate());
 		updateSpinnerDateHour(spinnerTime, reminder.getHour());
 		updateTimeFromString(reminder.getHour());
+		//#ifdef staticCategory 
+	    spinnerCategory.setSelection(categoryToIndex(reminder.getCategory())); 
+	    //#endif 
 	}
 
 	@Override
