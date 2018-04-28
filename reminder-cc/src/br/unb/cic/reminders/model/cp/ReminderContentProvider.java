@@ -10,6 +10,10 @@ import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders.model.db.DBConstants;
 import br.unb.cic.reminders.model.db.DefaultDBFactory;
 import br.unb.cic.reminders.model.db.ReminderDAO;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+import br.unb.cic.reminders.model.db.CategoryDAO;
+//#endif 
 
 public class ReminderContentProvider extends ContentProvider {
 	private static final int REMINDERS = 10;
@@ -17,6 +21,9 @@ public class ReminderContentProvider extends ContentProvider {
 	private static final String AUTHORITY = "br.com.positivo.reminders.contentprovider";
 	private static final String BASE_PATH = "reminders";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+	//#ifdef staticCategory 
+	private CategoryDAO cdao;
+	//#endif
 
 	public static final String text() {
 		return DBConstants.REMINDER_TEXT_COLUMN;
@@ -39,6 +46,9 @@ public class ReminderContentProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		rdao = DefaultDBFactory.factory(getContext()).createReminderDAO();
+		//#ifdef staticCategory
+		cdao = DefaultDBFactory.factory(getContext()).createCategoryDAO();
+		//#endif
 		return false;
 	}
 
@@ -59,6 +69,10 @@ public class ReminderContentProvider extends ContentProvider {
 		Reminder reminder = new Reminder();
 		reminder.setDate(values.getAsString(date()));
 		reminder.setHour(values.getAsString(hour()));
+		//#ifdef staticCategory
+		Category category = createCategoryInsert(values);
+		reminder.setCategory(category);
+		//#endif
 		return reminder;
 	}
 
@@ -81,4 +95,15 @@ public class ReminderContentProvider extends ContentProvider {
 	public int update(Uri arg0, ContentValues arg1, String arg2, String[] arg3) {
 		throw new SecurityException(SECURITY_EXCEPTION);
 	}
+
+	//#ifdef staticCategory
+	public static final String category() {
+		return DBConstants.CATEGORY_NAME_COLUMN;
+	}
+
+	private Category createCategoryInsert(ContentValues values) throws DBException {
+		Category category = cdao.findCategory(values.getAsString(category()));
+		return category;
+	}
+	//#endif
 }
