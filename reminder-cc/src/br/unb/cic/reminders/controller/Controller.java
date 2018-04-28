@@ -5,6 +5,9 @@ import android.content.Context;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders.model.db.DBFactory;
+//#ifdef staticCategory 
+import br.unb.cic.reminders.model.Category;
+//#endif 
 
 public class Controller {
 	private Context context;
@@ -64,4 +67,44 @@ public class Controller {
 	private void notImplementedYet() {
 		throw new RuntimeException("not implemented yet");
 	}
+
+	//#ifdef staticCategory
+	public List<Category> listCategories() throws Exception {
+		try {
+			return DBFactory.factory(context).createCategoryDAO().listCategories();
+		} catch (DBException e) {
+			// TODO: we need to define what to do in these situations.
+			throw e;
+		}
+	}
+
+	public Category findCategory(Long id) throws Exception {
+		return DBFactory.factory(context).createCategoryDAO().findCategoryById(id);
+	}
+
+	public Category findCategory(String name) throws Exception {
+		return DBFactory.factory(context).createCategoryDAO().findCategory(name);
+	}
+
+	public List<Reminder> listRemindersByCategory(Category category) throws Exception {
+		try {
+			return DBFactory.factory(context).createReminderDAO().listRemindersByCategory(category);
+		} catch (DBException e) {
+			throw e;
+		}
+	}
+
+	public Category getCategory(String name) throws DBException {
+		try {
+			List<Category> categories = DBFactory.factory(context).createCategoryDAO().listCategories();
+			for (Category c : categories) {
+				if (c.getName().equals(name))
+					return c;
+			}
+			return null;
+		} catch (DBException e) {
+			throw e;
+		}
+	}
+	//#endif
 }
