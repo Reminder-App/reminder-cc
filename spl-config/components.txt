@@ -1,0 +1,36 @@
+RemindersMainActivityXML => res/layout/reminders_main_activity.xml;
+ReminderAddXML => res/layout/reminder_add.xml;
+CategoriesListXML => res/layout/categories_list_fragment.xml;
+CategoryDialogXML => res/layout/category_dialog.xml;
+CategoryListFragmentContextMenuXML => res/menu/category_list_fragment_context_menu.xml;
+StringsXML => res/values/strings.xml;
+CategoryRowXML => res/layout/category_row.xml;
+
+CategoryFilterJava => src/br/unb/cic/reminders/controller/CategoryFilter.java;
+CategoryDAOJava => src/br/unb/cic/reminders/model/db/CategoryDAO.java;
+DefaultCategoryDAOJava => src/br/unb/cic/reminders/model/db/DefaultCategoryDAO.java;
+CategoryJava => src/br/unb/cic/reminders/model/Category.java;
+CategoryArrayAdapterJava => src/br/unb/cic/reminders/view/CategoryArrayAdapter.java;
+FilterListFragmentJava => src/br/unb/cic/reminders/view/FilterListFragment.java;
+
+GenericDAOJava => src/br/unb/cic/framework/persistence/GenericDAO.java;
+ReminderMainActivityJava => src/br/unb/cic/reminders/ReminderMainActivity.java;
+ControllerJava => src/br/unb/cic/reminders/controller/Controller.java;
+ReminderJava => src/br/unb/cic/reminders/model/Reminder.java;
+ReminderContentProviderJava => src/br/unb/cic/reminders/model/cp/ReminderContentProvider.java;
+DBConstantsJava => src/br/unb/cic/reminders/model/db/DBConstants.java;
+DBFactoryJava => src/br/unb/cic/reminders/model/db/DBFactory.java;
+DBHelperJava => src/br/unb/cic/reminders/model/db/DBHelper.java;
+DefaultDBFactoryJava => src/br/unb/cic/reminders/model/db/DefaultDBFactory.java;
+DefaultReminderDAOJava => src/br/unb/cic/reminders/model/db/DefaultReminderDAO.java;
+AddReminderActivityJava => src/br/unb/cic/reminders/view/AddReminderActivity.java;
+EditReminderActivityJava => src/br/unb/cic/reminders/view/EditReminderActivity.java;
+ExternalAddReminderActivityJava => src/br/unb/cic/reminders/view/ExternalAddReminderActivity.java;
+ReminderActivityJava => src/br/unb/cic/reminders/view/ReminderActivity.java;
+ReminderAddActivityJava => src/br/unb/cic/reminders/view/ReminderAddActivity.java;
+ReminderFilterArrayAdapterJava => src/br/unb/cic/reminders/view/ReminderFilterArrayAdapter.java;
+ReminderListFragmentJava => src/br/unb/cic/reminders/view/ReminderListFragment.java;
+ReminderDAOJava => src/br/unb/cic/reminders/model/db/ReminderDAO.java;
+
+AddCategoryDialogFragmentJava => src/br/unb/cic/reminders/view/AddCategoryDialogFragment.java;
+EditCategoryDialogFragmentJava => src/br/unb/cic/reminders/view/EditCategoryDialogFragment.java;

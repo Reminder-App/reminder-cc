@@ -1,0 +1,60 @@
+<configurationModel>
+  <configuration>
+    <expression>Reminder App</expression>
+    <transformation>
+      <name>selectAllComponents</name>
+      <args>-</args>
+    </transformation>
+    <transformation>
+      <name>preprocessFiles</name>
+      <args>RemindersMainActivityXML, ReminderAddXML, StringsXML</args>
+    </transformation>
+    <transformation>
+      <name>preprocessFiles</name>
+      <args>GenericDAOJava, ReminderMainActivityJava, ControllerJava, ReminderJava, ReminderContentProviderJava, DBConstantsJava, DBFactoryJava, DBHelperJava, DefaultDBFactoryJava, DefaultReminderDAOJava, AddReminderActivityJava, EditReminderActivityJava, ExternalAddReminderActivityJava, ReminderActivityJava, ReminderAddActivityJava, ReminderFilterArrayAdapterJava, ReminderListFragmentJava, ReminderDAOJava</args>
+    </transformation>
+  </configuration>
+  <configuration>
+		<expression>Or(Manage Category, Static Category)</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>category</args>
+		</transformation>
+	</configuration>
+  <configuration>
+    <expression>Manage Category</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>manageCategory</args>
+    </transformation>
+  </configuration>
+  <configuration>
+    <expression>Static Category</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>staticCategory</args>
+    </transformation>
+  </configuration>
+  <configuration>
+    <expression>Not(Or(Manage Category, Static Category))</expression>
+    <transformation>
+      <name>removeComponents</name>
+      <args>CategoryFilterJava, CategoryDAOJava, DefaultCategoryDAOJava, CategoryJava, CategoryArrayAdapterJava, FilterListFragmentJava</args>
+    </transformation>
+    <transformation>
+      <name>removeComponents</name>
+      <args>CategoriesListXML, CategoryRowXML</args>
+    </transformation>
+  </configuration>
+  <configuration>
+    <expression>Not(Manage Category)</expression>
+    <transformation>
+      <name>removeComponents</name>
+      <args>AddCategoryDialogFragmentJava, EditCategoryDialogFragmentJava</args>
+    </transformation>
+    <transformation>
+      <name>removeComponents</name>
+      <args>CategoryDialogXML, CategoryListFragmentContextMenuXML</args>
+    </transformation>
+  </configuration>
+</configurationModel>
