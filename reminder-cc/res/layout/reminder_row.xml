@@ -14,22 +14,14 @@
         android:layout_marginLeft="10dp"
         android:focusable="false" >
     </CheckBox>
-
-    <ImageView
-        android:id="@+id/ivPriority"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/cbDone" >
-    </ImageView>
-
+    
     <TextView
         android:id="@+id/txtReminder"
-        android:layout_width="310dp"
+        android:layout_width="wrap_content"
         android:layout_height="23dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/ivPriority"
+        android:layout_toRightOf="@id/cbDone"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Reminder"
@@ -39,11 +31,13 @@
 
     <TextView
         android:id="@+id/txtDateFirst"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="16dp"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="3dp"
         android:layout_toRightOf="@id/txtReminder"
+        android:layout_alignParentRight="true" 
+        android:layout_marginRight="10dp"      
         android:gravity="right"
         android:text="Date"
         android:textColor="#222222"
@@ -52,40 +46,17 @@
 
     <TextView
         android:id="@+id/txtDateSecond"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/txtDateFirst"
         android:layout_centerVertical="true"
         android:layout_marginLeft="25dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true" 
         android:layout_toRightOf="@id/txtReminder"
         android:gravity="right"
         android:text="Date2"
         android:textColor="#222222"
         android:textSize="3.5pt" >
     </TextView>
-
-    <!--
- 	   	<TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:id="@+id/txtHour"
-            android:text="Hour"
-            android:layout_below="@id/txtDate">
-        </TextView>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:id="@+id/txtPriority"
-            android:text="Priority"
-            android:layout_below="@id/txtHour">
-        </TextView>
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:id="@+id/txtCategory"
-            android:text="Category"
-            android:layout_below="@id/txtPriority">
-        </TextView>
-    -->
-
 </RelativeLayout>

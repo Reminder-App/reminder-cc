@@ -85,7 +85,7 @@
             android:background="#FFFFFF"
             android:divider="#EFEFEF"
             android:dividerHeight="1.5dp" />
-
+            
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="20dp"
@@ -112,5 +112,4 @@
             android:divider="#EFEFEF"
             android:dividerHeight="1.5dp" />
     </LinearLayout>
-
 </ScrollView>
