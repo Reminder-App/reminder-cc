@@ -3,7 +3,7 @@ package br.unb.cic.reminders.model.db;
 import java.util.List;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.model.Reminder;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
 //#endif 
 
@@ -18,7 +18,7 @@ public interface ReminderDAO {
 
 	public void persistReminder(Reminder reminder) throws DBException;
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	public List<Reminder> listRemindersByCategory(Category category) throws DBException;
 	//#endif
 }
