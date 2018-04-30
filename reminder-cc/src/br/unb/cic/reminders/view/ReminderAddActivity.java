@@ -15,7 +15,7 @@ import br.unb.cic.reminders.model.InvalidFormatException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory 
 import br.unb.cic.reminders.model.Category;
 import android.widget.Spinner;
 import java.util.List;
@@ -29,7 +29,7 @@ public class ReminderAddActivity extends Activity {
 	private boolean editingReminder;
 	private Long previewReminderId;
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	private Category selectedCategory;
 	private Spinner spinnerCategory;
 
@@ -90,7 +90,7 @@ public class ReminderAddActivity extends Activity {
 	private void configureActionListener() {
 		addListenerToBtnSave();
 		addListenerToBtnCancel();
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		addListenerToSpinnerCategory();
 		//#endif
 	}
@@ -143,7 +143,7 @@ public class ReminderAddActivity extends Activity {
 		Reminder reminder = new Reminder();
 		reminder.setDate(edtDate.getText().toString());
 		reminder.setHour(edtHour.getText().toString());
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		reminder.setCategory(selectedCategory);
 		//#endif
 		return reminder;
@@ -170,7 +170,7 @@ public class ReminderAddActivity extends Activity {
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		String categoryName = intent.getStringExtra("category_name");
 		String categoryId = intent.getStringExtra("category_id");
 		Category category = new Category();
@@ -209,7 +209,7 @@ public class ReminderAddActivity extends Activity {
 	}
 
 	private void initialize(Reminder reminder) {
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		try {
 			spinnerCategory = getSpinnerCategory();
 		} catch (Exception e) {
@@ -235,7 +235,7 @@ public class ReminderAddActivity extends Activity {
 		edtDetails.setText(reminder.getDetails());
 		edtDate.setText(reminder.getDate());
 		edtHour.setText(reminder.getHour());
-		//#ifdef staticCategory 
+		//#if staticCategory || manageCategory
 	    spinnerCategory.setSelection(categoryToIndex(reminder.getCategory())); 
 	    //#endif 
 	}
