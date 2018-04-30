@@ -5,7 +5,7 @@ import android.content.Context;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders.model.db.DBFactory;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
 //#endif 
 
@@ -68,7 +68,7 @@ public class Controller {
 		throw new RuntimeException("not implemented yet");
 	}
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	public List<Category> listCategories() throws Exception {
 		try {
 			return DBFactory.factory(context).createCategoryDAO().listCategories();
@@ -102,6 +102,44 @@ public class Controller {
 					return c;
 			}
 			return null;
+		} catch (DBException e) {
+			throw e;
+		}
+	}
+	//#endif
+
+	//#ifdef manageCategory
+	public void deleteReminderByCategory(Category category) throws DBException {
+		try {
+			List<Reminder> allReminders = DBFactory.factory(context).createReminderDAO()
+					.listRemindersByCategory(category);
+			for (Reminder reminder : allReminders) {
+				DBFactory.factory(context).createReminderDAO().deleteReminder(reminder);
+			}
+		} catch (DBException e) {
+			throw e;
+		}
+	}
+
+	public void addCategory(Category category) throws Exception {
+		try {
+			DBFactory.factory(context).createCategoryDAO().saveCategory(category);
+		} catch (DBException e) {
+			throw e;
+		}
+	}
+
+	public void updateCategory(Category category) throws DBException {
+		try {
+			DBFactory.factory(context).createCategoryDAO().updateCategory(category);
+		} catch (DBException e) {
+			throw e;
+		}
+	}
+
+	public void deleteCategory(Category category) throws DBException {
+		try {
+			DBFactory.factory(context).createCategoryDAO().deleteCategory(category);
 		} catch (DBException e) {
 			throw e;
 		}
