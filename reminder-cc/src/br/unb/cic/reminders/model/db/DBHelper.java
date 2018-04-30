@@ -25,7 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
 				Log.i(DBHelper.class.getCanonicalName(), sql);
 				db.execSQL(sql);
 			}
-			//#ifdef staticCategory
+			//#if staticCategory || manageCategory
 			for (String sql : DBConstants.PREDEFINED_CATEGORIES) {
 				Log.i(DBHelper.class.getCanonicalName(), sql);
 				db.execSQL(sql);
