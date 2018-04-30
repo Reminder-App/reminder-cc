@@ -29,6 +29,13 @@
     </transformation>
   </configuration>
   <configuration>
+    <expression>And(Static Category, Not(Manage Category))</expression>
+    <transformation>
+      <name>preprocessFiles</name>
+      <args>CategoryDAOJava, DefaultCategoryDAOJava</args>
+    </transformation>
+  </configuration>
+  <configuration>
     <expression>Static Category</expression>
     <transformation>
       <name>createBuildEntries</name>
