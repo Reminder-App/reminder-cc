@@ -12,7 +12,7 @@ public class DefaultDBFactory extends DBFactory {
 		return new DefaultReminderDAO(context);
 	}
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	@Override
 	public CategoryDAO createCategoryDAO() {
 		return new DefaultCategoryDAO(context);
