@@ -5,14 +5,16 @@ import android.os.Bundle;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.model.Reminder;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
 import java.util.List;
-//#endif 
+//#endif
 
 public class ExternalAddReminderActivity extends ReminderActivity {
-
-	//#ifdef staticCategory
+	//#ifdef manageCategory
+	private boolean isNewCategory = false;
+	//#endif
+	//#if staticCategory || manageCategory
 	private Category newCategory = null;
 
 	private void setNewCategory(Intent intent) throws Exception {
@@ -24,11 +26,23 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 				break;
 			}
 		}
+		//#ifdef manageCategory
+		if (newCategory == null) {
+			isNewCategory = true;
+			newCategory = new Category();
+			newCategory.setName(categoryName);
+		}
+		//#endif
 	}
 
 	@Override
 	protected List<Category> getCategories() throws Exception {
 		List<Category> categories = super.getCategories();
+		//#ifdef manageCategory
+		if (isNewCategory) {
+			categories.add(newCategory);
+		}
+		//#endif
 		return categories;
 	}
 
@@ -86,10 +100,10 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
-		//#ifdef staticCategory 
-	    setNewCategory(intent); 
-	    reminder.setCategory(newCategory); 
-	    //#endif 
+		//#if staticCategory || manageCategory
+		setNewCategory(intent);
+		reminder.setCategory(newCategory);
+		//#endif
 	}
 
 	@Override
@@ -110,14 +124,24 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		updateDateFromString(reminder.getDate());
 		updateSpinnerDateHour(spinnerTime, reminder.getHour());
 		updateTimeFromString(reminder.getHour());
-		//#ifdef staticCategory 
-	    spinnerCategory.setSelection(categoryToIndex(reminder.getCategory())); 
-	    //#endif 
+		//#if staticCategory || manageCategory
+		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
+		//#endif
+		//#ifdef manageCategory
+		if (isNewCategory)
+			spinnerCategory.setSelection(spinnerCategory.getCount() - 2);
+		//#endif
 	}
 
 	@Override
 	protected void persist(Reminder reminder) {
 		try {
+			//#ifdef manageCategory
+			if (isNewCategory) {
+				Controller.instance(getApplicationContext()).addCategory(reminder.getCategory());
+				reminder.setCategory(findCategory(reminder.getCategory()));
+			}
+			//#endif
 			Controller.instance(getApplicationContext()).addReminder(reminder);
 		} catch (DBException e) {
 			e.printStackTrace();
