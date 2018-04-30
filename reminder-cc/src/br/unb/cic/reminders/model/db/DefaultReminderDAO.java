@@ -9,7 +9,7 @@ import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.framework.persistence.DBInvalidEntityException;
 import br.unb.cic.framework.persistence.GenericDAO;
 import br.unb.cic.reminders.model.Reminder;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
 import android.util.Log;
 //#endif 
@@ -33,7 +33,7 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 			Cursor cursor = db.rawQuery(DBConstants.SELECT_REMINDERS, null);
 			return remindersFromCursor(cursor);
 		} catch (Exception e) {
-			//#ifdef staticCategory
+			//#if staticCategory || manageCategory
 			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
 			//#endif
 			throw new DBException();
@@ -59,7 +59,7 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 			db = dbHelper.getWritableDatabase();
 			db.delete(DBConstants.REMINDER_TABLE, DBConstants.REMINDER_PK_COLUMN + "=" + reminder.getId(), null);
 		} catch (SQLiteException e) {
-			//#ifdef staticCategory
+			//#if staticCategory || manageCategory
 			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
 			//#endif
 			throw new DBException();
@@ -91,7 +91,7 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		reminder.setId(pk);
 		reminder.setDone(done);
 
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		Long categoryId = cursor.getLong(cursor.getColumnIndex(DBConstants.REMINDER_FK_CATEGORY_COLUMN));
 		Category category = DBFactory.factory(context).createCategoryDAO().findCategoryById(categoryId);
 		reminder.setCategory(category);
@@ -121,7 +121,7 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		return reminders;
 	}
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	public List<Reminder> listRemindersByCategory(Category category) throws DBException {
 		try {
 			db = dbHelper.getReadableDatabase();
