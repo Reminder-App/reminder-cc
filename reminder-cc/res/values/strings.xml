@@ -19,6 +19,20 @@
   //#if staticCategory || manageCategory
   <string name="reminderCategory">Category</string>
   //#endif
+  //#ifdef manageCategory
+  <string name="context_menu_category_title">Category</string>
+  <!-- Category_list_fragment -->
+  <string name="addCategory">Add</string>
+  <!-- category_dialog -->
+  <string name="dialog_category_cancel">Cancel</string>
+  <!-- add_category_dialog -->
+  <string name="dialog_addcategory_name">Category\'s name</string>
+  <string name="dialog_addcategory_title">Add category:</string>
+  <string name="dialog_addcategory_add">Add</string>
+  <!-- edit_category_dialog -->
+  <string name="dialog_editcategory_title">Edit category:</string>
+  <string name="dialog_editcategory_save">Save</string>
+  //#endif
   <string name="saveButton">Save</string>
   <string name="cancelButton">Cancel</string>
   <!-- Reminder_list_fragment -->
