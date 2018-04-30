@@ -22,7 +22,7 @@ import br.unb.cic.reminders.model.InvalidDateException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders.controller.Controller;
 //#endif
@@ -34,12 +34,18 @@ public abstract class ReminderActivity extends Activity {
 	protected Spinner spinnerDate, spinnerTime;
 	private Button btnSave, btnCancel;
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	protected Spinner spinnerCategory;
 
 	private void addListenerToSpinnerCategory() {
 		spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+				//#ifdef manageCategory
+				if (pos == (spinnerCategory.getCount() - 1)) {
+					DialogFragment newFragment = AddCategoryDialogFragment.newInstance(spinnerCategory);
+					newFragment.show(getFragmentManager(), "" + R.string.dialog_addcategory_title);
+				}
+				//#endif
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
@@ -58,6 +64,12 @@ public abstract class ReminderActivity extends Activity {
 		ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
 
 		spinner.setAdapter(adapter);
+		
+		//#ifdef manageCategory
+	    Category temp = new Category();
+	    temp.setName("+ Category");
+	    adapter.add(temp);
+	    //#endif
 
 		return spinner;
 	}
@@ -95,7 +107,7 @@ public abstract class ReminderActivity extends Activity {
 		edtDetails = (EditText) findViewById(R.id.edtDetails);
 		spinnerDate = getSpinnerDate();
 		spinnerTime = getSpinnerTime();
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		try {
 			spinnerCategory = getSpinnerCategory();
 		} catch (Exception e) {
@@ -109,9 +121,9 @@ public abstract class ReminderActivity extends Activity {
 		addListenerToBtnCancel();
 		addListenerToSpinnerDate();
 		addListenerToSpinnerTime();
-		//#ifdef staticCategory 
-	    addListenerToSpinnerCategory(); 
-	    //#endif
+		//#if staticCategory || manageCategory
+		addListenerToSpinnerCategory();
+		//#endif
 	}
 
 	protected abstract void initializeValues();
@@ -226,9 +238,9 @@ public abstract class ReminderActivity extends Activity {
 	private void setValuesOnReminder() throws Exception {
 		reminder.setDate(dateToString());
 		reminder.setHour(timeToString());
-		//#ifdef staticCategory 
-	    reminder.setCategory((Category) spinnerCategory.getSelectedItem()); 
-	    //#endif
+		//#if staticCategory || manageCategory
+		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
+		//#endif
 	}
 
 	private String dateToString() {
