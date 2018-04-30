@@ -16,7 +16,7 @@
   <string name="reminderHourTip">HH:MM</string>
   <string name="reminderHourBlank">No Time</string>
   <string name="reminderHourButton">Choose Time</string>
-  //#ifdef category
+  //#if staticCategory || manageCategory
   <string name="reminderCategory">Category</string>
   //#endif
   <string name="saveButton">Save</string>
