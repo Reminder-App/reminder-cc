@@ -2,17 +2,17 @@ package br.unb.cic.reminders.model.db;
 
 public class DBConstants {
 	public static String DROP_TABLE_STATEMENTS[] = { "DROP TABLE IF EXISTS REMINDER"
-			//#ifdef staticCategory
+			//#if staticCategory || manageCategory
 			, "DROP TABLE IF EXISTS CATEGORY"
 			//#endif
 	};
 	public static String CREATE_TABLE_STATEMENTS[] = { "CREATE TABLE REMINDER ( "
 			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL," + "DETAILS VARCHAR(50) NULL,"
-			//#ifdef staticCategory
+			//#if staticCategory || manageCategory
 			+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE,"
 			//#endif
 			+ "DATE CHAR(10) NULL," + "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);"
-			//#ifdef staticCategory
+			//#if staticCategory || manageCategory
 			, "CREATE TABLE CATEGORY(" + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, "
 					+ "LOCKED INT NOT NULL);"
 			//#endif
@@ -26,7 +26,7 @@ public class DBConstants {
 	public static String REMINDER_HOUR_COLUMN = "HOUR";
 	public static String REMINDER_DONE_COLUMN = "DONE";
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
 	public static final String SELECT_CATEGORY_BY_NAME = "SELECT PK, NAME FROM CATEGORY WHERE NAME = ?";
 	public static final String SELECT_CATEGORY_BY_ID = "SELECT PK, NAME FROM CATEGORY WHERE PK = ?";
