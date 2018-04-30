@@ -10,7 +10,7 @@ import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders.model.db.DBConstants;
 import br.unb.cic.reminders.model.db.DefaultDBFactory;
 import br.unb.cic.reminders.model.db.ReminderDAO;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders.model.db.CategoryDAO;
 //#endif 
@@ -21,7 +21,7 @@ public class ReminderContentProvider extends ContentProvider {
 	private static final String AUTHORITY = "br.com.positivo.reminders.contentprovider";
 	private static final String BASE_PATH = "reminders";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
-	//#ifdef staticCategory 
+	//#if staticCategory || manageCategory
 	private CategoryDAO cdao;
 	//#endif
 
@@ -46,7 +46,7 @@ public class ReminderContentProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		rdao = DefaultDBFactory.factory(getContext()).createReminderDAO();
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		cdao = DefaultDBFactory.factory(getContext()).createCategoryDAO();
 		//#endif
 		return false;
@@ -69,7 +69,7 @@ public class ReminderContentProvider extends ContentProvider {
 		Reminder reminder = new Reminder();
 		reminder.setDate(values.getAsString(date()));
 		reminder.setHour(values.getAsString(hour()));
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		Category category = createCategoryInsert(values);
 		reminder.setCategory(category);
 		//#endif
@@ -96,13 +96,21 @@ public class ReminderContentProvider extends ContentProvider {
 		throw new SecurityException(SECURITY_EXCEPTION);
 	}
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	public static final String category() {
 		return DBConstants.CATEGORY_NAME_COLUMN;
 	}
 
 	private Category createCategoryInsert(ContentValues values) throws DBException {
 		Category category = cdao.findCategory(values.getAsString(category()));
+		//#ifdef manageCategory 
+	    if(category == null) { 
+	      Category auxCategory = new Category(); 
+	      auxCategory.setName(values.getAsString(category())); 
+	      cdao.saveCategory(auxCategory); 
+	      category = cdao.findCategory(values.getAsString(category())); 
+	    } 
+	    //#endif 
 		return category;
 	}
 	//#endif
