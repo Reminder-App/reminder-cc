@@ -23,6 +23,11 @@ import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.controller.ReminderFilter;
 import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders2.R;
+//#ifdef manageCategory 
+import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.app.DialogFragment;
+import android.view.MenuItem;
+//#endif 
 
 public class FilterListFragment extends Fragment implements OnItemClickListener {
 
@@ -119,4 +124,58 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 		notifyListeners(adapter.getItem(position));
 
 	}
+
+	//#ifdef manageCategory
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+
+		menu.setHeaderTitle(R.string.context_menu_category_title);
+
+		MenuInflater inflater = getActivity().getMenuInflater();
+
+		if (((AdapterContextMenuInfo) menuInfo).position < 1) {
+			return;
+		}
+
+		inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (item.getGroupId() == R.id.context_menu_category) {
+			// Used to verify it it is the right context_menu //Gets the item
+			// position and gets the category in that position:
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+			Category category = ((CategoryFilter) lvFilters.getAdapter().getItem(info.position)).getCategory();
+
+			// Switch between the options in the context menu(Edit and Delete)
+			switch (item.getItemId()) {
+			case R.id.edit:
+				// Passes the current reminder to be edited via Intent and
+				// Invokes edit method
+				DialogFragment newFragment = EditCategoryDialogFragment.newInstance(category);
+				newFragment.show(getFragmentManager(), "" + R.string.dialog_editcategory_title);
+				updateListView();
+				return true;
+			case R.id.delete:
+				// Invokes delete method
+				try {
+					// Deletes from the bank;
+					Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
+					Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
+					updateListView();
+					return true;
+				} catch (DBException e) {
+					Log.e(TAG, e.getMessage());
+				}
+				updateListView();
+				return true;
+			default:
+				return super.onContextItemSelected(item);
+			}
+
+		}
+		return super.onContextItemSelected(item);
+	}
+	//#endif
 }
