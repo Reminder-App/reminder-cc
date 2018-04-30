@@ -109,4 +109,45 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 
 		return category;
 	}
+
+	//#ifdef manageCategory
+	public void saveCategory(Category category) throws DBException {
+		try {
+			persist(category);
+		} catch (DBInvalidEntityException e) {
+			throw new DBException();
+		}
+	}
+
+	public void updateCategory(Category category) throws DBException {
+		try {
+			// db.delete(DBConstants.CATEGORY_TABLE,
+			// DBConstants.CATEGORY_PK_COLUMN + "=" + category.getId(), null);
+			try {
+				persist(category);
+			} catch (DBInvalidEntityException e) {
+				throw new DBException();
+			}
+		} catch (SQLiteException e) {
+			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+			throw new DBException();
+		} finally {
+			db.close();
+			dbHelper.close();
+		}
+	}
+
+	public void deleteCategory(Category category) throws DBException {
+		try {
+			db = dbHelper.getWritableDatabase();
+			db.delete(DBConstants.CATEGORY_TABLE, DBConstants.CATEGORY_PK_COLUMN + "=" + category.getId(), null);
+		} catch (SQLiteException e) {
+			Log.e(DefaultCategoryDAO.class.getCanonicalName(), e.getLocalizedMessage());
+			throw new DBException();
+		} finally {
+			db.close();
+			dbHelper.close();
+		}
+	}
+	//#endif
 }
