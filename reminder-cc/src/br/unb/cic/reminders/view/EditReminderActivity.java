@@ -4,7 +4,7 @@ import android.content.Intent;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.model.Reminder;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory 
 import br.unb.cic.reminders.model.Category;
 import java.util.List;
 //#endif 
@@ -34,7 +34,7 @@ public class EditReminderActivity extends ReminderActivity {
 		updateSpinnerDateHour(spinnerTime, hour);
 		updateTimeFromString(hour);
 
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		String categoryName = intent.getStringExtra("category_name");
 		String categoryId = intent.getStringExtra("category_id");
 		Category category = new Category();
@@ -46,12 +46,20 @@ public class EditReminderActivity extends ReminderActivity {
 
 	@Override
 	protected void persist(Reminder reminder) {
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 		try {
 			Category category = findCategory(reminder.getCategory());
+			//#ifdef manageCategory
+			if (category != null) {
+				reminder.setCategory(category);
+			} else {
+				Controller.instance(getApplicationContext()).addCategory(reminder.getCategory());
+				reminder.setCategory(findCategory(reminder.getCategory()));
+			}
+			//#elifdef staticCategory
 			reminder.setCategory(category);
+			//#endif
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//#endif
@@ -63,7 +71,7 @@ public class EditReminderActivity extends ReminderActivity {
 		}
 	}
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	private int categoryToIndex(Category category) throws Exception {
 		List<Category> categories = Controller.instance(getApplicationContext()).listCategories();
 		int i = 0;
