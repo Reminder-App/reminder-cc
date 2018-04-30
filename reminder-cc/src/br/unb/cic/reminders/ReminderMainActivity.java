@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import br.unb.cic.reminders.view.AddReminderActivity;
 import br.unb.cic.reminders.view.ReminderListFragment;
 import br.unb.cic.reminders2.R;
-//#ifdef staticCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.view.FilterListFragment; 
 //#endif 
 
@@ -30,7 +30,7 @@ public class ReminderMainActivity extends Activity {
 		ft = getFragmentManager().beginTransaction();
 		listReminderFragment = new ReminderListFragment();
 		ft.add(R.id.listReminders, listReminderFragment);
-		//#ifdef staticCategory 
+		//#if staticCategory || manageCategory 
 	    FilterListFragment listCategoryFragment = new FilterListFragment(); 
 	    listCategoryFragment.addListener(listReminderFragment); 
 	    ft.add(R.id.listCategories, listCategoryFragment); 
