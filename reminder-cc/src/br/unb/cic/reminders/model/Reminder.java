@@ -6,7 +6,7 @@ import util.Patterns;
 import br.unb.cic.framework.persistence.DBTypes;
 import br.unb.cic.framework.persistence.annotations.Column;
 import br.unb.cic.framework.persistence.annotations.Entity;
-//#ifdef staticCategory
+//#if staticCategory || manageCategory
 import br.unb.cic.framework.persistence.annotations.ForeignKey;
 //#endif
 import br.unb.cic.reminders.view.InvalidHourException;
@@ -26,7 +26,7 @@ public class Reminder {
 	@Column(column = "DONE", type = DBTypes.INT)
 	private boolean done;
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	@Column(column = "FK_CATEGORY", type = DBTypes.LONG)
 	@ForeignKey(mappedBy = "id")
 	private Category category;
@@ -99,7 +99,7 @@ public class Reminder {
 		return m.matches();
 	}
 
-	//#ifdef staticCategory
+	//#if staticCategory || manageCategory
 	public Category getCategory() {
 		return category;
 	}
@@ -111,7 +111,7 @@ public class Reminder {
 
 	public boolean isValid() {
 		return (text != null && date != null && hour != null
-		//#ifdef staticCategory
+		//#if staticCategory || manageCategory
 				&& category != null
 		//#endif
 		);
