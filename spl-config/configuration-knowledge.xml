@@ -20,6 +20,10 @@
 			<name>createBuildEntries</name>
 			<args>category</args>
 		</transformation>
+    <transformation>
+      <name>preprocessFiles</name>
+      <args>FilterListFragmentJava</args>
+    </transformation>
 	</configuration>
   <configuration>
     <expression>Manage Category</expression>
