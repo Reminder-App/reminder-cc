@@ -4,22 +4,24 @@ This project integrated the *Positivo Challenge*, a research and development pro
 ### Features
 The features present in this release are:
 
-![Feature Model](https://i.imgur.com/nmtGwK7.png)
+![Feature Model](https://i.imgur.com/bP7gvCr.png)
 
-# Steps to run the project
-To run this project it is necessary to use the Eclipse IDE - we are using the [Eclipse for Android Developers](https://www.eclipse.org/downloads/packages/eclipse-android-developers/neonm6). Once you have the IDE installed, the steps that must be followed to import the project are:
+# Steps to Generate a Product
+For the project to work, you must install and configure the  [Hepheatus](https://github.com/hephaestus-pl/hephaestus-base) and then follow the steps below:
 
-1. Open the eclipse IDE and go to **Window -> Android SDK Manager**
-1.1. Select options to install **Android API 19**.
+1. In the directory for this project, open the **spl-config** folder. Then open the file **project.properties** and replace the ```<directory-where-this-repository-is-cloned>``` tag as requested. <br />
+1.1. Then change the value of *instance-model* according to the product you want to generate. All products are on *products* folder.
 
-2. *This step is optional*. To create a virtual device, go to **Window -> Android Virtual Device Manager** and create the device with the following configuration: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Create a Virtual Device to Android](https://i.imgur.com/nGM9z8u.png)
+2. Open the workspace where the Hepheastus tool is installed. Then go to **hephaestus-sb/bin** and run the *hepheastus* file.
 
-3. To import the project go to **File -> Import -> Maven -> Existing Maven Project** and select the project in the directory where it was cloned;
-4. To run the project click **Properties -> Java Builder**  and verify that the following parameters are configured: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Java Compiler Configuration](https://i.imgur.com/z30LeVx.png)
+3. Enter the command *start*. Then enter the **absolute path** where the *project.properties* file is located and then confirm;
 
-5. After, right click on the project and then on **Run As -> Run Configurator -> Android Application -> New** and make the following settings: <br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Settings to Run Configurator](https://i.imgur.com/gasu7hI.png)
+4. Navigate to the target directory that was entered in the *projects.properties* file.
 
-6. Finally, click on **Run** to run the project in the virtual device or your device;
+5. Open the terminal and enter the command below. Remember to replace ```<hephaestus-workspace-path>``` with its corresponding value:
+>  *java -jar &lt;hephaestus-workspace-path&gt;/hephaestus-pp/bin/antenna-pp.jar files.pp build.lst --drop-lines*
+
+6. After, the generated product is fully configured. So import it into the Eclipse IDE or Android Studio and emulate the Reminder App.
 
 That is all.
 
