@@ -205,6 +205,12 @@ public class ReminderAddActivity extends Activity {
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#if staticCategory || manageCategory
+	    String category = intent.getStringExtra("category");
+	    Category auxCategory = new Category();
+	    auxCategory.setName(category);
+	    reminder.setCategory(auxCategory);
+	    //#endif
 		return reminder;
 	}
 
