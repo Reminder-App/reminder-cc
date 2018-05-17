@@ -104,4 +104,18 @@
 			<args>CalendarEventCreatorJava, CalendarNotFoundExceptionJava</args>
 		</transformation>
 	</configuration>
+  <configuration>
+		<expression>Search</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>search</args>
+		</transformation>
+	</configuration>
+  <configuration>
+		<expression>Not(Search)</expression>
+		<transformation>
+			<name>removeComponents</name>
+			<args>SearchIconHdpi, SearchIconLdpi, SearchIconMdpi, SearchReminderDialogLayoutXML</args>
+		</transformation>
+	</configuration>
 </configurationModel>
