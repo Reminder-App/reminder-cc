@@ -12,10 +12,10 @@
 					<feature name="Manage Category"/>
 					<feature name="Static Category"/>
 				</alt>
+				<feature name="Reminder Priority"/>
 			</and>
 		</struct>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
 		<comments/>
 		<featureOrder userDefined="false"/>
 	</featureModel>
-
