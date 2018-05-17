@@ -170,4 +170,71 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 	public void onSelectedFilterChanged(ReminderFilter filter) {
 		updateListView(filter);
 	}
+
+	//#ifdef search
+	public void updateListViewFilter(String filterRemider) {
+
+		ReminderFilter filter = new AllRemindersFilter(getActivity());
+		ArrayList<Reminder> reminders = new ArrayList<Reminder>();
+		for (Reminder item : filter.getReminderList()) {
+
+			if (item.getText().contains(filterRemider)) {
+				reminders.add(item);
+			}
+		}
+
+		adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), reminders);
+
+		ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays, adapterNoDate;
+		Reminder r = new Reminder();
+		List<Reminder> remindersLate = new ArrayList<Reminder>();
+		List<Reminder> remindersToday = new ArrayList<Reminder>();
+		List<Reminder> remindersNextDays = new ArrayList<Reminder>();
+		List<Reminder> remindersNoDate = new ArrayList<Reminder>();
+		for (int i = 0; i < adapter.getCount(); ++i) {
+			r = adapter.getItem(i);
+			if (r.getDate() != null) {
+				String day = r.getDate().substring(0, 2);
+				String month = r.getDate().substring(3, 5);
+				String year = r.getDate().substring(6, 10);
+				Calendar cal = Calendar.getInstance();
+				GregorianCalendar gc = new GregorianCalendar();
+				if (r.getHour() != null) {
+					String hour = r.getHour().substring(0, 2);
+					String min = r.getHour().substring(3, 5);
+					gc.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day),
+							Integer.parseInt(hour), Integer.parseInt(min));
+				} else {
+					gc.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
+				}
+				if (gc.before(cal))
+					remindersLate.add(r);
+				else if ((cal.get(Calendar.YEAR) == gc.get(Calendar.YEAR))
+						&& (cal.get(Calendar.MONTH) == gc.get(Calendar.MONTH))
+						&& (cal.get(Calendar.DAY_OF_MONTH) == gc.get(Calendar.DAY_OF_MONTH)))
+					remindersToday.add(r);
+				else
+					remindersNextDays.add(r);
+			} else {
+				remindersNoDate.add(r);
+			}
+		}
+		adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
+				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
+		adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
+				Color.rgb(0x33, 0xB5, 0xE5), ReminderArrayAdapter.TODAY);
+		adapterNextDays = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNextDays,
+				Color.rgb(0x99, 0x99, 0x99), ReminderArrayAdapter.NEXT_DAYS);
+		adapterNoDate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNoDate,
+				Color.rgb(0x00, 0x00, 0x00), ReminderArrayAdapter.NO_DATE);
+		lvReminderLate.setAdapter(adapterLate);
+		Utility.setListViewHeightBasedOnChildren(lvReminderLate);
+		lvReminderToday.setAdapter(adapterToday);
+		Utility.setListViewHeightBasedOnChildren(lvReminderToday);
+		lvReminderNextDays.setAdapter(adapterNextDays);
+		Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
+		lvReminderNoDate.setAdapter(adapterNoDate);
+		Utility.setListViewHeightBasedOnChildren(lvReminderNoDate);
+	}
+	//#endif
 }
