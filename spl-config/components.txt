@@ -48,3 +48,8 @@ ReminderArrayAdapterJava => src/br/unb/cic/reminders/view/ReminderArrayAdapter.j
 
 CalendarEventCreatorJava => src/br/unb/cic/reminders/calendar/CalendarEventCreator.java;
 CalendarNotFoundExceptionJava => src/br/unb/cic/reminders/model/CalendarNotFoundException.java;
+
+SearchReminderDialogLayoutXML => res/layout/search_reminder_dialog_layout.xml;
+SearchIconHdpi => res/drawable-hdpi/search_reminder.png;
+SearchIconLdpi => res/drawable-ldpi/search_reminder.png;
+SearchIconMdpi => res/drawable-mdpi/search_reminder.png;
