@@ -38,6 +38,23 @@ public abstract class ReminderFilter {
 		}
 	}
 
+	//#ifdef search
+	public List<Reminder> getReminders(String search) {
+		updateReminders();
+		if (search == null || search.trim().equals("")) {
+			updateReminders();
+			return reminders;
+		}
+		List<Reminder> values = new ArrayList<Reminder>();
+		for (Reminder item : this.reminders) {
+			if (item.getText().contains(search)) {
+				values.add(item);
+			}
+		}
+		return values;
+	}
+	//#endif
+
 	abstract protected boolean selectReminder(Reminder r);
 
 	abstract public String getName();
