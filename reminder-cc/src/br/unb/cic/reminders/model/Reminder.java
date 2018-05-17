@@ -32,6 +32,11 @@ public class Reminder {
 	private Category category;
 	//#endif
 
+	//#ifdef priority
+	@Column(column = "PRIORITY", type = DBTypes.INT)
+	private Priority priority;
+	//#endif
+
 	public Reminder() {
 	}
 
@@ -109,11 +114,24 @@ public class Reminder {
 	}
 	//#endif
 
+	//#ifdef priority
+	public int getPriority() {
+		return priority.getCode();
+	}
+
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
+	//#endif
+
 	public boolean isValid() {
 		return (text != null && date != null && hour != null
 		//#if staticCategory || manageCategory
 				&& category != null
 		//#endif
+		//#ifdef priority 
+				&& priority != null 
+	    //#endif 
 		);
 	}
 
