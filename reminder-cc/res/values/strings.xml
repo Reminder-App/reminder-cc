@@ -37,6 +37,9 @@
   <string name="reminderPriority">Priority</string>
   <string name="reminderPriorityTip">Reminder\'s priority</string>
   //#endif
+  //#ifdef googleCalendar
+  <string name="googleCalendar">Google Calendar</string>
+  //#endif
   <string name="saveButton">Save</string>
   <string name="cancelButton">Cancel</string>
   <!-- Reminder_list_fragment -->
