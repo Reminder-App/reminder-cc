@@ -40,6 +40,10 @@
   //#ifdef googleCalendar
   <string name="googleCalendar">Google Calendar</string>
   //#endif
+  //#ifdef search
+  <string name="search">Search</string>
+  <string name="menu_searchReminder">Search</string>
+  //#endif
   <string name="saveButton">Save</string>
   <string name="cancelButton">Cancel</string>
   <!-- Reminder_list_fragment -->
