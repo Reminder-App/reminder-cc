@@ -13,6 +13,9 @@ import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders.model.Category;
 import android.util.Log;
 //#endif 
+//#ifdef priority 
+import br.unb.cic.reminders.model.Priority; 
+//#endif 
 
 public class DefaultReminderDAO extends GenericDAO<Reminder> implements ReminderDAO {
 	public DefaultReminderDAO(Context c) {
@@ -96,6 +99,11 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		Category category = DBFactory.factory(context).createCategoryDAO().findCategoryById(categoryId);
 		reminder.setCategory(category);
 		//#endif
+		
+		//#ifdef priority 
+	    int priority = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_PRIORITY_COLUMN)); 
+	    reminder.setPriority(Priority.fromCode(priority)); 
+	    //#endif
 
 		return reminder;
 	}
