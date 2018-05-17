@@ -7,24 +7,24 @@
     </transformation>
     <transformation>
       <name>preprocessFiles</name>
-      <args>RemindersMainActivityXML, ReminderAddXML, StringsXML</args>
+      <args>RemindersMainActivityXML, ReminderAddXML, StringsXML, ReminderRowXML</args>
     </transformation>
     <transformation>
       <name>preprocessFiles</name>
-      <args>GenericDAOJava, ReminderMainActivityJava, ControllerJava, ReminderJava, ReminderContentProviderJava, DBConstantsJava, DBFactoryJava, DBHelperJava, DefaultDBFactoryJava, DefaultReminderDAOJava, AddReminderActivityJava, EditReminderActivityJava, ExternalAddReminderActivityJava, ReminderActivityJava, ReminderAddActivityJava, ReminderFilterArrayAdapterJava, ReminderListFragmentJava, ReminderDAOJava</args>
+      <args>GenericDAOJava, ReminderMainActivityJava, ControllerJava, ReminderJava, ReminderContentProviderJava, DBConstantsJava, DBFactoryJava, DBHelperJava, DefaultDBFactoryJava, DefaultReminderDAOJava, AddReminderActivityJava, EditReminderActivityJava, ExternalAddReminderActivityJava, ReminderActivityJava, ReminderAddActivityJava, ReminderFilterArrayAdapterJava, ReminderListFragmentJava, ReminderDAOJava, ReminderArrayAdapterJava</args>
     </transformation>
   </configuration>
   <configuration>
-		<expression>Or(Manage Category, Static Category)</expression>
-		<transformation>
-			<name>createBuildEntries</name>
-			<args>category</args>
-		</transformation>
+    <expression>Or(Manage Category, Static Category)</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>category</args>
+    </transformation>
     <transformation>
       <name>preprocessFiles</name>
       <args>FilterListFragmentJava, CategoryDAOJava, DefaultCategoryDAOJava</args>
     </transformation>
-	</configuration>
+  </configuration>
   <configuration>
     <expression>Manage Category</expression>
     <transformation>
@@ -40,10 +40,28 @@
     </transformation>
   </configuration>
   <configuration>
+    <expression>Reminder Priority</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>priority</args>
+    </transformation>
+    <transformation>
+      <name>preprocessFiles</name>
+      <args>FilterListFragmentJava</args>
+    </transformation>
+  </configuration>
+  <configuration>
     <expression>Not(Or(Manage Category, Static Category))</expression>
     <transformation>
       <name>removeComponents</name>
-      <args>CategoryFilterJava, CategoryDAOJava, DefaultCategoryDAOJava, CategoryJava, CategoryArrayAdapterJava, FilterListFragmentJava</args>
+      <args>CategoryFilterJava, CategoryDAOJava, DefaultCategoryDAOJava, CategoryJava, CategoryArrayAdapterJava</args>
+    </transformation>
+  </configuration>
+  <configuration>
+    <expression>Not(Or(Or(Manage Category, Static Category), Reminder Priority))</expression>
+    <transformation>
+      <name>removeComponents</name>
+      <args>FilterListFragmentJava</args>
     </transformation>
     <transformation>
       <name>removeComponents</name>
@@ -59,6 +77,17 @@
     <transformation>
       <name>removeComponents</name>
       <args>CategoryDialogXML, CategoryListFragmentContextMenuXML</args>
+    </transformation>
+  </configuration>
+  <configuration>
+    <expression>Not(Reminder Priority)</expression>
+    <transformation>
+      <name>removeComponents</name>
+      <args>PriorityFilterJava, PriorityJava</args>
+    </transformation>
+    <transformation>
+      <name>removeComponents</name>
+      <args>ImportantIconHdpi, ImportantIconLdpi, ImportantIconMdpi, UrgentIconHdpi, UrgentIconLdpi, UrgentIconMdpi</args>
     </transformation>
   </configuration>
 </configurationModel>
