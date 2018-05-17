@@ -15,13 +15,20 @@ import br.unb.cic.reminders.model.InvalidFormatException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
-//#if staticCategory || manageCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
+//#endif
+//#if staticCategory || manageCategory || priority
 import android.widget.Spinner;
 import java.util.List;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 //#endif
+//#ifdef priority 
+import br.unb.cic.reminders.model.Priority;
+import java.util.Arrays;
+import android.widget.ArrayAdapter;
+//#endif 
 
 public class ReminderAddActivity extends Activity {
 	private EditText edtReminder, edtDetails, edtDate, edtHour;
@@ -36,12 +43,11 @@ public class ReminderAddActivity extends Activity {
 	private void addListenerToSpinnerCategory() {
 		spinnerCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
-				// get the category from the spinner
 				selectedCategory = (Category) parent.getItemAtPosition(pos);
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-				// well... do nothing
+				
 			}
 		});
 	}
@@ -71,6 +77,39 @@ public class ReminderAddActivity extends Activity {
 	}
 	//#endif
 
+	//#ifdef priority
+	private Priority selectedPriority;
+	private Spinner spinnerPriority;
+
+	private void addListenerToSpinnerPriority() {
+		spinnerPriority.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+				selectedPriority = (Priority) parent.getItemAtPosition(pos);
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> parent) {
+				
+			}
+		});
+	}
+
+	private Spinner getSpinnerPriority() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerPriorities);
+
+		SpinnerAdapterGenerator<Priority> adapterPriorityGenerator = new SpinnerAdapterGenerator<Priority>();
+
+		List<Priority> priorityValues = Arrays.asList(Priority.values());
+
+		ArrayAdapter<Priority> priorityArrayAdapter = adapterPriorityGenerator.getSpinnerAdapter(priorityValues, this);
+
+		spinner.setAdapter(priorityArrayAdapter);
+
+		spinner.setSelection(Priority.NORMAL.getCode());
+
+		return spinner;
+	}
+	//#endif
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,6 +132,9 @@ public class ReminderAddActivity extends Activity {
 		//#if staticCategory || manageCategory
 		addListenerToSpinnerCategory();
 		//#endif
+		//#ifdef priority 
+	    addListenerToSpinnerPriority(); 
+	    //#endif 
 	}
 
 	private void addListenerToBtnSave() {
@@ -146,6 +188,9 @@ public class ReminderAddActivity extends Activity {
 		//#if staticCategory || manageCategory
 		reminder.setCategory(selectedCategory);
 		//#endif
+		//#ifdef priority 
+	    reminder.setPriority(selectedPriority); 
+	    //#endif 
 		return reminder;
 	}
 
@@ -178,6 +223,10 @@ public class ReminderAddActivity extends Activity {
 		category.setId(Long.parseLong(categoryId));
 		reminder.setCategory(category);
 		//#endif
+		//#ifdef priority 
+	    String priority = intent.getStringExtra("priority"); 
+	    reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10))); 
+	    //#endif 
 		return reminder;
 	}
 
@@ -206,11 +255,14 @@ public class ReminderAddActivity extends Activity {
 		reminder.setDate(date);
 		reminder.setHour(hour);
 		//#if staticCategory || manageCategory
-	    String category = intent.getStringExtra("category");
-	    Category auxCategory = new Category();
-	    auxCategory.setName(category);
-	    reminder.setCategory(auxCategory);
-	    //#endif
+		String category = intent.getStringExtra("category");
+		Category auxCategory = new Category();
+		auxCategory.setName(category);
+		reminder.setCategory(auxCategory);
+		//#endif
+		//#ifdef priority 
+	    String priority = intent.getStringExtra("priority"); 
+	    //#endif 
 		return reminder;
 	}
 
@@ -222,6 +274,10 @@ public class ReminderAddActivity extends Activity {
 			e.printStackTrace();
 		}
 		//#endif
+		
+		//#ifdef priority 
+	    spinnerPriority = getSpinnerPriority(); 
+	    //#endif 
 
 		try {
 			edtReminder = (EditText) findViewById(R.id.edtReminder);
@@ -242,7 +298,10 @@ public class ReminderAddActivity extends Activity {
 		edtDate.setText(reminder.getDate());
 		edtHour.setText(reminder.getHour());
 		//#if staticCategory || manageCategory
-	    spinnerCategory.setSelection(categoryToIndex(reminder.getCategory())); 
+		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
+		//#endif
+		//#ifdef priority 
+	    spinnerPriority.setSelection(reminder.getPriority()); 
 	    //#endif 
 	}
 }
