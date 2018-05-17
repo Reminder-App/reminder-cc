@@ -18,6 +18,10 @@ import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
+//#ifdef priority
+import android.widget.ImageView;
+import android.graphics.Typeface;
+//#endif
 
 public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 	private Context context;
@@ -54,6 +58,9 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		} else {
 			reminderRow = (LinearLayout) convertView;
 		}
+		//#ifdef priority
+		ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
+		//#endif
 		TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
 		TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 		TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
@@ -70,6 +77,15 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 				}
 			}
 		});
+		// #ifdef priority
+	    if (getItem(position).getPriority() == 1)
+	      ivPriority.setImageResource(R.drawable.important);
+	    else if (getItem(position).getPriority() == 2)
+	      ivPriority.setImageResource(R.drawable.urgent);
+	    
+	    if (getItem(position).getPriority() != 0)
+	        tvReminder.setTypeface(null, Typeface.BOLD);
+	    // #endif
 		tvReminder.setTextColor(rowColor);
 		tvReminder.setText(getItem(position).getText());
 		tvDateFirst.setTextColor(rowColor);
