@@ -34,3 +34,14 @@ ReminderDAOJava => src/br/unb/cic/reminders/model/db/ReminderDAO.java;
 
 AddCategoryDialogFragmentJava => src/br/unb/cic/reminders/view/AddCategoryDialogFragment.java;
 EditCategoryDialogFragmentJava => src/br/unb/cic/reminders/view/EditCategoryDialogFragment.java;
+
+PriorityFilterJava => src/br/unb/cic/reminders/controller/PriorityFilter.java;
+PriorityJava => src/br/unb/cic/reminders/model/Priority.java;
+ReminderRowXML => res/layout/reminder_row.xml;
+ImportantIconHdpi => res/drawable-hdpi/important.png;
+ImportantIconLdpi => res/drawable-ldpi/important.png;
+ImportantIconMdpi => res/drawable-mdpi/important.png;
+UrgentIconHdpi => res/drawable-hdpi/urgent.png;
+UrgentIconLdpi => res/drawable-ldpi/urgent.png;
+UrgentIconMdpi => res/drawable-mdpi/urgent.png;
+ReminderArrayAdapterJava => src/br/unb/cic/reminders/view/ReminderArrayAdapter.java;
