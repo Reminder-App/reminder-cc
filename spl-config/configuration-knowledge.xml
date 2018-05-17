@@ -90,4 +90,18 @@
       <args>ImportantIconHdpi, ImportantIconLdpi, ImportantIconMdpi, UrgentIconHdpi, UrgentIconLdpi, UrgentIconMdpi</args>
     </transformation>
   </configuration>
+  <configuration>
+		<expression>Google Calendar</expression>
+		<transformation>
+			<name>createBuildEntries</name>
+			<args>googleCalendar</args>
+		</transformation>
+	</configuration>
+  <configuration>
+		<expression>Not(Google Calendar)</expression>
+		<transformation>
+			<name>removeComponents</name>
+			<args>CalendarEventCreatorJava, CalendarNotFoundExceptionJava</args>
+		</transformation>
+	</configuration>
 </configurationModel>
