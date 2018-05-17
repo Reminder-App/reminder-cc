@@ -90,9 +90,12 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		editIntent.putExtra("date", reminder.getDate());
 		editIntent.putExtra("hour", reminder.getHour());
 		//#if staticCategory || manageCategory
-	    editIntent.putExtra("category_name", reminder.getCategory().getName());
-	    editIntent.putExtra("category_id", Long.toString(reminder.getCategory().getId()));
-	    //#endif
+		editIntent.putExtra("category_name", reminder.getCategory().getName());
+		editIntent.putExtra("category_id", Long.toString(reminder.getCategory().getId()));
+		//#endif
+		//#ifdef priority
+		editIntent.putExtra("priority", Integer.toString(reminder.getPriority()));
+		//#endif
 		return editIntent;
 	}
 
