@@ -29,6 +29,11 @@ import br.unb.cic.reminders.controller.Controller;
 //#ifdef priority 
 import br.unb.cic.reminders.model.Priority;
 import java.util.Arrays;
+//#endif
+//#ifdef googleCalendar 
+import br.unb.cic.reminders.calendar.CalendarEventCreator;
+import br.unb.cic.reminders.model.CalendarNotFoundException;
+import android.widget.CheckBox;
 //#endif 
 
 public abstract class ReminderActivity extends Activity {
@@ -37,6 +42,10 @@ public abstract class ReminderActivity extends Activity {
 	protected EditText edtReminder, edtDetails, edtDate, edtTime;
 	protected Spinner spinnerDate, spinnerTime;
 	private Button btnSave, btnCancel;
+	//#ifdef googleCalendar
+	private CalendarEventCreator creator;
+	private CheckBox cbCalendar;
+	//#endif
 
 	//#if staticCategory || manageCategory
 	protected Spinner spinnerCategory;
@@ -152,8 +161,11 @@ public abstract class ReminderActivity extends Activity {
 		}
 		//#endif
 		//#ifdef priority
-	    spinnerPriority = getSpinnerPriority();
-	    //#endif
+		spinnerPriority = getSpinnerPriority();
+		//#endif
+		//#ifdef googleCalendar
+		cbCalendar = (CheckBox) findViewById(R.id.cbCalendar);
+		//#endif
 	}
 
 	private void initializeListeners() {
@@ -165,8 +177,8 @@ public abstract class ReminderActivity extends Activity {
 		addListenerToSpinnerCategory();
 		//#endif
 		//#ifdef priority
-	    addListenerToSpinnerPriority();
-	    //#endif
+		addListenerToSpinnerPriority();
+		//#endif
 	}
 
 	protected abstract void initializeValues();
@@ -284,9 +296,15 @@ public abstract class ReminderActivity extends Activity {
 		//#if staticCategory || manageCategory
 		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 		//#endif
-		//#ifdef priority 
-	    reminder.setPriority(selectedPriority); 
-	    //#endif
+		//#ifdef priority
+		reminder.setPriority(selectedPriority);
+		//#endif
+		//#ifdef googleCalendar
+		if (cbCalendar.isChecked()) {
+			creator = new CalendarEventCreator();
+			creator.addEventCalendar(reminder, getApplicationContext());
+		}
+		//#endif
 	}
 
 	private String dateToString() {
