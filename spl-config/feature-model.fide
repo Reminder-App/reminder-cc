@@ -13,6 +13,7 @@
 					<feature name="Static Category"/>
 				</alt>
 				<feature name="Reminder Priority"/>
+				<feature name="Google Calendar"/>
 			</and>
 		</struct>
 		<calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
