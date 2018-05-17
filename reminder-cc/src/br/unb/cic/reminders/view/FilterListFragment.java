@@ -6,10 +6,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,15 +15,24 @@ import android.widget.Button;
 import android.widget.ListView;
 import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.AllRemindersFilter;
-import br.unb.cic.reminders.controller.CategoryFilter;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.controller.ReminderFilter;
-import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders2.R;
+//#if staticCategory || manageCategory 
+import br.unb.cic.reminders.controller.CategoryFilter;
+import br.unb.cic.reminders.model.Category;
+//#endif 
 //#ifdef manageCategory 
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.app.DialogFragment;
 import android.view.MenuItem;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+//#endif
+//#ifdef priority 
+import br.unb.cic.reminders.controller.PriorityFilter;
+import br.unb.cic.reminders.model.Priority;
 //#endif 
 
 public class FilterListFragment extends Fragment implements OnItemClickListener {
@@ -99,6 +105,7 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 		AllRemindersFilter allRemindersFilter = new AllRemindersFilter(getActivity());
 		filters.add(allRemindersFilter);
 
+		//#if staticCategory || manageCategory
 		List<Category> categories = new ArrayList<Category>();
 		try {
 			categories = Controller.instance(getActivity().getApplicationContext()).listCategories();
@@ -116,6 +123,16 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 			filter = new CategoryFilter(c, getActivity());
 			filters.add(filter);
 		}
+		//#endif
+
+		//#ifdef priority
+		PriorityFilter highPriorityFilter = new PriorityFilter(Priority.HIGH, getActivity());
+		filters.add(highPriorityFilter);
+		PriorityFilter normalPriorityFilter = new PriorityFilter(Priority.NORMAL, getActivity());
+		filters.add(normalPriorityFilter);
+		PriorityFilter lowPriorityFilter = new PriorityFilter(Priority.LOW, getActivity());
+		filters.add(lowPriorityFilter);
+		//#endif
 
 		return filters;
 	}
@@ -125,17 +142,29 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 
 	}
 
-	//#ifdef manageCategory
+	//#if manageCategory
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
 		menu.setHeaderTitle(R.string.context_menu_category_title);
 
 		MenuInflater inflater = getActivity().getMenuInflater();
-
-		if (((AdapterContextMenuInfo) menuInfo).position < 1) {
-			return;
-		}
+		
+		if (((AdapterContextMenuInfo)menuInfo).position < 1) {
+            return;
+        }
+ 
+        //#ifdef priority
+        List<Category> categories = new ArrayList<Category>();
+        try {
+            categories = Controller.instance(getActivity().getApplicationContext()).listCategories();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
+        if((( AdapterContextMenuInfo ) menuInfo).position > categories.size()) {
+            return;
+        }
+        //#endif
 
 		inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
 	}
