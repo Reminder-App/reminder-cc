@@ -8,7 +8,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 import br.unb.cic.framework.persistence.DBException;
+//#ifdef manageCategory
 import br.unb.cic.framework.persistence.DBInvalidEntityException;
+//#endif
 import br.unb.cic.framework.persistence.GenericDAO;
 import br.unb.cic.reminders.model.Category;
 
