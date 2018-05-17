@@ -45,3 +45,6 @@ UrgentIconHdpi => res/drawable-hdpi/urgent.png;
 UrgentIconLdpi => res/drawable-ldpi/urgent.png;
 UrgentIconMdpi => res/drawable-mdpi/urgent.png;
 ReminderArrayAdapterJava => src/br/unb/cic/reminders/view/ReminderArrayAdapter.java;
+
+CalendarEventCreatorJava => src/br/unb/cic/reminders/calendar/CalendarEventCreator.java;
+CalendarNotFoundExceptionJava => src/br/unb/cic/reminders/model/CalendarNotFoundException.java;
