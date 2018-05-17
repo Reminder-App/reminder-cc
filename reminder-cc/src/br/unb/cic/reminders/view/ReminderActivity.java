@@ -26,6 +26,10 @@ import br.unb.cic.reminders2.R;
 import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders.controller.Controller;
 //#endif
+//#ifdef priority 
+import br.unb.cic.reminders.model.Priority;
+import java.util.Arrays;
+//#endif 
 
 public abstract class ReminderActivity extends Activity {
 	protected Reminder reminder;
@@ -64,12 +68,12 @@ public abstract class ReminderActivity extends Activity {
 		ArrayAdapter<Category> adapter = adapterCategoryGenerator.getSpinnerAdapter(categories, this);
 
 		spinner.setAdapter(adapter);
-		
+
 		//#ifdef manageCategory
-	    Category temp = new Category();
-	    temp.setName("+ Category");
-	    adapter.add(temp);
-	    //#endif
+		Category temp = new Category();
+		temp.setName("+ Category");
+		adapter.add(temp);
+		//#endif
 
 		return spinner;
 	}
@@ -84,6 +88,39 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<Category> adapterCategoryGenerator = new SpinnerAdapterGenerator<Category>();
 
 		spinner.setAdapter(adapterCategoryGenerator.getSpinnerAdapter(categories, this));
+
+		return spinner;
+	}
+	//#endif
+
+	//#ifdef priority
+	private Priority selectedPriority;
+	protected Spinner spinnerPriority;
+
+	private void addListenerToSpinnerPriority() {
+		spinnerPriority.setOnItemSelectedListener(new OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+				selectedPriority = (Priority) parent.getItemAtPosition(pos);
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> parent) {
+				// well... do nothing
+			}
+		});
+	}
+
+	private Spinner getSpinnerPriority() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerPriorities);
+
+		SpinnerAdapterGenerator<Priority> adapterPriorityGenerator = new SpinnerAdapterGenerator<Priority>();
+
+		List<Priority> priorityValues = Arrays.asList(Priority.values());
+
+		ArrayAdapter<Priority> priorityArrayAdapter = adapterPriorityGenerator.getSpinnerAdapter(priorityValues, this);
+
+		spinner.setAdapter(priorityArrayAdapter);
+
+		spinner.setSelection(Priority.NORMAL.getCode());
 
 		return spinner;
 	}
@@ -114,6 +151,9 @@ public abstract class ReminderActivity extends Activity {
 			e.printStackTrace();
 		}
 		//#endif
+		//#ifdef priority
+	    spinnerPriority = getSpinnerPriority();
+	    //#endif
 	}
 
 	private void initializeListeners() {
@@ -124,6 +164,9 @@ public abstract class ReminderActivity extends Activity {
 		//#if staticCategory || manageCategory
 		addListenerToSpinnerCategory();
 		//#endif
+		//#ifdef priority
+	    addListenerToSpinnerPriority();
+	    //#endif
 	}
 
 	protected abstract void initializeValues();
@@ -241,6 +284,9 @@ public abstract class ReminderActivity extends Activity {
 		//#if staticCategory || manageCategory
 		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 		//#endif
+		//#ifdef priority 
+	    reminder.setPriority(selectedPriority); 
+	    //#endif
 	}
 
 	private String dateToString() {
