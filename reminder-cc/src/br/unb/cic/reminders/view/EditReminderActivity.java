@@ -7,6 +7,9 @@ import br.unb.cic.reminders.model.Reminder;
 //#if staticCategory || manageCategory 
 import br.unb.cic.reminders.model.Category;
 import java.util.List;
+//#endif
+//#ifdef priority 
+import br.unb.cic.reminders.model.Priority; 
 //#endif 
 
 public class EditReminderActivity extends ReminderActivity {
@@ -42,6 +45,11 @@ public class EditReminderActivity extends ReminderActivity {
 		category.setName(categoryName);
 		spinnerCategory.setSelection(categoryToIndex(category));
 		//#endif
+		
+		// #ifdef priority
+	    String priority = intent.getStringExtra("priority");
+	    spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
+	    // #endif
 	}
 
 	@Override
