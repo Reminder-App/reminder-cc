@@ -14,7 +14,7 @@ import br.unb.cic.reminders2.R;
 public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 	public ReminderFilterArrayAdapter(Context context, List<ReminderFilter> objects) {
 		super(context, 
-				//#if staticCategory || manageCategory
+				//#if staticCategory || manageCategory || priority
 				R.layout.category_row,
 				//#else
 				R.layout.reminder_row,
@@ -31,7 +31,7 @@ public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 			LayoutInflater vi;
 			vi = (LayoutInflater) getContext().getSystemService(inflater);
 			vi.inflate(
-					//#if staticCategory || manageCategory
+					//#if staticCategory || manageCategory || priority
 					R.layout.category_row,
 					//#else
 					R.layout.reminder_row,
@@ -41,7 +41,7 @@ public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 			filterRow = (LinearLayout) convertView;
 		}
 		
-		//#if staticCategory || manageCategory
+		//#if staticCategory || manageCategory || priority
 	    TextView tvFilter = (TextView) filterRow.findViewById(R.id.row_categoryName); 
 	    tvFilter.setText(getItem(position).getName()); 
 	 
