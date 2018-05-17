@@ -11,6 +11,9 @@ public class DBConstants {
 			//#if staticCategory || manageCategory
 			+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE,"
 			//#endif
+			//#ifdef priority
+			+ "PRIORITY INTEGER NOT NULL,"
+			//#endif
 			+ "DATE CHAR(10) NULL," + "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);"
 			//#if staticCategory || manageCategory
 			, "CREATE TABLE CATEGORY(" + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, "
@@ -25,6 +28,9 @@ public class DBConstants {
 	public static String REMINDER_DATE_COLUMN = "DATE";
 	public static String REMINDER_HOUR_COLUMN = "HOUR";
 	public static String REMINDER_DONE_COLUMN = "DONE";
+	//#ifdef priority
+	public static String REMINDER_PRIORITY_COLUMN = "PRIORITY";
+	//#endif
 
 	//#if staticCategory || manageCategory
 	public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
