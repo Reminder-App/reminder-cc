@@ -33,6 +33,10 @@
   <string name="dialog_editcategory_title">Edit category:</string>
   <string name="dialog_editcategory_save">Save</string>
   //#endif
+  //#ifdef priority
+  <string name="reminderPriority">Priority</string>
+  <string name="reminderPriorityTip">Reminder\'s priority</string>
+  //#endif
   <string name="saveButton">Save</string>
   <string name="cancelButton">Cancel</string>
   <!-- Reminder_list_fragment -->
