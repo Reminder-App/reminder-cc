@@ -261,7 +261,8 @@ public class ReminderAddActivity extends Activity {
 		reminder.setCategory(auxCategory);
 		//#endif
 		//#ifdef priority 
-	    String priority = intent.getStringExtra("priority"); 
+	    String priority = intent.getStringExtra("priority");
+	    reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10)));
 	    //#endif 
 		return reminder;
 	}
