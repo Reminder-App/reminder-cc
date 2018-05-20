@@ -110,10 +110,22 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 
 	private Reminder createReminderCursor(Cursor cursor) throws DBException {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		String date = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DATE_COLUMN));
 		String hour = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
+		//#ifdef dateRange 
+	    String dateStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_DATE_COLUMN)); 
+	    String hourStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_HOUR_COLUMN)); 
+	    String dateFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_DATE_COLUMN)); 
+	    String hourFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_HOUR_COLUMN)); 
+	    reminder.setDateStart(dateStart); 
+	    reminder.setHourStart(hourStart); 
+	    reminder.setDateFinal(dateFinal); 
+	    reminder.setHourFinal(hourFinal); 
+	    //#endif
 		return reminder;
 	}
 
