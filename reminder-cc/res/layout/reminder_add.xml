@@ -1,151 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/txtReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderName"
-            android:width="70dip" >
-        </TextView>
+    <TextView
+      android:id="@+id/txtReminder"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dip"
+      android:gravity="right"
+      android:text="@string/reminderName"
+      android:width="70dip" >
+    </TextView>
 
-        <EditText
-            android:id="@+id/edtReminder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtReminder"
-            android:hint="@string/reminderNameTip"
-            android:width="290dip" >
-        </EditText>
+    <EditText
+      android:id="@+id/edtReminder"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="5dip"
+      android:layout_toRightOf="@id/txtReminder"
+      android:hint="@string/reminderNameTip"
+      android:width="290dip" >
+    </EditText>
 
-        <TextView
-            android:id="@+id/txtDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/edtReminder"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderDetails"
-            android:width="70dip" >
-        </TextView>
+    <TextView
+      android:id="@+id/txtDetails"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@id/edtReminder"
+      android:layout_marginTop="10dip"
+      android:gravity="right"
+      android:text="@string/reminderDetails"
+      android:width="70dip" >
+    </TextView>
 
-        <EditText
-            android:id="@+id/edtDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edtReminder"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtDetails"
-            android:hint="@string/reminderDetailsTip"
-            android:width="290dip" >
-        </EditText>
+    <EditText
+      android:id="@+id/edtDetails"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/edtReminder"
+      android:layout_marginLeft="5dip"
+      android:layout_toRightOf="@id/txtDetails"
+      android:hint="@string/reminderDetailsTip"
+      android:width="290dip" >
+    </EditText>
 
-        <TextView
-            android:id="@+id/txtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/edtDetails"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderDate"
-            android:width="70dip" >
-        </TextView>
+    <TextView
+      //#ifdef fixedDate
+      android:id="@+id/txtDate"
+      //#elifdef dateRange
+      android:id="@+id/txtDateStart"
+      //#endif
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_below="@id/edtDetails"
+      android:layout_marginTop="10dip"
+      android:gravity="right"
+      //#ifdef fixedDate
+      android:text="@string/reminderDate"
+      //#elifdef dateRange
+      android:text="@string/reminderDateStart"
+      //#endif
+      android:width="70dip" >
+    </TextView>
+
+    <Spinner
+      //#ifdef fixedDate
+      android:id="@+id/spinnerDate"
+      //#elifdef dateRange
+      android:id="@+id/spinnerDateStart"
+      //#endif
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/edtDetails"
+      android:layout_marginLeft="5dip"
+      //#ifdef fixedDate
+      android:layout_toRightOf="@id/txtDate"
+      //#elifdef dateRange
+      android:layout_toRightOf="@id/txtDateStart"
+      //#endif
+      android:minWidth="290dip" >
+    </Spinner>
+
+    <TextView
+      //#ifdef fixedDate
+      android:id="@+id/txtTime"
+      //#elifdef dateRange
+      android:id="@+id/txtTimeStart"
+      //#endif
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      //#ifdef fixedDate
+      android:layout_below="@id/spinnerDate"
+      //#elifdef dateRange
+      android:layout_below="@id/spinnerDateStart"
+      //#endif
+      android:layout_marginTop="10dip"
+      android:gravity="right"
+      //#ifdef fixedDate
+      android:text="@string/reminderHour"
+      //#elifdef dateRange
+      android:text="@string/reminderHourStart"
+      //#endif
+      android:width="70dip" />
+
+      <Spinner
+        //#ifdef fixedDate
+        android:id="@+id/spinnerTime"
+        //#elifdef dateRange
+        android:id="@+id/spinnerTimeStart"
+        //#endif
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        //#ifdef fixedDate
+        android:layout_below="@id/spinnerDate"
+        //#elifdef dateRange
+        android:layout_below="@id/spinnerDateStart"
+        //#endif
+        android:layout_marginLeft="5dip"
+        //#ifdef fixedDate
+        android:layout_toRightOf="@id/txtTime"
+        //#elifdef dateRange
+        android:layout_toRightOf="@id/txtTimeStart"
+        //#endif
+        android:minWidth="290dip" >
+      </Spinner>
+
+      //#ifdef dateRange
+      <TextView
+        android:id="@+id/txtDateFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/txtTimeStart"
+        android:layout_marginTop="10dip"
+        android:gravity="right"
+        android:text="@string/reminderDateFinal"
+        android:width="70dip" >
+      </TextView>
+
+      <Spinner
+        android:id="@+id/spinnerDateFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtTimeStart"
+        android:layout_marginLeft="5dip"
+        android:layout_toRightOf="@id/txtDateFinal"
+        android:minWidth="290dip" >
+      </Spinner>
+
+      <TextView
+        android:id="@+id/txtTimeFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/spinnerDateFinal"
+        android:layout_marginTop="10dip"
+        android:gravity="right"
+        android:text="@string/reminderHourFinal"
+        android:width="70dip" />
 
         <Spinner
-            android:id="@+id/spinnerDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/edtDetails"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtDate"
-            android:minWidth="290dip" >
-        </Spinner>
-
-        <TextView
-            android:id="@+id/txtTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/spinnerDate"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderHour"
-            android:width="70dip" />
-
-        <Spinner
-            android:id="@+id/spinnerTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerDate"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtTime"
-            android:minWidth="290dip" >
-        </Spinner>
-
-        //#ifdef category
-        <TextView
-            android:id="@+id/txtCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/spinnerTime"
-            android:layout_marginTop="10dip"
-            android:gravity="right"
-            android:text="@string/reminderCategory"
-            android:width="70dip" >
-        </TextView>
-
-        <Spinner
-            android:id="@+id/spinnerCategories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spinnerTime"
-            android:layout_marginLeft="5dip"
-            android:layout_toRightOf="@id/txtCategory"
-            android:minWidth="290dip" >
+          android:id="@+id/spinnerTimeFinal"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/spinnerDateFinal"
+          android:layout_marginLeft="5dip"
+          android:layout_toRightOf="@id/txtTimeFinal"
+          android:minWidth="290dip" >
         </Spinner>
         //#endif
+        //#ifdef priority
+        <TextView
+          android:id="@+id/txtPriority"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          //#ifdef fixedDate
+          android:layout_below="@id/spinnerTime"
+          //#elifdef dateRange
+          android:layout_below="@id/spinnerTimeFinal"
+          //#endif
+          android:layout_marginTop="10dip"
+          android:gravity="right"
+          android:text="@string/reminderPriority"
+          android:width="70dip" >
+        </TextView>
 
-        <LinearLayout
+        <Spinner
+          android:id="@+id/spinnerPriorities"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          //#ifdef fixedDate
+          android:layout_below="@id/spinnerTime"
+          //#elifdef dateRange
+          android:layout_below="@id/spinnerTimeFinal"
+          //#endif
+          android:layout_marginLeft="5dip"
+          android:layout_toRightOf="@id/txtPriority"
+          android:minWidth="290dip" >
+        </Spinner>
+        //#endif
+        //#if staticCategory || manageCategory
+        <TextView
+          android:id="@+id/txtCategory"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          //#if (fixedDate) && (!priority)
+          android:layout_below="@id/spinnerTime"
+          //#elif (fixedDate && priority)
+          android:layout_below="@id/spinnerPriorities"
+          //#elif (dateRange) && (!priority)
+          android:layout_below="@id/spinnerTimeFinal"
+          //#elif (dateRange && priority)
+          android:layout_below="@id/spinnerPriorities"
+          //#endif
+          android:layout_marginTop="10dip"
+          android:gravity="right"
+          android:text="@string/reminderCategory"
+          android:width="70dip" >
+        </TextView>
+
+        <Spinner
+          android:id="@+id/spinnerCategories"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          //#if (fixedDate) && (!priority)
+          android:layout_below="@id/spinnerTime"
+          //#elif (fixedDate && priority)
+          android:layout_below="@id/spinnerPriorities"
+          //#elif (dateRange) && (!priority)
+          android:layout_below="@id/spinnerTimeFinal"
+          //#elif (dateRange && priority)
+          android:layout_below="@id/spinnerPriorities"
+          //#endif
+          android:layout_marginLeft="5dip"
+          android:layout_toRightOf="@id/txtCategory"
+          android:minWidth="290dip" >
+        </Spinner>
+        //#endif
+        //#ifdef googleCalendar
+        <TextView
+          android:id="@+id/txtAddgCalendar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          //#if (fixedDate) && (!priority && !staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerTime"
+          //#elif (fixedDate && priority) && (!staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerPriorities"
+          //#elif ((fixedDate && (staticCategory || manageCategory)) && (!priority)) || (fixedDate && (staticCategory || manageCategory) && priority)
+          android:layout_below="@id/spinnerCategories"
+          //#elif (dateRange) && (!priority && !staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerTimeFinal"
+          //#elif (dateRange && priority) && (!staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerPriorities"
+          //#elif ((dateRange && (staticCategory || manageCategory)) && (!priority)) || (dateRange && (staticCategory || manageCategory) && priority)
+          android:layout_below="@id/spinnerCategories"
+          //#endif
+          android:gravity="right"
+          android:text="@string/googleCalendar"
+          android:width="70dip" >
+        </TextView>
+
+        <CheckBox
+          android:id="@+id/cbCalendar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          //#if (fixedDate) && (!priority && !staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerTime"
+          //#elif (fixedDate && priority) && (!staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerPriorities"
+          //#elif ((fixedDate && (staticCategory || manageCategory)) && (!priority)) || (fixedDate && (staticCategory || manageCategory) && priority)
+          android:layout_below="@id/spinnerCategories"
+          //#elif (dateRange) && (!priority && !staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerTimeFinal"
+          //#elif (dateRange && priority) && (!staticCategory && !manageCategory)
+          android:layout_below="@id/spinnerPriorities"
+          //#elif ((dateRange && (staticCategory || manageCategory)) && (!priority)) || (dateRange && (staticCategory || manageCategory) && priority)
+          android:layout_below="@id/spinnerCategories"
+          //#endif
+          android:layout_marginLeft="5dip"
+          android:layout_toRightOf="@id/txtAddgCalendar"
+          android:checked="false"
+          android:gravity="right" />
+          //#endif
+
+          <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            //#ifdef category
-            android:layout_below="@id/spinnerCategories"
-            //#else
+            //#if (fixedDate) && (!priority && !staticCategory && !manageCategory && !googleCalendar)
             android:layout_below="@id/spinnerTime"
+            //#elif ((fixedDate && googleCalendar) && (!priority && !staticCategory && !manageCategory))
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (fixedDate && (staticCategory || manageCategory)) && (!priority && !googleCalendar)
+            android:layout_below="@id/spinnerCategories"
+            //#elif (fixedDate && (staticCategory || manageCategory) && googleCalendar) && (!priority)
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (fixedDate && priority) && (!staticCategory && !manageCategory && !googleCalendar)
+            android:layout_below="@id/spinnerPriorities"
+            //#elif (fixedDate && priority && googleCalendar) && (!staticCategory && !manageCategory)
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (fixedDate && priority && (staticCategory || manageCategory)) && (!googleCalendar)
+            android:layout_below="@id/spinnerCategories"
+            //#elif (fixedDate && priority && (staticCategory || manageCategory) && googleCalendar)
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (dateRange) && (!priority && !staticCategory && !manageCategory && !googleCalendar)
+            android:layout_below="@id/spinnerTimeFinal"
+            //#elif (dateRange && googleCalendar) && (!priority && !staticCategory && !manageCategory)
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (dateRange && (staticCategory || manageCategory)) && (!priority && !googleCalendar)
+            android:layout_below="@id/spinnerCategories"
+            //#elif (dateRange && (staticCategory || manageCategory) && googleCalendar) && (!priority)
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (dateRange && priority) && (!staticCategory && !manageCategory && !googleCalendar)
+            android:layout_below="@id/spinnerPriorities"
+            //#elif (dateRange && priority && googleCalendar) && (!staticCategory && !manageCategory)
+            android:layout_below="@id/txtAddgCalendar"
+            //#elif (dateRange && priority && (staticCategory || manageCategory)) && (!googleCalendar)
+            android:layout_below="@id/spinnerCategories"
+            //#elif (dateRange && priority && (staticCategory || manageCategory) && googleCalendar)
+            android:layout_below="@id/txtAddgCalendar"
             //#endif
             android:gravity="center_vertical" >
 
             <Button
-                android:id="@+id/btnSave"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:onClick="btnSave_click"
-                android:text="@string/saveButton" >
+              android:id="@+id/btnSave"
+              android:layout_width="0dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1.0"
+              android:onClick="btnSave_click"
+              android:text="@string/saveButton" >
             </Button>
 
             <Button
-                android:id="@+id/btnCancel"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:onClick="btnCancel_click"
-                android:text="@string/cancelButton" >
+              android:id="@+id/btnCancel"
+              android:layout_width="0dip"
+              android:layout_height="wrap_content"
+              android:layout_weight="1.0"
+              android:onClick="btnCancel_click"
+              android:text="@string/cancelButton" >
             </Button>
-        </LinearLayout>
-    </RelativeLayout>
-
-</ScrollView>
+          </LinearLayout>
+        </RelativeLayout>
+      </ScrollView>
