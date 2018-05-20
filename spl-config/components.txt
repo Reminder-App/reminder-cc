@@ -54,3 +54,5 @@ SearchIconHdpi => res/drawable-hdpi/search_reminder.png;
 SearchIconLdpi => res/drawable-ldpi/search_reminder.png;
 SearchIconMdpi => res/drawable-mdpi/search_reminder.png;
 ActionBarMenuXML => res/menu/action_bar_menu.xml;
+
+RemindersListFragmentXML => res/layout/reminders_list_fragment.xml;
