@@ -38,9 +38,19 @@ import android.widget.CheckBox;
 
 public abstract class ReminderActivity extends Activity {
 	protected Reminder reminder;
+	//#ifdef fixedDate
 	protected Calendar date, time;
+	//#endif
+	//#ifdef dateRange
+	protected Calendar dateStart, timeStart, dateFinal, timeFinal;
+	//#endif
 	protected EditText edtReminder, edtDetails, edtDate, edtTime;
+	//#ifdef fixedDate
 	protected Spinner spinnerDate, spinnerTime;
+	//#endif
+	//#ifdef dateRange
+	protected Spinner spinnerDateStart, spinnerTimeStart, spinnerDateFinal, spinnerTimeFinal;
+	//#endif
 	private Button btnSave, btnCancel;
 	//#ifdef googleCalendar
 	private CalendarEventCreator creator;
@@ -151,8 +161,16 @@ public abstract class ReminderActivity extends Activity {
 		btnCancel = (Button) findViewById(R.id.btnCancel);
 		edtReminder = (EditText) findViewById(R.id.edtReminder);
 		edtDetails = (EditText) findViewById(R.id.edtDetails);
+		//#ifdef fixedDate
 		spinnerDate = getSpinnerDate();
 		spinnerTime = getSpinnerTime();
+		//#endif
+		//#ifdef dateRange
+		spinnerDateStart = getSpinnerDateStart();
+		spinnerTimeStart = getSpinnerTimeStart();
+		spinnerDateFinal = getSpinnerDateFinal();
+		spinnerTimeFinal = getSpinnerTimeFinal();
+		//#endif
 		//#if staticCategory || manageCategory
 		try {
 			spinnerCategory = getSpinnerCategory();
@@ -207,6 +225,7 @@ public abstract class ReminderActivity extends Activity {
 	}
 
 	private void addListenerToSpinnerDate() {
+		//#ifdef fixedDate
 		spinnerDate.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				spinnerDate = getSpinnerDate();
@@ -238,9 +257,89 @@ public abstract class ReminderActivity extends Activity {
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
 			}
 		});
+		//#endif
+
+		//#ifdef dateRange
+		spinnerDateStart.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				spinnerDateStart = getSpinnerDateStart();
+				return false;
+			}
+		});
+
+		spinnerDateStart.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				spinnerDateStart = getSpinnerDateStart();
+				return false;
+			}
+		});
+
+		spinnerDateStart.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+
+				switch (pos) {
+				case 0:
+					dateStart = null;
+					break;
+				case 1:
+					if (dateStart == null)
+						dateStart = Calendar.getInstance();
+					DialogFragment newFragment = new DatePickerDialogFragment(dateStart, spinnerDateStart);
+					newFragment.show(getFragmentManager(), "datePicker");
+					break;
+				default:
+				}
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
+				// Well, do nothing...
+			}
+
+		});
+
+		spinnerDateFinal.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				spinnerDateFinal = getSpinnerDateFinal();
+				return false;
+			}
+		});
+
+		spinnerDateFinal.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				spinnerDateFinal = getSpinnerDateFinal();
+				return false;
+			}
+		});
+
+		spinnerDateFinal.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+
+				switch (pos) {
+				case 0:
+					dateFinal = null;
+					break;
+				case 1:
+					if (dateFinal == null)
+						dateFinal = Calendar.getInstance();
+					DialogFragment newFragment = new DatePickerDialogFragment(dateFinal, spinnerDateFinal);
+					newFragment.show(getFragmentManager(), "datePicker");
+					break;
+				default:
+				}
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
+				// Well, do nothing...
+			}
+
+		});
+		//#endif
 	}
 
 	private void addListenerToSpinnerTime() {
+		//#ifdef fixedDate
 		spinnerTime.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				spinnerTime = getSpinnerTime();
@@ -272,6 +371,83 @@ public abstract class ReminderActivity extends Activity {
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
 			}
 		});
+		//#endif
+
+		//#ifdef dateRange
+		spinnerTimeStart.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				spinnerTimeStart = getSpinnerTimeStart();
+				return false;
+			}
+		});
+
+		spinnerTimeStart.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				spinnerTimeStart = getSpinnerTimeStart();
+				return false;
+			}
+		});
+
+		spinnerTimeStart.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+
+				switch (pos) {
+				case 0:
+					timeStart = null;
+					break;
+				case 1:
+					if (timeStart == null)
+						timeStart = Calendar.getInstance();
+					DialogFragment newFragment = new TimePickerDialogFragment(timeStart, spinnerTimeStart);
+					newFragment.show(getFragmentManager(), "timePicker");
+					break;
+				default:
+				}
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
+
+			}
+		});
+
+		spinnerTimeFinal.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				spinnerTimeFinal = getSpinnerTimeFinal();
+				return false;
+			}
+		});
+
+		spinnerTimeFinal.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				spinnerTimeFinal = getSpinnerTimeFinal();
+				return false;
+			}
+		});
+
+		spinnerTimeFinal.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			public void onItemSelected(AdapterView<? extends Object> parent, View view, int pos, long id) {
+
+				switch (pos) {
+				case 0:
+					timeFinal = null;
+					break;
+				case 1:
+					if (timeFinal == null)
+						timeFinal = Calendar.getInstance();
+					DialogFragment newFragment = new TimePickerDialogFragment(timeFinal, spinnerTimeFinal);
+					newFragment.show(getFragmentManager(), "timePicker");
+					break;
+				default:
+				}
+			}
+
+			public void onNothingSelected(AdapterView<? extends Object> arg0) {
+				// Well, do nothing...
+			}
+		});
+		//#endif
 	}
 
 	private void createReminder() {
@@ -291,8 +467,16 @@ public abstract class ReminderActivity extends Activity {
 	}
 
 	private void setValuesOnReminder() throws Exception {
+		//#ifdef fixedDate
 		reminder.setDate(dateToString());
 		reminder.setHour(timeToString());
+		//#endif
+		//#ifdef dateRange
+		reminder.setDateStart(dateToString(dateStart));
+		reminder.setHourStart(timeToString(timeStart));
+		reminder.setDateFinal(dateToString(dateFinal));
+		reminder.setHourFinal(timeToString(timeFinal));
+		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 		//#endif
@@ -307,7 +491,11 @@ public abstract class ReminderActivity extends Activity {
 		//#endif
 	}
 
-	private String dateToString() {
+	private String dateToString(
+			//#ifdef dateRange
+			Calendar date
+	//#endif
+	) {
 		if (date == null)
 			return null;
 		String sDate;
@@ -321,7 +509,11 @@ public abstract class ReminderActivity extends Activity {
 		return sDate;
 	}
 
-	private String timeToString() {
+	private String timeToString(
+			//#ifdef dateRange
+			Calendar time
+	//#endif
+	) {
 		if (time == null)
 			return null;
 		String sTime;
@@ -334,9 +526,21 @@ public abstract class ReminderActivity extends Activity {
 		return sTime;
 	}
 
-	protected void updateDateFromString(String sDate) {
+	protected void updateDateFromString(String sDate
+			//#ifdef dateRange
+			,boolean isFinal
+	//#endif
+	) {
 		if (sDate == null || sDate.equals("")) {
+			//#ifdef fixedDate
 			date = null;
+			//#endif
+			//#ifdef dateRange
+			if (isFinal)
+				dateFinal = null;
+			else
+				dateStart = null;
+			//#endif
 			return;
 		}
 		char sDay[] = { sDate.charAt(0), sDate.charAt(1) };
@@ -345,24 +549,67 @@ public abstract class ReminderActivity extends Activity {
 		int month = Integer.parseInt(new String(sMonth), 10);
 		char sYear[] = { sDate.charAt(6), sDate.charAt(7), sDate.charAt(8), sDate.charAt(9) };
 		int year = Integer.parseInt(new String(sYear), 10);
+
+		//#ifdef fixedDate
 		if (date == null)
 			date = Calendar.getInstance();
 		date.set(year, month - 1, day);
+		//#endif
+
+		//#ifdef dateRange
+		if (dateFinal == null)
+			dateFinal = Calendar.getInstance();
+		if (dateStart == null)
+			dateStart = Calendar.getInstance();
+		if (isFinal)
+			dateFinal.set(year, month - 1, day);
+		else
+			dateStart.set(year, month - 1, day);
+		//#endif
 	}
 
-	protected void updateTimeFromString(String sTime) {
+	protected void updateTimeFromString(String sTime
+			//#ifdef dateRange
+			,boolean isFinal
+	//#endif
+	) {
 		if (sTime == null || sTime.equals("")) {
+			//#ifdef fixedDate
 			time = null;
+			//#endif
+			//#ifdef dateRange
+			if (isFinal)
+				timeFinal = null;
+			else
+				timeStart = null;
+			//#endif
 			return;
 		}
 		char sHour[] = { sTime.charAt(0), sTime.charAt(1) };
 		int hour = Integer.parseInt(new String(sHour), 10);
 		char sMinute[] = { sTime.charAt(3), sTime.charAt(4) };
 		int minute = Integer.parseInt(new String(sMinute), 10);
+
+		//#ifdef fixedDate
 		if (time == null)
 			time = Calendar.getInstance();
 		time.set(Calendar.MINUTE, minute);
 		time.set(Calendar.HOUR_OF_DAY, hour);
+		//#endif
+
+		//#ifdef dateRange
+		if (timeStart == null)
+			timeStart = Calendar.getInstance();
+		if (timeFinal == null)
+			timeFinal = Calendar.getInstance();
+		if (isFinal) {
+			timeFinal.set(Calendar.MINUTE, minute);
+			timeFinal.set(Calendar.HOUR_OF_DAY, hour);
+		} else {
+			timeStart.set(Calendar.MINUTE, minute);
+			timeStart.set(Calendar.HOUR_OF_DAY, hour);
+		}
+		//#endif
 	}
 
 	@SuppressWarnings("unchecked")
@@ -379,6 +626,7 @@ public abstract class ReminderActivity extends Activity {
 		spinner.setSelection(2);
 	}
 
+	//#ifdef fixedDate
 	private Spinner getSpinnerDate() {
 		Spinner spinner = (Spinner) findViewById(R.id.spinnerDate);
 		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
@@ -398,6 +646,69 @@ public abstract class ReminderActivity extends Activity {
 		spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
 		return spinner;
 	}
+	//#endif
+
+	//#ifdef dateRange
+	private Spinner getSpinnerDateStart() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerDateStart);
+
+		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
+
+		List<String> items = new ArrayList<String>();
+		// TODO: Move these to XML.
+		items.add("No date");
+		items.add("+ Select");
+
+		spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
+
+		return spinner;
+	}
+
+	private Spinner getSpinnerTimeStart() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerTimeStart);
+
+		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
+
+		List<String> items = new ArrayList<String>();
+		// TODO: Move these to XML.
+		items.add("No time");
+		items.add("+ Select");
+
+		spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
+
+		return spinner;
+	}
+
+	private Spinner getSpinnerDateFinal() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerDateFinal);
+
+		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
+
+		List<String> items = new ArrayList<String>();
+		// TODO: Move these to XML.
+		items.add("No date");
+		items.add("+ Select");
+
+		spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
+
+		return spinner;
+	}
+
+	private Spinner getSpinnerTimeFinal() {
+		Spinner spinner = (Spinner) findViewById(R.id.spinnerTimeFinal);
+
+		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
+
+		List<String> items = new ArrayList<String>();
+		// TODO: Move these to XML.
+		items.add("No time");
+		items.add("+ Select");
+
+		spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
+
+		return spinner;
+	}
+	//#endif
 
 	protected abstract void persist(Reminder reminder);
 }
