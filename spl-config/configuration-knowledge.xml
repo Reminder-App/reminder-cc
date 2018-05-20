@@ -118,4 +118,18 @@
 			<args>SearchIconHdpi, SearchIconLdpi, SearchIconMdpi, SearchReminderDialogLayoutXML</args>
 		</transformation>
 	</configuration>
+  <configuration>
+    <expression>Fixed Date</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>fixedDate</args>
+    </transformation>
+  </configuration>
+  <configuration>
+    <expression>Date Range</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>dateRange</args>
+    </transformation>
+  </configuration>
 </configurationModel>
