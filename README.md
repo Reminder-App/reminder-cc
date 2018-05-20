@@ -4,7 +4,7 @@ This project integrated the *Positivo Challenge*, a research and development pro
 ### Features
 The features present in this release are:
 
-![Feature Model](https://i.imgur.com/bP7gvCr.png)
+![Feature Model](https://i.imgur.com/NMbezl9.png)
 
 # Steps to Generate a Product
 For the project to work, you must install and configure the  [Hepheatus](https://github.com/hephaestus-pl/hephaestus-base) and then follow the steps below:
