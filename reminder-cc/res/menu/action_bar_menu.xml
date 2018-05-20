@@ -6,4 +6,12 @@
         android:icon="@drawable/add_reminder"
         android:showAsAction="ifRoom"
         android:title="@string/menu_addReminder"/>
+
+    //#ifdef search
+    <item
+          android:id="@+id/menu_searchReminder"
+          android:icon="@drawable/search_reminder"
+          android:showAsAction="ifRoom"
+          android:title="@string/menu_searchReminder"/>
+    //#endif
 </menu>
