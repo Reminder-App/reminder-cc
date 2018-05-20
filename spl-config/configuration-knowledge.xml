@@ -7,7 +7,7 @@
     </transformation>
     <transformation>
       <name>preprocessFiles</name>
-      <args>RemindersMainActivityXML, ReminderAddXML, StringsXML, ReminderRowXML</args>
+      <args>RemindersMainActivityXML, ReminderAddXML, StringsXML, ReminderRowXML, ActionBarMenuXML</args>
     </transformation>
     <transformation>
       <name>preprocessFiles</name>
