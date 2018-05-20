@@ -10,7 +10,7 @@ import br.unb.cic.reminders.model.Category;
 import java.util.List;
 //#endif
 //#ifdef priority 
-import br.unb.cic.reminders.model.Priority; 
+import br.unb.cic.reminders.model.Priority;
 //#endif
 
 public class ExternalAddReminderActivity extends ReminderActivity {
@@ -99,18 +99,30 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 	}
 
 	private void reminderFromIntent(Intent intent) throws Exception {
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
+		//#ifdef dateRange
+		String dateStart = intent.getStringExtra("dateStart");
+		String hourStart = intent.getStringExtra("hourStart");
+		String dateFinal = intent.getStringExtra("dateFinal");
+		String hourFinal = intent.getStringExtra("hourFinal");
+		reminder.setDateStart(dateStart);
+		reminder.setHourStart(hourStart);
+		reminder.setDateFinal(dateFinal);
+		reminder.setHourFinal(hourFinal);
+		//#endif
 		//#if staticCategory || manageCategory
 		setNewCategory(intent);
 		reminder.setCategory(newCategory);
 		//#endif
 		//#ifdef priority
-	    String priority = intent.getStringExtra("priority");
-	    reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
-	    //#endif
+		String priority = intent.getStringExtra("priority");
+		reminder.setPriority(Priority.fromCode(Integer.parseInt(priority)));
+		//#endif
 	}
 
 	@Override
@@ -127,10 +139,22 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 	}
 
 	private void initialize() throws Exception {
+		//#ifdef fixedDate
 		updateSpinnerDateHour(spinnerDate, reminder.getDate());
 		updateDateFromString(reminder.getDate());
 		updateSpinnerDateHour(spinnerTime, reminder.getHour());
 		updateTimeFromString(reminder.getHour());
+		//#endif
+		//#ifdef dateRange
+	    updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
+	    updateDateFromString(reminder.getDateStart(), false);
+	    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourStart());
+	    updateTimeFromString(reminder.getHourStart(), false);
+	    updateSpinnerDateHour(spinnerDateStart, reminder.getDateFinal());
+	    updateDateFromString(reminder.getDateFinal(), true);
+	    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
+	    updateTimeFromString(reminder.getHourFinal(), true);
+	    //#endif
 		//#if staticCategory || manageCategory
 		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		//#endif
@@ -138,9 +162,9 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		if (isNewCategory)
 			spinnerCategory.setSelection(spinnerCategory.getCount() - 2);
 		//#endif
-		//#ifdef priority 
-	    spinnerPriority.setSelection(reminder.getPriority()); 
-	    //#endif
+		//#ifdef priority
+		spinnerPriority.setSelection(reminder.getPriority());
+		//#endif
 	}
 
 	@Override
