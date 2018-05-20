@@ -31,7 +31,13 @@ import android.widget.ArrayAdapter;
 //#endif 
 
 public class ReminderAddActivity extends Activity {
-	private EditText edtReminder, edtDetails, edtDate, edtHour;
+	private EditText edtReminder, edtDetails;
+	//#ifdef fixedDate
+	private EditText edtDate, edtHour;
+	//#endif
+	//#ifdef dateRange
+	private EditText edtDateStart, edtHourStart, edtDateFinal, edtHourFinal;
+	//#endif
 	private Button btnSave, btnCancel;
 	private boolean editingReminder;
 	private Long previewReminderId;
@@ -47,7 +53,7 @@ public class ReminderAddActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-				
+
 			}
 		});
 	}
@@ -88,7 +94,7 @@ public class ReminderAddActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-				
+
 			}
 		});
 	}
@@ -132,9 +138,9 @@ public class ReminderAddActivity extends Activity {
 		//#if staticCategory || manageCategory
 		addListenerToSpinnerCategory();
 		//#endif
-		//#ifdef priority 
-	    addListenerToSpinnerPriority(); 
-	    //#endif 
+		//#ifdef priority
+		addListenerToSpinnerPriority();
+		//#endif
 	}
 
 	private void addListenerToBtnSave() {
@@ -183,14 +189,22 @@ public class ReminderAddActivity extends Activity {
 
 	private Reminder createReminderAux() {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		reminder.setDate(edtDate.getText().toString());
 		reminder.setHour(edtHour.getText().toString());
+		//#endif
+		//#ifdef dateRange
+		reminder.setDateStart(edtDateStart.getText().toString());
+		reminder.setHourStart(edtHourStart.getText().toString());
+		reminder.setDateFinal(edtDateFinal.getText().toString());
+		reminder.setHourFinal(edtHourFinal.getText().toString());
+		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory(selectedCategory);
 		//#endif
-		//#ifdef priority 
-	    reminder.setPriority(selectedPriority); 
-	    //#endif 
+		//#ifdef priority
+		reminder.setPriority(selectedPriority);
+		//#endif
 		return reminder;
 	}
 
@@ -211,10 +225,22 @@ public class ReminderAddActivity extends Activity {
 
 	private Reminder createReminderExisting(Intent intent) {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
+		//#ifdef dateRange
+		String dateStart = intent.getStringExtra("dateStart");
+		String hourStart = intent.getStringExtra("hourStart");
+		String dateFinal = intent.getStringExtra("dateFinal");
+		String hourFinal = intent.getStringExtra("hourFinal");
+		reminder.setDateStart(dateStart);
+		reminder.setHourStart(hourStart);
+		reminder.setDateFinal(dateFinal);
+		reminder.setHourFinal(hourFinal);
+		//#endif
 		//#if staticCategory || manageCategory
 		String categoryName = intent.getStringExtra("category_name");
 		String categoryId = intent.getStringExtra("category_id");
@@ -223,10 +249,10 @@ public class ReminderAddActivity extends Activity {
 		category.setId(Long.parseLong(categoryId));
 		reminder.setCategory(category);
 		//#endif
-		//#ifdef priority 
-	    String priority = intent.getStringExtra("priority"); 
-	    reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10))); 
-	    //#endif 
+		//#ifdef priority
+		String priority = intent.getStringExtra("priority");
+		reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10)));
+		//#endif
 		return reminder;
 	}
 
@@ -250,20 +276,32 @@ public class ReminderAddActivity extends Activity {
 
 	private Reminder createReminderIntent(Intent intent) {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
+		//#ifdef dateRange
+		String dateStart = intent.getStringExtra("dateStart");
+		String hourStart = intent.getStringExtra("hourStart");
+		String dateFinal = intent.getStringExtra("dateFinal");
+		String hourFinal = intent.getStringExtra("hourFinal");
+		reminder.setDateStart(dateStart);
+		reminder.setHourStart(hourStart);
+		reminder.setDateFinal(dateFinal);
+		reminder.setHourFinal(hourFinal);
+		//#endif
 		//#if staticCategory || manageCategory
 		String category = intent.getStringExtra("category");
 		Category auxCategory = new Category();
 		auxCategory.setName(category);
 		reminder.setCategory(auxCategory);
 		//#endif
-		//#ifdef priority 
-	    String priority = intent.getStringExtra("priority");
-	    reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10)));
-	    //#endif 
+		//#ifdef priority
+		String priority = intent.getStringExtra("priority");
+		reminder.setPriority(Priority.fromCode(Integer.parseInt(priority, 10)));
+		//#endif
 		return reminder;
 	}
 
@@ -275,10 +313,10 @@ public class ReminderAddActivity extends Activity {
 			e.printStackTrace();
 		}
 		//#endif
-		
-		//#ifdef priority 
-	    spinnerPriority = getSpinnerPriority(); 
-	    //#endif 
+
+		//#ifdef priority
+		spinnerPriority = getSpinnerPriority();
+		//#endif
 
 		try {
 			edtReminder = (EditText) findViewById(R.id.edtReminder);
@@ -296,13 +334,21 @@ public class ReminderAddActivity extends Activity {
 	private void updateFieldsFromReminder(Reminder reminder) throws Exception {
 		edtReminder.setText(reminder.getText());
 		edtDetails.setText(reminder.getDetails());
+		//#ifdef fixedDate
 		edtDate.setText(reminder.getDate());
 		edtHour.setText(reminder.getHour());
+		//#endif
+		//#ifdef dateRange
+		edtDateStart.setText(reminder.getDateStart());
+		edtHourStart.setText(reminder.getHourStart());
+		edtDateFinal.setText(reminder.getDateFinal());
+		edtHourFinal.setText(reminder.getHourFinal());
+		//#endif
 		//#if staticCategory || manageCategory
 		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		//#endif
-		//#ifdef priority 
-	    spinnerPriority.setSelection(reminder.getPriority()); 
-	    //#endif 
+		//#ifdef priority
+		spinnerPriority.setSelection(reminder.getPriority());
+		//#endif
 	}
 }
