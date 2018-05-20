@@ -77,15 +77,15 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 				}
 			}
 		});
-		// #ifdef priority
-	    if (getItem(position).getPriority() == 1)
-	      ivPriority.setImageResource(R.drawable.important);
-	    else if (getItem(position).getPriority() == 2)
-	      ivPriority.setImageResource(R.drawable.urgent);
-	    
-	    if (getItem(position).getPriority() != 0)
-	        tvReminder.setTypeface(null, Typeface.BOLD);
-	    // #endif
+		//#ifdef priority
+		if (getItem(position).getPriority() == 1)
+			ivPriority.setImageResource(R.drawable.important);
+		else if (getItem(position).getPriority() == 2)
+			ivPriority.setImageResource(R.drawable.urgent);
+
+		if (getItem(position).getPriority() != 0)
+			tvReminder.setTypeface(null, Typeface.BOLD);
+		//#endif
 		tvReminder.setTextColor(rowColor);
 		tvReminder.setText(getItem(position).getText());
 		tvDateFirst.setTextColor(rowColor);
@@ -97,16 +97,30 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 	}
 
 	private String getDateFirst(int position) {
+		//#ifdef fixedDate
 		if (getItem(position).getDate() == null) {
 			return "";
 		}
+		//#endif
+		//#ifdef dateRange
+		if (getItem(position).getDateFinal() == null) {
+			return "";
+		}
+		//#endif
 		String months[] = { "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC" };
 		String week[] = { "", "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 		Calendar today = Calendar.getInstance();
 		GregorianCalendar thatDay = new GregorianCalendar();
+		//#ifdef fixedDate
 		thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)),
 				Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1,
 				Integer.parseInt(getItem(position).getDate().substring(0, 2)));
+		//#endif
+		//#ifdef dateRange
+		thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)),
+				Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1,
+				Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));
+		//#endif
 		switch (rowType) {
 		case LATE:
 			long diff = today.getTimeInMillis() - thatDay.getTimeInMillis();
@@ -130,7 +144,12 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		default:
 			break;
 		}
+		//#ifdef fixedDate
 		return getItem(position).getDate();
+		//#endif
+		//#ifdef dateRange
+		return getItem(position).getDateFinal();
+		//#endif
 	}
 
 	private String getDateSecond(int position) {
@@ -142,9 +161,16 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		case NEXT_DAYS:
 			Calendar today = Calendar.getInstance();
 			GregorianCalendar thatDay = new GregorianCalendar();
+			//#ifdef fixedDate
 			thatDay.set(Integer.parseInt(getItem(position).getDate().substring(6, 10)),
 					Integer.parseInt(getItem(position).getDate().substring(3, 5)) - 1,
 					Integer.parseInt(getItem(position).getDate().substring(0, 2)));
+			//#endif
+			//#ifdef dateRange
+			thatDay.set(Integer.parseInt(getItem(position).getDateFinal().substring(6, 10)),
+					Integer.parseInt(getItem(position).getDateFinal().substring(3, 5)) - 1,
+					Integer.parseInt(getItem(position).getDateFinal().substring(0, 2)));
+			//#endif
 			long diff = thatDay.getTimeInMillis() - today.getTimeInMillis();
 			long days = diff / (24 * 60 * 60 * 1000);
 			if (days == 1)
@@ -154,10 +180,16 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		default:
 			break;
 		}
+		//#ifdef fixedDate
 		return getItem(position).getHour();
+		//#endif
+		//#ifdef dateRange
+		return getItem(position).getHourFinal();
+		//#endif
 	}
 
 	private String getDatesHour(int position) {
+		//#ifdef fixedDate
 		if (getItem(position).getHour() == null) {
 			return "";
 		}
@@ -165,6 +197,17 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 			return getItem(position).getHour().substring(0, 2) + "h" + getItem(position).getHour().substring(3, 5);
 		else
 			return getItem(position).getHour().substring(0, 2) + "h";
+		//#endif
+		//#ifdef dateRange
+		if (getItem(position).getHourFinal() == null) {
+			return "";
+		}
+		if (getItem(position).getHourFinal().substring(3, 5) != "00")
+			return getItem(position).getHourFinal().substring(0, 2) + "h"
+					+ getItem(position).getHourFinal().substring(3, 5);
+		else
+			return getItem(position).getHourFinal().substring(0, 2) + "h";
+		//#endif
 	}
 
 	public int getRowColor() {
