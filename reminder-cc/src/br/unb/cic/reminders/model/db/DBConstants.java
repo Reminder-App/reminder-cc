@@ -14,7 +14,14 @@ public class DBConstants {
 			//#ifdef priority
 			+ "PRIORITY INTEGER NOT NULL,"
 			//#endif
-			+ "DATE CHAR(10) NULL," + "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);"
+			//#ifdef fixedDate
+			+ "DATE CHAR(10) NULL," + "HOUR CHAR(5) NULL,"
+			//#endif
+			//#ifdef dateRange
+			+ "INITIAL_DATE CHAR(10) NOT NULL," + "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
+			+ "FINAL_HOUR CHAR(5) NULL,"
+			//#endif
+			+ "DONE INTEGER NOT NULL);"
 			//#if staticCategory || manageCategory
 			, "CREATE TABLE CATEGORY(" + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, "
 					+ "LOCKED INT NOT NULL);"
@@ -25,13 +32,20 @@ public class DBConstants {
 	public static String REMINDER_PK_COLUMN = "PK";
 	public static String REMINDER_TEXT_COLUMN = "TEXT";
 	public static String REMINDER_DETAILS_COLUMN = "DETAILS";
+	//#ifdef fixedDate
 	public static String REMINDER_DATE_COLUMN = "DATE";
 	public static String REMINDER_HOUR_COLUMN = "HOUR";
+	//#endif
 	public static String REMINDER_DONE_COLUMN = "DONE";
+	//#ifdef dateRange
+	public static String REMINDER_INITIAL_DATE_COLUMN = "INITIAL_DATE";
+	public static String REMINDER_INITIAL_HOUR_COLUMN = "INITIAL_HOUR";
+	public static String REMINDER_FINAL_DATE_COLUMN = "FINAL_DATE";
+	public static String REMINDER_FINAL_HOUR_COLUMN = "FINAL_HOUR";
+	//#endif
 	//#ifdef priority
 	public static String REMINDER_PRIORITY_COLUMN = "PRIORITY";
 	//#endif
-
 	//#if staticCategory || manageCategory
 	public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";
 	public static final String SELECT_CATEGORY_BY_NAME = "SELECT PK, NAME FROM CATEGORY WHERE NAME = ?";
