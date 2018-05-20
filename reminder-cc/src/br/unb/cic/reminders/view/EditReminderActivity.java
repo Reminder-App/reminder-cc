@@ -9,7 +9,7 @@ import br.unb.cic.reminders.model.Category;
 import java.util.List;
 //#endif
 //#ifdef priority 
-import br.unb.cic.reminders.model.Priority; 
+import br.unb.cic.reminders.model.Priority;
 //#endif 
 
 public class EditReminderActivity extends ReminderActivity {
@@ -30,12 +30,29 @@ public class EditReminderActivity extends ReminderActivity {
 	}
 
 	private void initializeValues(Intent intent) throws Exception {
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		updateSpinnerDateHour(spinnerDate, date);
 		updateDateFromString(date);
 		updateSpinnerDateHour(spinnerTime, hour);
 		updateTimeFromString(hour);
+		//#endif
+
+		//#ifdef dateRange
+		String dateStart = intent.getStringExtra("dateStart");
+		String hourStart = intent.getStringExtra("hourStart");
+		String dateFinal = intent.getStringExtra("dateFinal");
+		String hourFinal = intent.getStringExtra("hourFinal");
+		updateSpinnerDateHour(spinnerDateStart, dateStart);
+		updateDateFromString(dateStart, false);
+		updateSpinnerDateHour(spinnerTimeStart, hourStart);
+		updateTimeFromString(hourStart, false);
+		updateSpinnerDateHour(spinnerDateFinal, dateFinal);
+		updateDateFromString(dateFinal, true);
+		updateSpinnerDateHour(spinnerTimeFinal, hourFinal);
+		updateTimeFromString(hourFinal, false);
+		//#endif
 
 		//#if staticCategory || manageCategory
 		String categoryName = intent.getStringExtra("category_name");
@@ -45,11 +62,11 @@ public class EditReminderActivity extends ReminderActivity {
 		category.setName(categoryName);
 		spinnerCategory.setSelection(categoryToIndex(category));
 		//#endif
-		
-		// #ifdef priority
-	    String priority = intent.getStringExtra("priority");
-	    spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
-	    // #endif
+
+		//#ifdef priority
+		String priority = intent.getStringExtra("priority");
+		spinnerPriority.setSelection(Priority.fromCode(Integer.parseInt(priority, 10)).getCode());
+		//#endif
 	}
 
 	@Override
