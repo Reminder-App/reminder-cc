@@ -29,6 +29,7 @@ public class ReminderContentProvider extends ContentProvider {
 		return DBConstants.REMINDER_TEXT_COLUMN;
 	}
 
+	//#ifdef fixedDate
 	public static final String date() {
 		return DBConstants.REMINDER_DATE_COLUMN;
 	}
@@ -36,6 +37,25 @@ public class ReminderContentProvider extends ContentProvider {
 	public static final String hour() {
 		return DBConstants.REMINDER_HOUR_COLUMN;
 	}
+	//#endif
+
+	//#ifdef dateRange
+	public static final String dateStart() {
+		return DBConstants.REMINDER_INITIAL_DATE_COLUMN;
+	}
+
+	public static final String hourStart() {
+		return DBConstants.REMINDER_INITIAL_HOUR_COLUMN;
+	}
+
+	public static final String dateFinal() {
+		return DBConstants.REMINDER_FINAL_DATE_COLUMN;
+	}
+
+	public static final String hourFinal() {
+		return DBConstants.REMINDER_FINAL_HOUR_COLUMN;
+	}
+	//#endif
 
 	private ReminderDAO rdao;
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -67,8 +87,18 @@ public class ReminderContentProvider extends ContentProvider {
 
 	private Reminder createReminderInsert(ContentValues values) throws DBException {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		reminder.setDate(values.getAsString(date()));
+		//#endif
+		//#ifdef fixedDate
 		reminder.setHour(values.getAsString(hour()));
+		//#endif
+		//#ifdef dateRange
+		reminder.setDateStart(values.getAsString(dateStart()));
+		reminder.setHourStart(values.getAsString(hourStart()));
+		reminder.setDateFinal(values.getAsString(dateFinal()));
+		reminder.setHourFinal(values.getAsString(hourFinal()));
+		//#endif
 		//#if staticCategory || manageCategory
 		Category category = createCategoryInsert(values);
 		reminder.setCategory(category);
@@ -103,14 +133,14 @@ public class ReminderContentProvider extends ContentProvider {
 
 	private Category createCategoryInsert(ContentValues values) throws DBException {
 		Category category = cdao.findCategory(values.getAsString(category()));
-		//#ifdef manageCategory 
-	    if(category == null) { 
-	      Category auxCategory = new Category(); 
-	      auxCategory.setName(values.getAsString(category())); 
-	      cdao.saveCategory(auxCategory); 
-	      category = cdao.findCategory(values.getAsString(category())); 
-	    } 
-	    //#endif 
+		//#ifdef manageCategory
+		if (category == null) {
+			Category auxCategory = new Category();
+			auxCategory.setName(values.getAsString(category()));
+			cdao.saveCategory(auxCategory);
+			category = cdao.findCategory(values.getAsString(category()));
+		}
+		//#endif
 		return category;
 	}
 	//#endif
