@@ -246,7 +246,7 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 			}
 		}
 
-		adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
+		adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), reminders);
 		ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays;
 		//#ifdef fixedDate
 		ReminderArrayAdapter adapterNoDate;
