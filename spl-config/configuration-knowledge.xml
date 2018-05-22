@@ -96,6 +96,10 @@
 			<name>createBuildEntries</name>
 			<args>googleCalendar</args>
 		</transformation>
+    <transformation>
+      <name>preprocessFiles</name>
+      <args>CalendarEventCreatorJava</args>
+    </transformation>
 	</configuration>
   <configuration>
 		<expression>Not(Google Calendar)</expression>
