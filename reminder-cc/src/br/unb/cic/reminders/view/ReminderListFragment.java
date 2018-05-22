@@ -116,8 +116,8 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
 		//#ifdef fixedDate
 		lvReminderNoDate = (ListView) view.findViewById(R.id.lvRemindersNoDate);
-		updateListView(null);
 		//#endif
+		updateListView(null);
 		registerForContextMenu(lvReminderLate);
 		registerForContextMenu(lvReminderToday);
 		registerForContextMenu(lvReminderNextDays);
