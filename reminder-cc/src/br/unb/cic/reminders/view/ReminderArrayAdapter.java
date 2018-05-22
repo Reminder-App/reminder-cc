@@ -30,7 +30,9 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 	public static final int LATE = 0;
 	public static final int TODAY = 1;
 	public static final int NEXT_DAYS = 2;
+	//#ifdef fixedDate
 	public static final int NO_DATE = 3;
+	//#endif
 
 	public ReminderArrayAdapter(Context context, List<Reminder> objects) {
 		super(context, R.layout.reminder_row, objects);
