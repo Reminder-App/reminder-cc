@@ -55,25 +55,42 @@ public class CalendarEventCreator {
 	}
 
 	public void addEventCalendar(Reminder reminder, Context ctx) throws CalendarNotFoundException, ParseException {
-		long startMilliseconds, endmilliseconds;
-		Calendar calEnd;
-		startMilliseconds = endmilliseconds = 0;
+		long startMilliSeconds, endMilliSeconds;
+		Calendar calStart;
+		//#ifdef dateRange
+		Calendar calFinal;
+		//#endif
+		startMilliSeconds = endMilliSeconds = 0;
 
 		getUserMainCalendar(ctx);
 
 		if (haveMainCalendar) {
 			ContentResolver cr = ctx.getContentResolver();
-			calEnd = Calendar.getInstance();
-			Date date = DateFormat.dateFormater(reminder.getDate() + " " + reminder.getHour());
-			calEnd.setTime(date);
+			calStart = Calendar.getInstance();
+			//#ifdef dateRange
+			calFinal = Calendar.getInstance();
+			//#endif
+			//#ifdef fixedDate
+			Date dateStart = DateFormat.dateFormater(reminder.getDate() + " " + reminder.getHour());
+			//#elifdef dateRange
+			Date dateStart = DateFormat.dateFormater(reminder.getDateStart() + " " + reminder.getHourStart());
+			Date dateFinal = DateFormat.dateFormater(reminder.getDateFinal() + " " + reminder.getHourFinal());
+			calFinal.setTime(dateFinal);
+			//#endif
+			calStart.setTime(dateStart);
 
-			startMilliseconds = calEnd.getTimeInMillis() - 100000;
-			endmilliseconds = calEnd.getTimeInMillis();
+			//#ifdef fixedDate
+			startMilliSeconds = calStart.getTimeInMillis() - 100000;
+			endMilliSeconds = calStart.getTimeInMillis();
+			//#elifdef dateRange
+			startMilliSeconds = calStart.getTimeInMillis();
+			endMilliSeconds = calFinal.getTimeInMillis();
+			//#endif
 
 			ContentValues values = new ContentValues();
 
-			values.put(Events.DTSTART, startMilliseconds);
-			values.put(Events.DTEND, endmilliseconds);
+			values.put(Events.DTSTART, startMilliSeconds);
+			values.put(Events.DTEND, endMilliSeconds);
 			values.put(Events.TITLE, reminder.getText());
 			values.put(Events.CALENDAR_ID, calendarID);
 			values.put(Events.EVENT_TIMEZONE, timeZone);
