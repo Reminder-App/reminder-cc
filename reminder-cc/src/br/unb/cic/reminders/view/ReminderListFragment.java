@@ -29,15 +29,15 @@ import br.unb.cic.reminders2.R;
 
 public class ReminderListFragment extends Fragment implements FiltersListChangeListener {
 	private static String TAG = "reminder fragment list";
-	// #if fixedDate || dateRange
+	//#if fixedDate || dateRange
 	private ListView lvReminderLate, lvReminderToday, lvReminderNextDays;
-	// #endif
-	// #ifdef fixedDate
+	//#endif
+	//#ifdef fixedDate
 	private ListView lvReminderNoDate;
-	// #endif
-	// #ifdef dateRepeat
+	//#endif
+	//#ifdef dateRepeat
 	private ListView lvMonday, lvTuesday, lvWednesday, lvThursday, lvFriday, lvSaturday, lvSunday;
-	// #endif
+	//#endif
 	private ReminderArrayAdapter adapter;
 	private ReminderArrayAdapter contextMenuAdapter;
 	private View view;
@@ -97,19 +97,19 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 
 	private Intent editIntent(Reminder reminder) {
 		Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
-		// #ifdef fixedDate
+		//#ifdef fixedDate
 		editIntent.putExtra("date", reminder.getDate());
-		// #endif
-		// #if fixedDate || dateRepeat
+		//#endif
+		//#if fixedDate || dateRepeat
 		editIntent.putExtra("hour", reminder.getHour());
-		// #endif
-		// #ifdef dateRange
+		//#endif
+		//#ifdef dateRange
 		editIntent.putExtra("dateStart", reminder.getDateStart());
 		editIntent.putExtra("hourStart", reminder.getHourStart());
 		editIntent.putExtra("dateFinal", reminder.getDateFinal());
 		editIntent.putExtra("hourFinal", reminder.getHourFinal());
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		editIntent.putExtra("monday", reminder.isMonday());
 		editIntent.putExtra("tuesday", reminder.isTuesday());
 		editIntent.putExtra("wednesday", reminder.isWednesday());
@@ -117,27 +117,27 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		editIntent.putExtra("friday", reminder.isFriday());
 		editIntent.putExtra("saturday", reminder.isSaturday());
 		editIntent.putExtra("sunday", reminder.isSunday());
-		// #endif
-		// #if staticCategory || manageCategory
+		//#endif
+		//#if staticCategory || manageCategory
 		editIntent.putExtra("category_name", reminder.getCategory().getName());
 		editIntent.putExtra("category_id", Long.toString(reminder.getCategory().getId()));
-		// #endif
-		// #ifdef priority
+		//#endif
+		//#ifdef priority
 		editIntent.putExtra("priority", Integer.toString(reminder.getPriority()));
-		// #endif
+		//#endif
 		return editIntent;
 	}
 
 	public void createUI() {
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
 		lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
 		lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		lvReminderNoDate = (ListView) view.findViewById(R.id.lvRemindersNoDate);
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		lvMonday = (ListView) view.findViewById(R.id.lvMonday);
 		lvTuesday = (ListView) view.findViewById(R.id.lvTuesday);
 		lvWednesday = (ListView) view.findViewById(R.id.lvWednesday);
@@ -145,17 +145,17 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		lvFriday = (ListView) view.findViewById(R.id.lvFriday);
 		lvSaturday = (ListView) view.findViewById(R.id.lvSaturday);
 		lvSunday = (ListView) view.findViewById(R.id.lvSunday);
-		// #endif
+		//#endif
 		updateListView(null);
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		registerForContextMenu(lvReminderLate);
 		registerForContextMenu(lvReminderToday);
 		registerForContextMenu(lvReminderNextDays);
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		registerForContextMenu(lvReminderNoDate);
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		registerForContextMenu(lvMonday);
 		registerForContextMenu(lvTuesday);
 		registerForContextMenu(lvWednesday);
@@ -163,33 +163,33 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		registerForContextMenu(lvFriday);
 		registerForContextMenu(lvSaturday);
 		registerForContextMenu(lvSunday);
-		// #endif
+		//#endif
 	}
 
 	public void updateListView(ReminderFilter filter) {
 		if (filter == null)
 			filter = new AllRemindersFilter(getActivity());
 		adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), filter.getReminderList());
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays;
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		ReminderArrayAdapter adapterNoDate;
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		ReminderArrayAdapter adapterMonday, adapterTuesday, adapterWednesday, adapterThursday, adapterFriday,
 				adapterSaturday, adapterSunday;
-		// #endif
+		//#endif
 		Reminder r = new Reminder();
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		List<Reminder> remindersLate = new ArrayList<Reminder>();
 		List<Reminder> remindersToday = new ArrayList<Reminder>();
 		List<Reminder> remindersNextDays = new ArrayList<Reminder>();
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		List<Reminder> remindersNoDate = new ArrayList<Reminder>();
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		List<Reminder> remindersModay = new ArrayList<Reminder>();
 		List<Reminder> remindersTuesday = new ArrayList<Reminder>();
 		List<Reminder> remindersWednesday = new ArrayList<Reminder>();
@@ -197,11 +197,11 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		List<Reminder> remindersFriday = new ArrayList<Reminder>();
 		List<Reminder> remindersSaturday = new ArrayList<Reminder>();
 		List<Reminder> remindersSunday = new ArrayList<Reminder>();
-		// #endif
+		//#endif
 
 		for (int i = 0; i < adapter.getCount(); ++i) {
 			r = adapter.getItem(i);
-			// #ifdef fixedDate
+			//#ifdef fixedDate
 			if (r.getDate() != null) {
 				String day = r.getDate().substring(0, 2);
 				String month = r.getDate().substring(3, 5);
@@ -228,8 +228,8 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 			} else {
 				remindersNoDate.add(r);
 			}
-			// #endif
-			// #ifdef dateRange
+			//#endif
+			//#ifdef dateRange
 			if (r.getDateFinal() != null && r.getDateStart() != null) {
 				String dayStart = r.getDateStart().substring(0, 2);
 				String monthStart = r.getDateStart().substring(3, 5);
@@ -264,8 +264,8 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 				else
 					remindersNextDays.add(r);
 			}
-			// #endif
-			// #ifdef dateRepeat
+			//#endif
+			//#ifdef dateRepeat
 			if (r.isMonday())
 				remindersModay.add(r);
 			if (r.isTuesday())
@@ -280,10 +280,10 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 				remindersSaturday.add(r);
 			if (r.isSunday())
 				remindersSunday.add(r);
-			// #endif
+			//#endif
 		}
 
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
 				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
 		adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
@@ -296,28 +296,28 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		Utility.setListViewHeightBasedOnChildren(lvReminderToday);
 		lvReminderNextDays.setAdapter(adapterNextDays);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		adapterNoDate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNoDate,
 				Color.rgb(0x00, 0x00, 0x00), ReminderArrayAdapter.NO_DATE);
 		lvReminderNoDate.setAdapter(adapterNoDate);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNoDate);
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		adapterMonday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersModay,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.MONDAY);
+				Color.rgb(0, 0, 0), ReminderArrayAdapter.MONDAY);
 		adapterTuesday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersTuesday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.TUESDAY);
+				Color.rgb(0, 0, 255), ReminderArrayAdapter.TUESDAY);
 		adapterWednesday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersWednesday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.WEDNESDAY);
+				Color.rgb(210, 105, 30), ReminderArrayAdapter.WEDNESDAY);
 		adapterThursday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersThursday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.THURSDAY);
+				Color.rgb(0, 128, 0), ReminderArrayAdapter.THURSDAY);
 		adapterFriday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersFriday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.FRIDAY);
+				Color.rgb(255, 20, 147), ReminderArrayAdapter.FRIDAY);
 		adapterSaturday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersSaturday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.SATURDAY);
+				Color.rgb(255, 0, 0), ReminderArrayAdapter.SATURDAY);
 		adapterSunday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersSunday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.SUNDAY);
+				Color.rgb(128, 0, 128), ReminderArrayAdapter.SUNDAY);
 
 		lvMonday.setAdapter(adapterMonday);
 		Utility.setListViewHeightBasedOnChildren(lvMonday);
@@ -333,14 +333,14 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		Utility.setListViewHeightBasedOnChildren(lvSaturday);
 		lvSunday.setAdapter(adapterSunday);
 		Utility.setListViewHeightBasedOnChildren(lvSunday);
-		// #endif
+		//#endif
 	}
 
 	public void onSelectedFilterChanged(ReminderFilter filter) {
 		updateListView(filter);
 	}
 
-	// #ifdef search
+	//#ifdef search
 	public void updateListViewFilter(String filterRemider) {
 
 		ReminderFilter filter = new AllRemindersFilter(getActivity());
@@ -353,26 +353,26 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		}
 
 		adapter = new ReminderArrayAdapter(getActivity().getApplicationContext(), reminders);
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		ReminderArrayAdapter adapterLate, adapterToday, adapterNextDays;
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		ReminderArrayAdapter adapterNoDate;
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		ReminderArrayAdapter adapterMonday, adapterTuesday, adapterWednesday, adapterThursday, adapterFriday,
 				adapterSaturday, adapterSunday;
-		// #endif
+		//#endif
 		Reminder r = new Reminder();
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		List<Reminder> remindersLate = new ArrayList<Reminder>();
 		List<Reminder> remindersToday = new ArrayList<Reminder>();
 		List<Reminder> remindersNextDays = new ArrayList<Reminder>();
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		List<Reminder> remindersNoDate = new ArrayList<Reminder>();
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		List<Reminder> remindersModay = new ArrayList<Reminder>();
 		List<Reminder> remindersTuesday = new ArrayList<Reminder>();
 		List<Reminder> remindersWednesday = new ArrayList<Reminder>();
@@ -380,11 +380,11 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		List<Reminder> remindersFriday = new ArrayList<Reminder>();
 		List<Reminder> remindersSaturday = new ArrayList<Reminder>();
 		List<Reminder> remindersSunday = new ArrayList<Reminder>();
-		// #endif
+		//#endif
 
 		for (int i = 0; i < adapter.getCount(); ++i) {
 			r = adapter.getItem(i);
-			// #ifdef fixedDate
+			//#ifdef fixedDate
 			if (r.getDate() != null) {
 				String day = r.getDate().substring(0, 2);
 				String month = r.getDate().substring(3, 5);
@@ -411,8 +411,8 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 			} else {
 				remindersNoDate.add(r);
 			}
-			// #endif
-			// #ifdef dateRange
+			//#endif
+			//#ifdef dateRange
 			if (r.getDateFinal() != null && r.getDateStart() != null) {
 				String dayStart = r.getDateStart().substring(0, 2);
 				String monthStart = r.getDateStart().substring(3, 5);
@@ -447,8 +447,8 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 				else
 					remindersNextDays.add(r);
 			}
-			// #endif
-			// #ifdef dateRepeat
+			//#endif
+			//#ifdef dateRepeat
 			if (r.isMonday())
 				remindersModay.add(r);
 			if (r.isTuesday())
@@ -463,10 +463,10 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 				remindersSaturday.add(r);
 			if (r.isSunday())
 				remindersSunday.add(r);
-			// #endif
+			//#endif
 		}
 
-		// #if fixedDate || dateRange
+		//#if fixedDate || dateRange
 		adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
 				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
 		adapterToday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersToday,
@@ -479,28 +479,28 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		Utility.setListViewHeightBasedOnChildren(lvReminderToday);
 		lvReminderNextDays.setAdapter(adapterNextDays);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
-		// #endif
-		// #ifdef fixedDate
+		//#endif
+		//#ifdef fixedDate
 		adapterNoDate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNoDate,
 				Color.rgb(0x00, 0x00, 0x00), ReminderArrayAdapter.NO_DATE);
 		lvReminderNoDate.setAdapter(adapterNoDate);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNoDate);
-		// #endif
-		// #ifdef dateRepeat
+		//#endif
+		//#ifdef dateRepeat
 		adapterMonday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersModay,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.MONDAY);
+				Color.rgb(0, 0, 0), ReminderArrayAdapter.MONDAY);
 		adapterTuesday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersTuesday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.TUESDAY);
+				Color.rgb(0, 0, 255), ReminderArrayAdapter.TUESDAY);
 		adapterWednesday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersWednesday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.WEDNESDAY);
+				Color.rgb(210, 105, 30), ReminderArrayAdapter.WEDNESDAY);
 		adapterThursday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersThursday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.THURSDAY);
+				Color.rgb(0, 128, 0), ReminderArrayAdapter.THURSDAY);
 		adapterFriday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersFriday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.FRIDAY);
+				Color.rgb(255, 20, 147), ReminderArrayAdapter.FRIDAY);
 		adapterSaturday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersSaturday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.SATURDAY);
+				Color.rgb(255, 0, 0), ReminderArrayAdapter.SATURDAY);
 		adapterSunday = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersSunday,
-				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.SUNDAY);
+				Color.rgb(128, 0, 128), ReminderArrayAdapter.SUNDAY);
 
 		lvMonday.setAdapter(adapterMonday);
 		Utility.setListViewHeightBasedOnChildren(lvMonday);
@@ -516,7 +516,7 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		Utility.setListViewHeightBasedOnChildren(lvSaturday);
 		lvSunday.setAdapter(adapterSunday);
 		Utility.setListViewHeightBasedOnChildren(lvSunday);
-		// #endif
+		//#endif
 	}
-	// #endif
+	//#endif
 }
