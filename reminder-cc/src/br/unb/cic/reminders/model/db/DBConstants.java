@@ -15,7 +15,15 @@ public class DBConstants {
 			+ "PRIORITY INTEGER NOT NULL,"
 			//#endif
 			//#ifdef fixedDate
-			+ "DATE CHAR(10) NULL," + "HOUR CHAR(5) NULL,"
+			+ "DATE CHAR(10) NULL,"
+			//#endif
+			//#if fixedDate || dateRepeat
+			+ "HOUR CHAR(5) NULL,"
+			//#endif
+			//#ifdef dateRepeat
+			+ "MONDAY INTEGER NOT NULL," + "TUESDAY INTEGER NOT NULL," + "WEDNESDAY INTEGER NOT NULL,"
+			+ "THURSDAY INTEGER NOT NULL," + "FRIDAY INTEGER NOT NULL," + "SATURDAY INTEGER NOT NULL,"
+			+ "SUNDAY INTEGER NOT NULL,"
 			//#endif
 			//#ifdef dateRange
 			+ "INITIAL_DATE CHAR(10) NOT NULL," + "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
@@ -34,6 +42,8 @@ public class DBConstants {
 	public static String REMINDER_DETAILS_COLUMN = "DETAILS";
 	//#ifdef fixedDate
 	public static String REMINDER_DATE_COLUMN = "DATE";
+	//#endif
+	//#if fixedDate || dateRepeat
 	public static String REMINDER_HOUR_COLUMN = "HOUR";
 	//#endif
 	public static String REMINDER_DONE_COLUMN = "DONE";
@@ -59,5 +69,14 @@ public class DBConstants {
 	public static String CATEGORY_NAME_COLUMN = "NAME";
 	public static String CATEGORY_LOCKED_COLUMN = "LOCKED";
 	public static String REMINDER_FK_CATEGORY_COLUMN = "FK_CATEGORY";
+	//#endif
+	//#ifdef dateRepeat
+	public static String REMINDER_MONDAY_COLUMN = "MONDAY";
+	public static String REMINDER_TUESDAY_COLUMN = "TUESDAY";
+	public static String REMINDER_WEDNESDAY_COLUMN = "WEDNESDAY";
+	public static String REMINDER_THURSDAY_COLUMN = "THURSDAY";
+	public static String REMINDER_FRIDAY_COLUMN = "FRIDAY";
+	public static String REMINDER_SATURDAY_COLUMN = "SATURDAY";
+	public static String REMINDER_SUNDAY_COLUMN = "SUNDAY";
 	//#endif
 }
