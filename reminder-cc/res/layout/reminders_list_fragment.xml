@@ -16,18 +16,23 @@
             android:gravity="center_vertical"
             //#if fixedDate || dateRange
             android:text="@string/reminder_list_late"
+            android:textColor="#cc0000"
             //#else
             android:text="MONDAY"
+            android:textColor="#000000"
             //#endif
-            android:textColor="#cc0000"
             android:textSize="4.2pt"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="1.5dp"
-            android:layout_marginLeft="10dp"
-            android:background="#cc0000" />
+            //#if fixedDate || dateRange
+            android:background="#cc0000"
+            //#else
+            android:background="#000000"
+            //#endif
+            android:layout_marginLeft="10dp" />
 
         <ListView
             //#if fixedDate || dateRange
@@ -53,7 +58,7 @@
             android:textColor="#0099ff"
             //#else
             android:text="TUESDAY"
-            android:textColor="#cc0000"
+            android:textColor="#0000FF"
             //#endif
             android:textSize="4.2pt"
             android:textStyle="bold" />
@@ -64,7 +69,7 @@
             //#if fixedDate || dateRange
             android:background="#0099ff"
             //#else
-            android:background="#cc0000"
+            android:background="#0000FF"
             //#endif
             android:layout_marginLeft="10dp" />
 
@@ -92,7 +97,7 @@
             android:textColor="#bababa"
             //#else
             android:text="WEDNESDAY"
-            android:textColor="#cc0000"
+            android:textColor="#D2691E"
             //#endif
             android:textSize="4.2pt"
             android:textStyle="bold" />
@@ -103,7 +108,7 @@
             //#if fixedDate || dateRange
             android:background="#bababa"
             //#else
-            android:background="#cc0000"
+            android:background="#D2691E"
             //#endif
             android:layout_marginLeft="10dp" />
 
@@ -132,7 +137,7 @@
             android:textColor="#000"
             //#else
             android:text="THURSDAY"
-            android:textColor="#cc0000"
+            android:textColor="#008000"
             //#endif
             android:textSize="4.2pt"
             android:textStyle="bold" />
@@ -143,7 +148,7 @@
             //#if fixedDate || dateRange
             android:background="#000"
             //#else
-            android:background="#cc0000"
+            android:background="#008000"
             //#endif
             android:layout_marginLeft="10dp" />
 
@@ -169,7 +174,7 @@
             android:layout_marginTop="7dp"
             android:gravity="center_vertical"
             android:text="FRIDAY"
-            android:textColor="#cc0000"
+            android:textColor="#FF1493"
             android:textSize="4.2pt"
             android:textStyle="bold" />
 
@@ -177,7 +182,7 @@
             android:layout_width="fill_parent"
             android:layout_height="1.5dp"
             android:layout_marginLeft="10dp"
-            android:background="#cc0000" />
+            android:background="#FF1493" />
 
         <ListView
             android:id="@+id/lvFriday"
@@ -221,7 +226,7 @@
             android:layout_marginTop="7dp"
             android:gravity="center_vertical"
             android:text="SUNDAY"
-            android:textColor="#cc0000"
+            android:textColor="#800080"
             android:textSize="4.2pt"
             android:textStyle="bold" />
 
@@ -229,7 +234,7 @@
             android:layout_width="fill_parent"
             android:layout_height="1.5dp"
             android:layout_marginLeft="10dp"
-            android:background="#cc0000" />
+            android:background="#800080" />
 
         <ListView
             android:id="@+id/lvSunday"
