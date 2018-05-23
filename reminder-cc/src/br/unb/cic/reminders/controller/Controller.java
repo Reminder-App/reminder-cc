@@ -64,10 +64,6 @@ public class Controller {
 		}
 	}
 
-	private void notImplementedYet() {
-		throw new RuntimeException("not implemented yet");
-	}
-
 	//#if staticCategory || manageCategory
 	public List<Category> listCategories() throws Exception {
 		try {
