@@ -75,7 +75,7 @@ public class AddCategoryDialogFragment extends DialogFragment {
                                     Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                     Toast.makeText(getActivity().getApplicationContext(),
-                                            "Categoria inválida.", Toast.LENGTH_SHORT).show();
+                                            "Invalid category.", Toast.LENGTH_SHORT).show();
 
                                 }
                                 catch(Exception e) {
