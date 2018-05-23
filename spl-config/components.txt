@@ -56,3 +56,5 @@ SearchIconMdpi => res/drawable-mdpi/search_reminder.png;
 ActionBarMenuXML => res/menu/action_bar_menu.xml;
 
 RemindersListFragmentXML => res/layout/reminders_list_fragment.xml;
+
+DatePickerDialogFragmentJava => src/br/unb/cic/reminders/view/DatePickerDialogFragment.java;
