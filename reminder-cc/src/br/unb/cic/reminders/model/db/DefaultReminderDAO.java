@@ -14,7 +14,7 @@ import br.unb.cic.reminders.model.Category;
 import android.util.Log;
 //#endif 
 //#ifdef priority 
-import br.unb.cic.reminders.model.Priority; 
+import br.unb.cic.reminders.model.Priority;
 //#endif 
 
 public class DefaultReminderDAO extends GenericDAO<Reminder> implements ReminderDAO {
@@ -99,11 +99,11 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		Category category = DBFactory.factory(context).createCategoryDAO().findCategoryById(categoryId);
 		reminder.setCategory(category);
 		//#endif
-		
-		//#ifdef priority 
-	    int priority = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_PRIORITY_COLUMN)); 
-	    reminder.setPriority(Priority.fromCode(priority)); 
-	    //#endif
+
+		//#ifdef priority
+		int priority = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_PRIORITY_COLUMN));
+		reminder.setPriority(Priority.fromCode(priority));
+		//#endif
 
 		return reminder;
 	}
@@ -112,20 +112,38 @@ public class DefaultReminderDAO extends GenericDAO<Reminder> implements Reminder
 		Reminder reminder = new Reminder();
 		//#ifdef fixedDate
 		String date = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_DATE_COLUMN));
-		String hour = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
 		reminder.setDate(date);
+		//#endif
+		//#if fixedDate || dateRepeat
+		String hour = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_HOUR_COLUMN));
 		reminder.setHour(hour);
 		//#endif
-		//#ifdef dateRange 
-	    String dateStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_DATE_COLUMN)); 
-	    String hourStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_HOUR_COLUMN)); 
-	    String dateFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_DATE_COLUMN)); 
-	    String hourFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_HOUR_COLUMN)); 
-	    reminder.setDateStart(dateStart); 
-	    reminder.setHourStart(hourStart); 
-	    reminder.setDateFinal(dateFinal); 
-	    reminder.setHourFinal(hourFinal); 
-	    //#endif
+		//#ifdef dateRange
+		String dateStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_DATE_COLUMN));
+		String hourStart = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_INITIAL_HOUR_COLUMN));
+		String dateFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_DATE_COLUMN));
+		String hourFinal = cursor.getString(cursor.getColumnIndex(DBConstants.REMINDER_FINAL_HOUR_COLUMN));
+		reminder.setDateStart(dateStart);
+		reminder.setHourStart(hourStart);
+		reminder.setDateFinal(dateFinal);
+		reminder.setHourFinal(hourFinal);
+		//#endif
+		//#ifdef dateRepeat
+		int monday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_MONDAY_COLUMN));
+		int tuesday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_TUESDAY_COLUMN));
+		int wednesday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_WEDNESDAY_COLUMN));
+		int thursday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_THURSDAY_COLUMN));
+		int friday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_FRIDAY_COLUMN));
+		int saturday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_SATURDAY_COLUMN));
+		int sunday = cursor.getInt(cursor.getColumnIndex(DBConstants.REMINDER_SUNDAY_COLUMN));
+		reminder.setMonday(monday);
+		reminder.setTuesday(tuesday);
+		reminder.setWednesday(wednesday);
+		reminder.setThursday(thursday);
+		reminder.setFriday(friday);
+		reminder.setSaturday(saturday);
+		reminder.setSunday(sunday);
+		//#endif
 		return reminder;
 	}
 
