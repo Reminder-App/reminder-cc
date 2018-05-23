@@ -26,14 +26,14 @@ import br.unb.cic.reminders2.R;
 import br.unb.cic.reminders.model.Category;
 import br.unb.cic.reminders.controller.Controller;
 //#endif
-//#ifdef priority 
+//#ifdef priority
 import br.unb.cic.reminders.model.Priority;
 import java.util.Arrays;
 //#endif
-//#ifdef googleCalendar 
+//#ifdef googleCalendar
 import br.unb.cic.reminders.calendar.CalendarEventCreator;
 import br.unb.cic.reminders.model.CalendarNotFoundException;
-//#endif 
+//#endif
 //#if googleCalendar || dateRepeat
 import android.widget.CheckBox;
 //#endif
@@ -79,7 +79,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-				// well... do nothing
+
 			}
 		});
 	}
@@ -130,7 +130,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-				// well... do nothing
+
 			}
 		});
 	}
@@ -314,7 +314,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-				// Well, do nothing...
+
 			}
 
 		});
@@ -352,7 +352,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-				// Well, do nothing...
+
 			}
 
 		});
@@ -466,7 +466,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-				// Well, do nothing...
+
 			}
 		});
 		//#endif
@@ -694,7 +694,7 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-		// TODO: Move these to XML.
+
 		items.add("No date");
 		items.add("+ Select");
 
@@ -709,7 +709,7 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-		// TODO: Move these to XML.
+
 		items.add("No time");
 		items.add("+ Select");
 
@@ -724,7 +724,7 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-		// TODO: Move these to XML.
+
 		items.add("No date");
 		items.add("+ Select");
 
@@ -739,7 +739,7 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-		// TODO: Move these to XML.
+		
 		items.add("No time");
 		items.add("+ Select");
 

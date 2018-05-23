@@ -20,9 +20,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 		super(c);
 	}
 
-	/**
-	 * @see CategoryDAO#listCategories()
-	 */
 	public List<Category> listCategories() throws DBException {
 		try {
 			db = dbHelper.getReadableDatabase();
@@ -47,9 +44,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 		}
 	}
 
-	/**
-	 * @see CategoryDAO#findCategory(String)
-	 */
 	public Category findCategory(String name) throws DBException {
 		try {
 			db = dbHelper.getReadableDatabase();
@@ -65,9 +59,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 		}
 	}
 
-	/**
-	 * @see CategoryDAO#findCategoryById(Long)
-	 */
 	public Category findCategoryById(Long id) throws DBException {
 		try {
 			db = dbHelper.getReadableDatabase();
@@ -83,9 +74,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 		}
 	}
 
-	/*
-	 * Given a cursor, returns the first category.
-	 */
 	private Category returnUniqueCategory(Cursor cursor) {
 		List<Category> categories = new ArrayList<Category>();
 
@@ -98,9 +86,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 		return null;
 	}
 
-	/*
-	 * Creates a category from a given cursor.
-	 */
 	private Category cursorToCategory(Cursor cursor) {
 		Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.CATEGORY_PK_COLUMN));
 		String name = cursor.getString(cursor.getColumnIndex(DBConstants.CATEGORY_NAME_COLUMN));
@@ -123,8 +108,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 
 	public void updateCategory(Category category) throws DBException {
 		try {
-			// db.delete(DBConstants.CATEGORY_TABLE,
-			// DBConstants.CATEGORY_PK_COLUMN + "=" + category.getId(), null);
 			try {
 				persist(category);
 			} catch (DBInvalidEntityException e) {

@@ -24,8 +24,7 @@ public class CategoryArrayAdapter extends ArrayAdapter<Category> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LinearLayout categoryRow;
-
-		// Inflate the view
+		
 		if (convertView == null) {
 			categoryRow = new LinearLayout(getContext());
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;

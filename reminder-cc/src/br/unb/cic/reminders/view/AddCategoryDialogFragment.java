@@ -34,25 +34,16 @@ public class AddCategoryDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Add one title to the dialog
         builder.setTitle(R.string.dialog_addcategory_title);
-        // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         final View view = inflater.inflate(R.layout.category_dialog, null);
         builder.setView(view)
-                // Add action buttons
                 .setPositiveButton(R.string.dialog_addcategory_add, new
                         DialogInterface.OnClickListener() {
                             @SuppressWarnings("unchecked")
                             public void onClick(DialogInterface dialog, int which) {
-                                // Add the category informed in the edit text
-                                // Gets the EditText, then its content and creates an
-                                // category with its content
                                 EditText edtCategoryName = ( EditText )
                                         view.findViewById(R.id.dialog_category);
 
@@ -69,7 +60,6 @@ public class AddCategoryDialogFragment extends DialogFragment {
                                 Category category = new Category();
                                 try {
                                     category.setName(edtCategoryName.getText().toString());
-                                    // Controller.instance(getActivity()).addCategory(category);
                                     if(spinner != null) {
                                         ArrayAdapter<Category> adapter = ( ArrayAdapter<Category> )
                                                 spinner.getAdapter();
@@ -82,29 +72,18 @@ public class AddCategoryDialogFragment extends DialogFragment {
                                     }
                                 }
                                 catch(InvalidTextException e) {
-                                    Log.e("CategoryDialogFragment", e.getMessage()); // TODO:Handle
-                                    // it
-                                    // properly.
+                                    Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                     Toast.makeText(getActivity().getApplicationContext(),
                                             "Categoria inválida.", Toast.LENGTH_SHORT).show();
-                                    // } catch (DBException e) {
-                                    // Log.e("CategoryDialogFragment", e.getMessage());
-                                    // // TODO:Handle it properly.
-                                    // e.printStackTrace();
-                                    // }
 
                                 }
                                 catch(Exception e) {
-                                    Log.e("CategoryDialogFragment", e.getMessage()); // TODO:
-                                    // Handle
-                                    // it
-                                    // properly.
+                                    Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                 }
                             }
                         })
-                // Cancel the dialog
                 .setNegativeButton(R.string.dialog_category_cancel, new
                         DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -116,17 +95,8 @@ public class AddCategoryDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    /**
-     * Recreates the preview activity to update the categories list.
-     */
     @Override
     public void onDestroy() {
         super.onDestroy();
-        // getActivity().recreate();
-        // Intent intent = new Intent(getActivity().getApplicationContext(),
-        // ReminderMainActivity.class);
-        // startActivity(intent);
-        // getActivity().finish();
-
     }
 }

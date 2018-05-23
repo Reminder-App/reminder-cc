@@ -20,11 +20,11 @@ public class CalendarEventCreator {
 	private long calendarID;
 	private boolean haveMainCalendar;
 
-	private static final String[] COLUMNS = new String[] { Calendars._ID, // 0
-			Calendars.ACCOUNT_NAME, // 1
-			Calendars.CALENDAR_DISPLAY_NAME, // 2
-			Calendars.OWNER_ACCOUNT, // 3
-			Calendars.CALENDAR_TIME_ZONE // 4
+	private static final String[] COLUMNS = new String[] { Calendars._ID,
+			Calendars.ACCOUNT_NAME,
+			Calendars.CALENDAR_DISPLAY_NAME,
+			Calendars.OWNER_ACCOUNT,
+			Calendars.CALENDAR_TIME_ZONE
 	};
 
 	private void initializer() {

@@ -18,11 +18,11 @@ import br.unb.cic.reminders.controller.AllRemindersFilter;
 import br.unb.cic.reminders.controller.Controller;
 import br.unb.cic.reminders.controller.ReminderFilter;
 import br.unb.cic.reminders2.R;
-//#if staticCategory || manageCategory 
+//#if staticCategory || manageCategory
 import br.unb.cic.reminders.controller.CategoryFilter;
 import br.unb.cic.reminders.model.Category;
-//#endif 
-//#ifdef manageCategory 
+//#endif
+//#ifdef manageCategory
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.app.DialogFragment;
 import android.view.MenuItem;
@@ -30,10 +30,10 @@ import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 //#endif
-//#ifdef priority 
+//#ifdef priority
 import br.unb.cic.reminders.controller.PriorityFilter;
 import br.unb.cic.reminders.model.Priority;
-//#endif 
+//#endif
 
 public class FilterListFragment extends Fragment implements OnItemClickListener {
 
@@ -149,11 +149,11 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 		menu.setHeaderTitle(R.string.context_menu_category_title);
 
 		MenuInflater inflater = getActivity().getMenuInflater();
-		
+
 		if (((AdapterContextMenuInfo)menuInfo).position < 1) {
             return;
         }
- 
+
         //#ifdef priority
         List<Category> categories = new ArrayList<Category>();
         try {
@@ -172,24 +172,17 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		if (item.getGroupId() == R.id.context_menu_category) {
-			// Used to verify it it is the right context_menu //Gets the item
-			// position and gets the category in that position:
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			Category category = ((CategoryFilter) lvFilters.getAdapter().getItem(info.position)).getCategory();
 
-			// Switch between the options in the context menu(Edit and Delete)
 			switch (item.getItemId()) {
 			case R.id.edit:
-				// Passes the current reminder to be edited via Intent and
-				// Invokes edit method
 				DialogFragment newFragment = EditCategoryDialogFragment.newInstance(category);
 				newFragment.show(getFragmentManager(), "" + R.string.dialog_editcategory_title);
 				updateListView();
 				return true;
 			case R.id.delete:
-				// Invokes delete method
 				try {
-					// Deletes from the bank;
 					Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 					Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
 					updateListView();

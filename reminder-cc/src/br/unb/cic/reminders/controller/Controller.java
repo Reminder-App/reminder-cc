@@ -7,7 +7,7 @@ import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders.model.db.DBFactory;
 //#if staticCategory || manageCategory
 import br.unb.cic.reminders.model.Category;
-//#endif 
+//#endif
 
 public class Controller {
 	private Context context;
@@ -69,7 +69,6 @@ public class Controller {
 		try {
 			return DBFactory.factory(context).createCategoryDAO().listCategories();
 		} catch (DBException e) {
-			// TODO: we need to define what to do in these situations.
 			throw e;
 		}
 	}

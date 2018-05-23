@@ -18,7 +18,6 @@ import br.unb.cic.reminders2.R;
 
 public class EditCategoryDialogFragment extends DialogFragment {
 
-    // The category that is being edited
     Category category;
 
     public static EditCategoryDialogFragment newInstance(Category category) {
@@ -33,30 +32,20 @@ public class EditCategoryDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Add one title to the dialog
         builder.setTitle(R.string.dialog_editcategory_title);
-        // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         final View view = inflater.inflate(R.layout.category_dialog, null);
 
-        // Initiates the editText with the preview category information:
         EditText edtCategoryName = ( EditText )
                 view.findViewById(R.id.dialog_category);
         edtCategoryName.setText(category.getName());
 
         builder.setView(view)
-                // Add action buttons
                 .setPositiveButton(R.string.dialog_editcategory_save, new
                         DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Add the category informed in the edit text
-                                // Gets the EditText, then its content and updates the
-                                // category with its content
                                 EditText edtCategoryName = ( EditText )
                                         view.findViewById(R.id.dialog_category);
                                 try {
@@ -64,29 +53,21 @@ public class EditCategoryDialogFragment extends DialogFragment {
                                     Controller.instance(getActivity()).updateCategory(category);
                                 }
                                 catch(InvalidTextException e) {
-                                    Log.e("CategoryDialogFragment", e.getMessage()); // TODO:Handle
-                                    // it
-                                    // properly.
+                                    Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                     Toast.makeText(getActivity().getApplicationContext(),
                                             "Categoria inválida.", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(DBException e) {
-                                    Log.e("CategoryDialogFragment", e.getMessage()); // TODO:Handle
-                                    // it
-                                    // properly.
+                                    Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                 }
                                 catch(Exception e) {
-                                    Log.e("CategoryDialogFragment", e.getMessage()); // TODO:
-                                    // Handle
-                                    // it
-                                    // properly.
+                                    Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                 }
                             }
                         })
-                // Cancel the dialog
                 .setNegativeButton(R.string.dialog_category_cancel, new
                         DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -97,9 +78,6 @@ public class EditCategoryDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    /**
-     * Recreates the preview activity to update the categories list.
-     */
     @Override
     public void onDestroy() {
         super.onDestroy();
