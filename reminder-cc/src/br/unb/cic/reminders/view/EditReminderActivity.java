@@ -32,9 +32,12 @@ public class EditReminderActivity extends ReminderActivity {
 	private void initializeValues(Intent intent) throws Exception {
 		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
-		String hour = intent.getStringExtra("hour");
 		updateSpinnerDateHour(spinnerDate, date);
 		updateDateFromString(date);
+		//#endif
+
+		//#if fixedDate || dateRepeat
+		String hour = intent.getStringExtra("hour");
 		updateSpinnerDateHour(spinnerTime, hour);
 		updateTimeFromString(hour);
 		//#endif
@@ -52,6 +55,30 @@ public class EditReminderActivity extends ReminderActivity {
 		updateDateFromString(dateFinal, true);
 		updateSpinnerDateHour(spinnerTimeFinal, hourFinal);
 		updateTimeFromString(hourFinal, false);
+		//#endif
+
+		//#ifdef dateRepeat
+		boolean monday = intent.getBooleanExtra("monday", false);
+		boolean tuesday = intent.getBooleanExtra("tuesday", false);
+		boolean wednesday = intent.getBooleanExtra("wednesday", false);
+		boolean thursday = intent.getBooleanExtra("thursday", false);
+		boolean friday = intent.getBooleanExtra("friday", false);
+		boolean saturday = intent.getBooleanExtra("saturday", false);
+		boolean sunday = intent.getBooleanExtra("sunday", false);
+		reminder.setMonday(monday);
+		reminder.setTuesday(tuesday);
+		reminder.setWednesday(wednesday);
+		reminder.setThursday(thursday);
+		reminder.setFriday(friday);
+		reminder.setSaturday(saturday);
+		reminder.setSunday(sunday);
+		cbMonday.setChecked(monday);
+		cbTuesday.setChecked(tuesday);
+		cbWednesday.setChecked(wednesday);
+		cbThursday.setChecked(thursday);
+		cbFriday.setChecked(friday);
+		cbSaturday.setChecked(saturday);
+		cbSunday.setChecked(sunday);
 		//#endif
 
 		//#if staticCategory || manageCategory
