@@ -13,6 +13,9 @@
   <string name="reminderDateTip">DD-MM-AAAA</string>
   <string name="reminderDateBlank">No Date</string>
   <string name="reminderDateButton">Choose Date</string>
+  <string name="reminder_list_nodate">NO DATE</string>
+  //#endif
+  //#if fixedDate || dateRepeat
   <string name="reminderHour">Time</string>
   <string name="reminderHourTip">HH:MM</string>
   <string name="reminderHourBlank">No Time</string>
@@ -25,6 +28,7 @@
   <string name="reminderHourStart">Initial Time</string>
   <string name="reminderHourStartTip">HH:MM</string>
   <string name="reminderHourStartButton">Choose Initial Time</string>
+
   <string name="reminderDateFinal">End Date</string>
   <string name="reminderDateFinalTip">DD-MM-AAAA</string>
   <string name="reminderDateFinalButton">Choose End Date</string>
@@ -62,12 +66,11 @@
   //#endif
   <string name="saveButton">Save</string>
   <string name="cancelButton">Cancel</string>
+  //#if fixedDate || dateRange
   <!-- Reminder_list_fragment -->
   <string name="reminder_list_late">DELAYED</string>
   <string name="reminder_list_today">TODAY</string>
   <string name="reminder_list_nextdays">NEXT DAYS</string>
-  //#ifndef dateRange
-  <string name="reminder_list_nodate">NO DATE</string>
   //#endif
   <!-- Activities title labels -->
   <string name="title_activity_reminder_add">Add</string>
@@ -78,4 +81,14 @@
   <string name="context_menu_reminder_title">Reminder</string>
   <!-- Action Bar titles -->
   <string name="menu_addReminder">Add</string>
+  //#ifdef dateRepeat
+  <!-- Days of the week -->
+  <string name="Sun">Sunday</string>
+  <string name="Mon">Monday</string>
+  <string name="Tue">Tuesday</string>
+  <string name="Wed">Wednesday</string>
+  <string name="Thu">Thursday</string>
+  <string name="Fri">Friday</string>
+  <string name="Sat">Saturday</string>
+  //#endif
 </resources>
