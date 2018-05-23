@@ -11,6 +11,7 @@
 				<alt mandatory="true" name="Reminder Schedule">
 					<feature name="Date Range"/>
 					<feature name="Fixed Date"/>
+					<feature name="Date Repeat"/>
 				</alt>
 				<alt name="Reminder Category">
 					<feature name="Manage Category"/>
