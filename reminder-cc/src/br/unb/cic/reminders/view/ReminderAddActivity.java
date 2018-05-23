@@ -28,15 +28,24 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import br.unb.cic.reminders.model.Priority;
 import java.util.Arrays;
 import android.widget.ArrayAdapter;
+//#endif
+//#ifdef dateRepeat 
+import android.widget.CheckBox;
 //#endif 
 
 public class ReminderAddActivity extends Activity {
 	private EditText edtReminder, edtDetails;
 	//#ifdef fixedDate
-	private EditText edtDate, edtHour;
+	private EditText edtDate;
+	//#endif
+	//#if fixedDate || dateRepeat
+	private EditText edtHour;
 	//#endif
 	//#ifdef dateRange
 	private EditText edtDateStart, edtHourStart, edtDateFinal, edtHourFinal;
+	//#endif
+	//#ifdef dateRepeat
+	private CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday;
 	//#endif
 	private Button btnSave, btnCancel;
 	private boolean editingReminder;
@@ -191,6 +200,8 @@ public class ReminderAddActivity extends Activity {
 		Reminder reminder = new Reminder();
 		//#ifdef fixedDate
 		reminder.setDate(edtDate.getText().toString());
+		//#endif
+		//#if fixedDate || dateRepeat
 		reminder.setHour(edtHour.getText().toString());
 		//#endif
 		//#ifdef dateRange
@@ -198,6 +209,15 @@ public class ReminderAddActivity extends Activity {
 		reminder.setHourStart(edtHourStart.getText().toString());
 		reminder.setDateFinal(edtDateFinal.getText().toString());
 		reminder.setHourFinal(edtHourFinal.getText().toString());
+		//#endif
+		//#ifdef dateRepeat
+		reminder.setMonday(cbMonday.isChecked());
+		reminder.setTuesday(cbTuesday.isChecked());
+		reminder.setWednesday(cbWednesday.isChecked());
+		reminder.setThursday(cbThursday.isChecked());
+		reminder.setFriday(cbFriday.isChecked());
+		reminder.setSaturday(cbSaturday.isChecked());
+		reminder.setSunday(cbSunday.isChecked());
 		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory(selectedCategory);
@@ -227,8 +247,10 @@ public class ReminderAddActivity extends Activity {
 		Reminder reminder = new Reminder();
 		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
-		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
+		//#endif
+		//#if fixedDate || dateRepeat
+		String hour = intent.getStringExtra("hour");
 		reminder.setHour(hour);
 		//#endif
 		//#ifdef dateRange
@@ -240,6 +262,22 @@ public class ReminderAddActivity extends Activity {
 		reminder.setHourStart(hourStart);
 		reminder.setDateFinal(dateFinal);
 		reminder.setHourFinal(hourFinal);
+		//#endif
+		//#ifdef dateRepeat
+		boolean monday = intent.getBooleanExtra("monday", false);
+		boolean tuesday = intent.getBooleanExtra("tuesday", false);
+		boolean wednesday = intent.getBooleanExtra("wednesday", false);
+		boolean thursday = intent.getBooleanExtra("thursday", false);
+		boolean friday = intent.getBooleanExtra("friday", false);
+		boolean saturday = intent.getBooleanExtra("saturday", false);
+		boolean sunday = intent.getBooleanExtra("sunday", false);
+		reminder.setMonday(monday);
+		reminder.setTuesday(tuesday);
+		reminder.setWednesday(wednesday);
+		reminder.setThursday(thursday);
+		reminder.setFriday(friday);
+		reminder.setSaturday(saturday);
+		reminder.setSunday(sunday);
 		//#endif
 		//#if staticCategory || manageCategory
 		String categoryName = intent.getStringExtra("category_name");
@@ -278,8 +316,10 @@ public class ReminderAddActivity extends Activity {
 		Reminder reminder = new Reminder();
 		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
-		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
+		//#endif
+		//#if fixedDate || dateRepeat
+		String hour = intent.getStringExtra("hour");
 		reminder.setHour(hour);
 		//#endif
 		//#ifdef dateRange
@@ -291,6 +331,22 @@ public class ReminderAddActivity extends Activity {
 		reminder.setHourStart(hourStart);
 		reminder.setDateFinal(dateFinal);
 		reminder.setHourFinal(hourFinal);
+		//#endif
+		//#ifdef dateRepeat
+		boolean monday = intent.getBooleanExtra("monday", false);
+		boolean tuesday = intent.getBooleanExtra("tuesday", false);
+		boolean wednesday = intent.getBooleanExtra("wednesday", false);
+		boolean thursday = intent.getBooleanExtra("thursday", false);
+		boolean friday = intent.getBooleanExtra("friday", false);
+		boolean saturday = intent.getBooleanExtra("saturday", false);
+		boolean sunday = intent.getBooleanExtra("sunday", false);
+		reminder.setMonday(monday);
+		reminder.setTuesday(tuesday);
+		reminder.setWednesday(wednesday);
+		reminder.setThursday(thursday);
+		reminder.setFriday(friday);
+		reminder.setSaturday(saturday);
+		reminder.setSunday(sunday);
 		//#endif
 		//#if staticCategory || manageCategory
 		String category = intent.getStringExtra("category");
@@ -336,7 +392,18 @@ public class ReminderAddActivity extends Activity {
 		edtDetails.setText(reminder.getDetails());
 		//#ifdef fixedDate
 		edtDate.setText(reminder.getDate());
+		//#endif
+		//#if fixedDate || dateRepeat
 		edtHour.setText(reminder.getHour());
+		//#endif
+		//#ifdef dateRepeat
+		cbMonday.setChecked(reminder.isMonday());
+		cbTuesday.setChecked(reminder.isTuesday());
+		cbWednesday.setChecked(reminder.isWednesday());
+		cbThursday.setChecked(reminder.isThursday());
+		cbFriday.setChecked(reminder.isFriday());
+		cbSaturday.setChecked(reminder.isSaturday());
+		cbSunday.setChecked(reminder.isSunday());
 		//#endif
 		//#ifdef dateRange
 		edtDateStart.setText(reminder.getDateStart());
