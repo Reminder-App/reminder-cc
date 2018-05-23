@@ -101,8 +101,10 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 	private void reminderFromIntent(Intent intent) throws Exception {
 		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
-		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
+		//#endif
+		//#if fixedDate || dateRepeat
+		String hour = intent.getStringExtra("hour");
 		reminder.setHour(hour);
 		//#endif
 		//#ifdef dateRange
@@ -114,6 +116,22 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		reminder.setHourStart(hourStart);
 		reminder.setDateFinal(dateFinal);
 		reminder.setHourFinal(hourFinal);
+		//#endif
+		//#ifdef dateRepeat
+		int monday = intent.getIntExtra("monday", 0);
+		int tuesday = intent.getIntExtra("tuesday", 0);
+		int wednesday = intent.getIntExtra("wednesday", 0);
+		int thursday = intent.getIntExtra("thursday", 0);
+		int friday = intent.getIntExtra("friday", 0);
+		int saturday = intent.getIntExtra("saturday", 0);
+		int sunday = intent.getIntExtra("sunday", 0);
+		reminder.setMonday(monday);
+		reminder.setTuesday(tuesday);
+		reminder.setWednesday(wednesday);
+		reminder.setThursday(thursday);
+		reminder.setFriday(friday);
+		reminder.setSaturday(saturday);
+		reminder.setSunday(sunday);
 		//#endif
 		//#if staticCategory || manageCategory
 		setNewCategory(intent);
@@ -142,19 +160,21 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		//#ifdef fixedDate
 		updateSpinnerDateHour(spinnerDate, reminder.getDate());
 		updateDateFromString(reminder.getDate());
+		//#endif
+		//#if fixedDate || dateRepeat
 		updateSpinnerDateHour(spinnerTime, reminder.getHour());
 		updateTimeFromString(reminder.getHour());
 		//#endif
 		//#ifdef dateRange
-	    updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
-	    updateDateFromString(reminder.getDateStart(), false);
-	    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourStart());
-	    updateTimeFromString(reminder.getHourStart(), false);
-	    updateSpinnerDateHour(spinnerDateStart, reminder.getDateFinal());
-	    updateDateFromString(reminder.getDateFinal(), true);
-	    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
-	    updateTimeFromString(reminder.getHourFinal(), true);
-	    //#endif
+		updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
+		updateDateFromString(reminder.getDateStart(), false);
+		updateSpinnerDateHour(spinnerTimeStart, reminder.getHourStart());
+		updateTimeFromString(reminder.getHourStart(), false);
+		updateSpinnerDateHour(spinnerDateStart, reminder.getDateFinal());
+		updateDateFromString(reminder.getDateFinal(), true);
+		updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
+		updateTimeFromString(reminder.getHourFinal(), true);
+		//#endif
 		//#if staticCategory || manageCategory
 		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		//#endif
