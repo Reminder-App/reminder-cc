@@ -33,7 +33,9 @@ public class ReminderContentProvider extends ContentProvider {
 	public static final String date() {
 		return DBConstants.REMINDER_DATE_COLUMN;
 	}
+	//#endif
 
+	//#if fixedDate || dateRepeat
 	public static final String hour() {
 		return DBConstants.REMINDER_HOUR_COLUMN;
 	}
@@ -90,7 +92,7 @@ public class ReminderContentProvider extends ContentProvider {
 		//#ifdef fixedDate
 		reminder.setDate(values.getAsString(date()));
 		//#endif
-		//#ifdef fixedDate
+		//#if fixedDate || dateRepeat
 		reminder.setHour(values.getAsString(hour()));
 		//#endif
 		//#ifdef dateRange
