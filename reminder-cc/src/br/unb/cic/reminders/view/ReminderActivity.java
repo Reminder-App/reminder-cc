@@ -33,28 +33,35 @@ import java.util.Arrays;
 //#ifdef googleCalendar 
 import br.unb.cic.reminders.calendar.CalendarEventCreator;
 import br.unb.cic.reminders.model.CalendarNotFoundException;
-import android.widget.CheckBox;
 //#endif 
+//#if googleCalendar || dateRepeat
+import android.widget.CheckBox;
+//#endif
 
 public abstract class ReminderActivity extends Activity {
 	protected Reminder reminder;
 	//#ifdef fixedDate
-	protected Calendar date, time;
+	protected Calendar date;
+	protected Spinner spinnerDate;
+	protected EditText edtDate;
+	//#endif
+	//#if fixedDate || dateRepeat
+	protected Calendar time;
+	protected EditText edtTime;
+	protected Spinner spinnerTime;
 	//#endif
 	//#ifdef dateRange
 	protected Calendar dateStart, timeStart, dateFinal, timeFinal;
-	//#endif
-	protected EditText edtReminder, edtDetails, edtDate, edtTime;
-	//#ifdef fixedDate
-	protected Spinner spinnerDate, spinnerTime;
-	//#endif
-	//#ifdef dateRange
 	protected Spinner spinnerDateStart, spinnerTimeStart, spinnerDateFinal, spinnerTimeFinal;
 	//#endif
+	protected EditText edtReminder, edtDetails;
 	private Button btnSave, btnCancel;
 	//#ifdef googleCalendar
 	private CalendarEventCreator creator;
 	private CheckBox cbCalendar;
+	//#endif
+	//#ifdef dateRepeat
+	protected CheckBox cbMonday, cbTuesday, cbWednesday, cbThursday, cbFriday, cbSaturday, cbSunday;
 	//#endif
 
 	//#if staticCategory || manageCategory
@@ -163,6 +170,8 @@ public abstract class ReminderActivity extends Activity {
 		edtDetails = (EditText) findViewById(R.id.edtDetails);
 		//#ifdef fixedDate
 		spinnerDate = getSpinnerDate();
+		//#endif
+		//#if fixedDate || dateRepeat
 		spinnerTime = getSpinnerTime();
 		//#endif
 		//#ifdef dateRange
@@ -170,6 +179,15 @@ public abstract class ReminderActivity extends Activity {
 		spinnerTimeStart = getSpinnerTimeStart();
 		spinnerDateFinal = getSpinnerDateFinal();
 		spinnerTimeFinal = getSpinnerTimeFinal();
+		//#endif
+		//#ifdef dateRepeat
+		cbMonday = (CheckBox) findViewById(R.id.cbMonday);
+		cbTuesday = (CheckBox) findViewById(R.id.cbTuesday);
+		cbWednesday = (CheckBox) findViewById(R.id.cbWednesday);
+		cbThursday = (CheckBox) findViewById(R.id.cbThursday);
+		cbFriday = (CheckBox) findViewById(R.id.cbFriday);
+		cbSaturday = (CheckBox) findViewById(R.id.cbSaturday);
+		cbSunday = (CheckBox) findViewById(R.id.cbSunday);
 		//#endif
 		//#if staticCategory || manageCategory
 		try {
@@ -189,7 +207,9 @@ public abstract class ReminderActivity extends Activity {
 	private void initializeListeners() {
 		addListenerToBtnSave();
 		addListenerToBtnCancel();
+		//#if fixedDate || dateRange
 		addListenerToSpinnerDate();
+		//#endif
 		addListenerToSpinnerTime();
 		//#if staticCategory || manageCategory
 		addListenerToSpinnerCategory();
@@ -224,6 +244,7 @@ public abstract class ReminderActivity extends Activity {
 		});
 	}
 
+	//#if fixedDate || dateRange
 	private void addListenerToSpinnerDate() {
 		//#ifdef fixedDate
 		spinnerDate.setOnTouchListener(new View.OnTouchListener() {
@@ -337,9 +358,10 @@ public abstract class ReminderActivity extends Activity {
 		});
 		//#endif
 	}
+	//#endif
 
 	private void addListenerToSpinnerTime() {
-		//#ifdef fixedDate
+		//#if fixedDate || dateRepeat
 		spinnerTime.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				spinnerTime = getSpinnerTime();
@@ -469,6 +491,8 @@ public abstract class ReminderActivity extends Activity {
 	private void setValuesOnReminder() throws Exception {
 		//#ifdef fixedDate
 		reminder.setDate(dateToString());
+		//#endif
+		//#if fixedDate || dateRepeat
 		reminder.setHour(timeToString());
 		//#endif
 		//#ifdef dateRange
@@ -476,6 +500,15 @@ public abstract class ReminderActivity extends Activity {
 		reminder.setHourStart(timeToString(timeStart));
 		reminder.setDateFinal(dateToString(dateFinal));
 		reminder.setHourFinal(timeToString(timeFinal));
+		//#endif
+		//#ifdef dateRepeat
+		reminder.setMonday(cbMonday.isChecked());
+		reminder.setTuesday(cbTuesday.isChecked());
+		reminder.setWednesday(cbWednesday.isChecked());
+		reminder.setThursday(cbThursday.isChecked());
+		reminder.setFriday(cbFriday.isChecked());
+		reminder.setSaturday(cbSaturday.isChecked());
+		reminder.setSunday(cbSunday.isChecked());
 		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
@@ -491,6 +524,7 @@ public abstract class ReminderActivity extends Activity {
 		//#endif
 	}
 
+	//#if fixedDate || dateRange
 	private String dateToString(
 			//#ifdef dateRange
 			Calendar date
@@ -508,6 +542,7 @@ public abstract class ReminderActivity extends Activity {
 		sDate += "-" + Integer.toString(date.get(Calendar.YEAR));
 		return sDate;
 	}
+	//#endif
 
 	private String timeToString(
 			//#ifdef dateRange
@@ -526,9 +561,10 @@ public abstract class ReminderActivity extends Activity {
 		return sTime;
 	}
 
+	//#if fixedDate || dateRange
 	protected void updateDateFromString(String sDate
-			//#ifdef dateRange
-			,boolean isFinal
+	//#ifdef dateRange
+			, boolean isFinal
 	//#endif
 	) {
 		if (sDate == null || sDate.equals("")) {
@@ -567,14 +603,15 @@ public abstract class ReminderActivity extends Activity {
 			dateStart.set(year, month - 1, day);
 		//#endif
 	}
+	//#endif
 
 	protected void updateTimeFromString(String sTime
-			//#ifdef dateRange
-			,boolean isFinal
+	//#ifdef dateRange
+			, boolean isFinal
 	//#endif
 	) {
 		if (sTime == null || sTime.equals("")) {
-			//#ifdef fixedDate
+			//#if fixedDate || dateRepeat
 			time = null;
 			//#endif
 			//#ifdef dateRange
@@ -590,7 +627,7 @@ public abstract class ReminderActivity extends Activity {
 		char sMinute[] = { sTime.charAt(3), sTime.charAt(4) };
 		int minute = Integer.parseInt(new String(sMinute), 10);
 
-		//#ifdef fixedDate
+		//#if fixedDate || dateRepeat
 		if (time == null)
 			time = Calendar.getInstance();
 		time.set(Calendar.MINUTE, minute);
@@ -636,7 +673,9 @@ public abstract class ReminderActivity extends Activity {
 		spinner.setAdapter(adapterDateGenerator.getSpinnerAdapter(items, this));
 		return spinner;
 	}
+	//#endif
 
+	//#if fixedDate || dateRepeat
 	private Spinner getSpinnerTime() {
 		Spinner spinner = (Spinner) findViewById(R.id.spinnerTime);
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
