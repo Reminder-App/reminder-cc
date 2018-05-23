@@ -136,4 +136,15 @@
       <args>dateRange</args>
     </transformation>
   </configuration>
+  <configuration>
+    <expression>Date Repeat</expression>
+    <transformation>
+      <name>createBuildEntries</name>
+      <args>dateRepeat</args>
+    </transformation>
+    <transformation>
+      <name>removeComponents</name>
+      <args>DatePickerDialogFragmentJava</args>
+    </transformation>
+  </configuration>
 </configurationModel>
