@@ -19,12 +19,17 @@ public class Reminder {
 	private String text;
 	@Column(column = "DETAILS", type = DBTypes.TEXT)
 	private String details;
+
 	//#ifdef fixedDate
 	@Column(column = "DATE", type = DBTypes.TEXT)
 	private String date;
+	//#endif
+
+	//#if fixedDate || dateRepeat
 	@Column(column = "HOUR", type = DBTypes.TEXT)
 	private String hour;
 	//#endif
+
 	//#ifdef dateRange
 	@Column(column = "INITIAL_DATE", type = DBTypes.TEXT)
 	private String dateStart;
@@ -35,6 +40,24 @@ public class Reminder {
 	@Column(column = "FINAL_HOUR", type = DBTypes.TEXT)
 	private String hourFinal;
 	//#endif
+
+	//#ifdef dateRepeat
+	@Column(column = "MONDAY", type = DBTypes.INT)
+	private boolean monday;
+	@Column(column = "TUESDAY", type = DBTypes.INT)
+	private boolean tuesday;
+	@Column(column = "WEDNESDAY", type = DBTypes.INT)
+	private boolean wednesday;
+	@Column(column = "THURSDAY", type = DBTypes.INT)
+	private boolean thursday;
+	@Column(column = "FRIDAY", type = DBTypes.INT)
+	private boolean friday;
+	@Column(column = "SATURDAY", type = DBTypes.INT)
+	private boolean saturday;
+	@Column(column = "SUNDAY", type = DBTypes.INT)
+	private boolean sunday;
+	//#endif
+
 	@Column(column = "DONE", type = DBTypes.INT)
 	private boolean done;
 
@@ -99,7 +122,9 @@ public class Reminder {
 		}
 		this.date = date;
 	}
+	//#endif
 
+	//#if fixedDate || dateRepeat
 	public String getHour() {
 		return hour;
 	}
@@ -193,7 +218,10 @@ public class Reminder {
 	public boolean isValid() {
 		return (text != null
 				//#ifdef fixedDate
-				&& date != null && hour != null
+				&& date != null
+				//#endif
+				//#if fixedDate || dateRepeat
+				&& hour != null
 				//#endif
 				//#ifdef dateRange
 				&& dateStart != null && hourStart != null && dateFinal != null && hourFinal != null
@@ -203,9 +231,123 @@ public class Reminder {
 				//#endif
 				//#ifdef priority
 				&& priority != null
-				//#endif
+		//#endif
 		);
 	}
+
+	//#ifdef dateRepeat
+	public boolean isMonday() {
+		return monday;
+	}
+
+	public void setMonday(boolean monday) {
+		this.monday = monday;
+	}
+
+	public void setMonday(int monday) {
+		this.monday = (monday == 0 ? false : true);
+	}
+
+	public int getMonday() {
+		return monday ? 1 : 0;
+	}
+
+	public boolean isTuesday() {
+		return tuesday;
+	}
+
+	public void setTuesday(boolean tuesday) {
+		this.tuesday = tuesday;
+	}
+
+	public void setTuesday(int tuesday) {
+		this.tuesday = (tuesday == 0 ? false : true);
+	}
+
+	public int getTuesday() {
+		return tuesday ? 1 : 0;
+	}
+
+	public boolean isWednesday() {
+		return wednesday;
+	}
+
+	public void setWednesday(boolean wednesday) {
+		this.wednesday = wednesday;
+	}
+
+	public void setWednesday(int wednesday) {
+		this.wednesday = (wednesday == 0 ? false : true);
+	}
+
+	public int getWednesday() {
+		return wednesday ? 1 : 0;
+	}
+
+	public boolean isThursday() {
+		return thursday;
+	}
+
+	public void setThursday(boolean thursday) {
+		this.thursday = thursday;
+	}
+
+	public void setThursday(int thursday) {
+		this.thursday = (thursday == 0 ? false : true);
+	}
+
+	public int getThursday() {
+		return thursday ? 1 : 0;
+	}
+
+	public boolean isFriday() {
+		return friday;
+	}
+
+	public void setFriday(boolean friday) {
+		this.friday = friday;
+	}
+
+	public void setFriday(int friday) {
+		this.friday = (friday == 0 ? false : true);
+	}
+
+	public int getFriday() {
+		return friday ? 1 : 0;
+	}
+
+	public boolean isSaturday() {
+		return saturday;
+	}
+
+	public void setSaturday(boolean saturday) {
+		this.saturday = saturday;
+	}
+
+	public void setSaturday(int saturday) {
+		this.saturday = (saturday == 0 ? false : true);
+	}
+
+	public int getSaturday() {
+		return saturday ? 1 : 0;
+	}
+
+	public boolean isSunday() {
+		return sunday;
+	}
+
+	public void setSunday(boolean sunday) {
+		this.sunday = sunday;
+	}
+
+	public void setSunday(int sunday) {
+		this.sunday = (sunday == 0 ? false : true);
+	}
+
+	public int getSunday() {
+		return sunday ? 1 : 0;
+	}
+	//#endif
 
 	public boolean isDone() {
 		return done;
