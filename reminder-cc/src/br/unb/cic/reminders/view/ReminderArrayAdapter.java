@@ -1,7 +1,9 @@
 package br.unb.cic.reminders.view;
 
+//#if fixedDate || dateRange
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+//#endif
 import java.util.List;
 
 import android.content.Context;
@@ -26,19 +28,36 @@ import android.graphics.Typeface;
 public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 	private Context context;
 	private int rowColor = Color.BLACK;
+	//#if fixedDate || dateRange
 	private int rowType = NEXT_DAYS;
 	public static final int LATE = 0;
 	public static final int TODAY = 1;
 	public static final int NEXT_DAYS = 2;
+	//#endif
 	//#ifdef fixedDate
 	public static final int NO_DATE = 3;
+	//#endif
+	//#ifdef dateRepeat
+	private int rowType = MONDAY;
+	public static final int MONDAY = 0;
+	public static final int TUESDAY = 1;
+	public static final int WEDNESDAY = 2;
+	public static final int THURSDAY = 3;
+	public static final int FRIDAY = 4;
+	public static final int SATURDAY = 5;
+	public static final int SUNDAY = 6;
 	//#endif
 
 	public ReminderArrayAdapter(Context context, List<Reminder> objects) {
 		super(context, R.layout.reminder_row, objects);
 		this.context = context;
 		this.rowColor = Color.BLACK;
+		//#if fixedDate || dateRange
 		this.rowType = NEXT_DAYS;
+		//#endif
+		//#ifdef dateRepeat
+		this.rowType = MONDAY;
+		//#endif
 	}
 
 	public ReminderArrayAdapter(Context context, List<Reminder> objects, int rowColor, int rowType) {
@@ -64,8 +83,13 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		ImageView ivPriority = (ImageView) reminderRow.findViewById(R.id.ivPriority);
 		//#endif
 		TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
+		//#if fixedDate || dateRange
 		TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 		TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
+		//#endif
+		//#ifdef dateRepeat
+		TextView tvHour = (TextView) reminderRow.findViewById(R.id.txtHour);
+		//#endif
 		CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
 		tvDone.setTag(position);
 		tvDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -90,14 +114,21 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		//#endif
 		tvReminder.setTextColor(rowColor);
 		tvReminder.setText(getItem(position).getText());
+		//#if fixedDate || dateRange
 		tvDateFirst.setTextColor(rowColor);
 		tvDateFirst.setText(getDateFirst(position));
 		tvDateSecond.setTextColor(rowColor);
 		tvDateSecond.setText(getDateSecond(position));
+		//#endif
+		//#ifdef dateRepeat
+		tvHour.setTextColor(rowColor);
+		tvHour.setText(getDatesHour(position));
+		//#endif
 		tvDone.setChecked(getItem(position).isDone());
 		return reminderRow;
 	}
 
+	//#if fixedDate || dateRange
 	private String getDateFirst(int position) {
 		//#ifdef fixedDate
 		if (getItem(position).getDate() == null) {
@@ -189,9 +220,10 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		return getItem(position).getHourFinal();
 		//#endif
 	}
+	//#endif
 
 	private String getDatesHour(int position) {
-		//#ifdef fixedDate
+		//#if fixedDate || dateRepeat
 		if (getItem(position).getHour() == null) {
 			return "";
 		}
