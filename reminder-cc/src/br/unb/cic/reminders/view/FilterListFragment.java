@@ -25,6 +25,7 @@ import br.unb.cic.reminders.model.Category;
 //#ifdef manageCategory
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -150,23 +151,33 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 
 		MenuInflater inflater = getActivity().getMenuInflater();
 
-		if (((AdapterContextMenuInfo)menuInfo).position < 1) {
-            return;
-        }
+		if (((AdapterContextMenuInfo) menuInfo).position < 1) {
+			return;
+		}
 
-        //#ifdef priority
-        List<Category> categories = new ArrayList<Category>();
-        try {
-            categories = Controller.instance(getActivity().getApplicationContext()).listCategories();
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
-        if((( AdapterContextMenuInfo ) menuInfo).position > categories.size()) {
-            return;
-        }
-        //#endif
+		//#ifdef priority
+		List<Category> categories = new ArrayList<Category>();
+		try {
+			categories = Controller.instance(getActivity().getApplicationContext()).listCategories();
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}
+		if (((AdapterContextMenuInfo) menuInfo).position > categories.size()) {
+			return;
+		}
+		//#endif
 
 		inflater.inflate(R.menu.category_list_fragment_context_menu, menu);
+	}
+
+	public void reloadReminderListFragment() {
+		Fragment currentFragment = getActivity().getFragmentManager().findFragmentById(R.id.listReminders);
+		if (currentFragment instanceof ReminderListFragment) {
+			FragmentTransaction fragTransaction = (getActivity()).getFragmentManager().beginTransaction();
+			fragTransaction.detach(currentFragment);
+			fragTransaction.attach(currentFragment);
+			fragTransaction.commit();
+		}
 	}
 
 	@Override
@@ -185,17 +196,15 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 				try {
 					Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 					Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
-					updateListView();
-					return true;
 				} catch (DBException e) {
 					Log.e(TAG, e.getMessage());
 				}
+				reloadReminderListFragment();
 				updateListView();
 				return true;
 			default:
 				return super.onContextItemSelected(item);
 			}
-
 		}
 		return super.onContextItemSelected(item);
 	}
