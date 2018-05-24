@@ -2,10 +2,8 @@ package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +11,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import br.unb.cic.framework.persistence.DBException;
 import br.unb.cic.reminders.controller.AllRemindersFilter;
+//#if (manageCategory && priority) || (staticCategory || manageCategory)
 import br.unb.cic.reminders.controller.Controller;
+//#endif
 import br.unb.cic.reminders.controller.ReminderFilter;
 import br.unb.cic.reminders2.R;
 //#if staticCategory || manageCategory
 import br.unb.cic.reminders.controller.CategoryFilter;
 import br.unb.cic.reminders.model.Category;
+import android.util.Log;
+import br.unb.cic.framework.persistence.DBException;
 //#endif
 //#ifdef manageCategory
 import android.widget.AdapterView.AdapterContextMenuInfo;
