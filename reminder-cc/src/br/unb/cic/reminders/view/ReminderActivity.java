@@ -37,6 +37,9 @@ import br.unb.cic.reminders.model.CalendarNotFoundException;
 //#if googleCalendar || dateRepeat
 import android.widget.CheckBox;
 //#endif
+//#ifdef dateRepeat
+import br.unb.cic.reminders.model.InvalidDaysException;
+//#endif 
 
 public abstract class ReminderActivity extends Activity {
 	protected Reminder reminder;
@@ -508,7 +511,11 @@ public abstract class ReminderActivity extends Activity {
 		reminder.setThursday(cbThursday.isChecked());
 		reminder.setFriday(cbFriday.isChecked());
 		reminder.setSaturday(cbSaturday.isChecked());
-		reminder.setSunday(cbSunday.isChecked());
+		try {
+			reminder.setSunday(cbSunday.isChecked());
+		} catch (InvalidDaysException e) {
+			Toast.makeText(getApplicationContext(), "At least one day should be checked.", Toast.LENGTH_SHORT).show();
+		}
 		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
@@ -739,7 +746,7 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-		
+
 		items.add("No time");
 		items.add("+ Select");
 

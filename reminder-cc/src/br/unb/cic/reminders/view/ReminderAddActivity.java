@@ -31,6 +31,7 @@ import android.widget.ArrayAdapter;
 //#endif
 //#ifdef dateRepeat 
 import android.widget.CheckBox;
+import br.unb.cic.reminders.model.InvalidDaysException;
 //#endif 
 
 public class ReminderAddActivity extends Activity {
@@ -217,7 +218,11 @@ public class ReminderAddActivity extends Activity {
 		reminder.setThursday(cbThursday.isChecked());
 		reminder.setFriday(cbFriday.isChecked());
 		reminder.setSaturday(cbSaturday.isChecked());
-		reminder.setSunday(cbSunday.isChecked());
+		try {
+			reminder.setSunday(cbSunday.isChecked());
+		} catch (InvalidDaysException e) {
+			Toast.makeText(getApplicationContext(), "At least one day should be checked.", Toast.LENGTH_SHORT).show();
+		}
 		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory(selectedCategory);

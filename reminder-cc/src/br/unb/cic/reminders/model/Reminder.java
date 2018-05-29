@@ -223,6 +223,9 @@ public class Reminder {
 				//#if fixedDate || dateRepeat
 				&& hour != null
 				//#endif
+				//#ifdef dateRepeat
+				&& isOneCbSelected()
+				//#endif
 				//#ifdef dateRange
 				&& dateStart != null && hourStart != null && dateFinal != null && hourFinal != null
 				//#endif
@@ -231,7 +234,7 @@ public class Reminder {
 				//#endif
 				//#ifdef priority
 				&& priority != null
-		//#endif
+				//#endif
 		);
 	}
 
@@ -337,6 +340,9 @@ public class Reminder {
 	}
 
 	public void setSunday(boolean sunday) {
+		if (!isOneCbSelected() && !sunday) {
+            throw new InvalidDaysException("are all false");
+        }
 		this.sunday = sunday;
 	}
 
@@ -347,6 +353,11 @@ public class Reminder {
 	public int getSunday() {
 		return sunday ? 1 : 0;
 	}
+	
+	public boolean isOneCbSelected() {
+        return (monday != false || tuesday != false || wednesday != false || thursday != false 
+            || friday != false || saturday != false);
+    }
 	//#endif
 
 	public boolean isDone() {

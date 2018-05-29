@@ -147,4 +147,11 @@
       <args>DatePickerDialogFragmentJava</args>
     </transformation>
   </configuration>
+  <configuration>
+    <expression>Not(Date Repeat)</expression>
+    <transformation>
+      <name>removeComponents</name>
+      <args>InvalidDaysExceptionJava</args>
+    </transformation>
+  </configuration>
 </configurationModel>
