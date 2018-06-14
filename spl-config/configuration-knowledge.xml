@@ -17,10 +17,6 @@
   <configuration>
     <expression>Or(Manage Category, Static Category)</expression>
     <transformation>
-      <name>createBuildEntries</name>
-      <args>category</args>
-    </transformation>
-    <transformation>
       <name>preprocessFiles</name>
       <args>FilterListFragmentJava, CategoryDAOJava, DefaultCategoryDAOJava</args>
     </transformation>
