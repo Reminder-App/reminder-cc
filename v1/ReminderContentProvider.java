@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.model.cp;
 
 import android.content.ContentProvider;
@@ -23,6 +23,7 @@ public class ReminderContentProvider extends ContentProvider {
 		return DBConstants.REMINDER_TEXT_COLUMN;
 	}
 
+	//#ifdef fixedDate
 	public static final String date() {
 		return DBConstants.REMINDER_DATE_COLUMN;
 	}
@@ -30,6 +31,7 @@ public class ReminderContentProvider extends ContentProvider {
 	public static final String hour() {
 		return DBConstants.REMINDER_HOUR_COLUMN;
 	}
+	//#endif
 
 	private ReminderDAO rdao;
 	private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -58,8 +60,10 @@ public class ReminderContentProvider extends ContentProvider {
 
 	private Reminder createReminderInsert(ContentValues values) throws DBException {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		reminder.setDate(values.getAsString(date()));
 		reminder.setHour(values.getAsString(hour()));
+		//#endif
 		return reminder;
 	}
 

@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.framework.persistence;
 
 public class DBException extends Exception {

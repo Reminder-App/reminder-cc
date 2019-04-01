@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef edit
 package br.unb.cic.reminders.view;
 
 import android.content.Intent;
@@ -24,12 +24,14 @@ public class EditReminderActivity extends ReminderActivity {
 	}
 
 	private void initializeValues(Intent intent) throws Exception {
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		updateSpinnerDateHour(spinnerDate, date);
 		updateDateFromString(date);
 		updateSpinnerDateHour(spinnerTime, hour);
 		updateTimeFromString(hour);
+		//#endif
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.controller;
 
 import java.util.List;
@@ -22,6 +22,7 @@ public class Controller {
 		return instance;
 	}
 
+	//#ifdef view
 	public List<Reminder> listReminders() throws Exception {
 		try {
 			return DBFactory.factory(context).createReminderDAO().listReminders();
@@ -29,7 +30,9 @@ public class Controller {
 			throw e;
 		}
 	}
+	//#endif
 
+	//#ifdef create
 	public void addReminder(Reminder reminder) throws DBException {
 		try {
 			DBFactory.factory(context).createReminderDAO().saveReminder(reminder);
@@ -37,7 +40,9 @@ public class Controller {
 			throw e;
 		}
 	}
+	//#endif
 
+	//#ifdef edit
 	public void updateReminder(Reminder reminder) throws DBException {
 		try {
 			DBFactory.factory(context).createReminderDAO().updateReminder(reminder);
@@ -45,7 +50,9 @@ public class Controller {
 			throw e;
 		}
 	}
+	//#endif
 
+	//#ifdef delete
 	public void deleteReminder(Reminder reminder) throws DBException {
 		try {
 			DBFactory.factory(context).createReminderDAO().deleteReminder(reminder);
@@ -53,6 +60,7 @@ public class Controller {
 			throw e;
 		}
 	}
+	//#endif
 
 	public void persistReminder(Reminder reminder) throws DBException {
 		try {

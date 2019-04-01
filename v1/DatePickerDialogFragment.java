@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef fixedDate
 package br.unb.cic.reminders.view;
 
 import java.util.Calendar;
