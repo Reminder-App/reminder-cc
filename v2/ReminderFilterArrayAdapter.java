@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class ReminderFilterArrayAdapter extends ArrayAdapter<ReminderFilter> {
 			filterRow = (LinearLayout) convertView;
 		}
 
-		//#if staticCategory || manageCategory
+		  //#if staticCategory || manageCategory
 	    TextView tvFilter = (TextView) filterRow.findViewById(R.id.row_categoryName);
 	    tvFilter.setText(getItem(position).getName());
 

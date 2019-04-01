@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#ifdef staticCategory
 package br.unb.cic.reminders.model.db;
 
 import java.util.ArrayList;
@@ -85,7 +85,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 		return null;
 	}
 
-
 	private Category cursorToCategory(Cursor cursor) {
 		Long pk = cursor.getLong(cursor.getColumnIndex(DBConstants.CATEGORY_PK_COLUMN));
 		String name = cursor.getString(cursor.getColumnIndex(DBConstants.CATEGORY_NAME_COLUMN));
@@ -108,7 +107,6 @@ public class DefaultCategoryDAO extends GenericDAO<Category> implements Category
 
 	public void updateCategory(Category category) throws DBException {
 		try {
-
 			try {
 				persist(category);
 			} catch (DBInvalidEntityException e) {

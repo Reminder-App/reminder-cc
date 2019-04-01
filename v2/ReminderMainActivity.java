@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders;
 
 import android.app.Activity;
@@ -31,7 +31,7 @@ public class ReminderMainActivity extends Activity {
 		ft = getFragmentManager().beginTransaction();
 		listReminderFragment = new ReminderListFragment();
 		ft.add(R.id.listReminders, listReminderFragment);
-		  //#if staticCategory || manageCategory
+		//#if staticCategory || manageCategory
 	    FilterListFragment listCategoryFragment = new FilterListFragment();
 	    listCategoryFragment.addListener(listReminderFragment);
 	    ft.add(R.id.listCategories, listCategoryFragment);

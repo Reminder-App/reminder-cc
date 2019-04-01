@@ -34,15 +34,15 @@ public class AddCategoryDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) { 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.dialog_addcategory_title);
-        LayoutInflater inflater = getActivity().getLayoutInflater();
 
+        builder.setTitle(R.string.dialog_addcategory_title);
+
+        LayoutInflater inflater = getActivity().getLayoutInflater();
 
         final View view = inflater.inflate(R.layout.category_dialog, null);
         builder.setView(view)
-
                 .setPositiveButton(R.string.dialog_addcategory_add, new
                         DialogInterface.OnClickListener() {
                             @SuppressWarnings("unchecked")
@@ -77,16 +77,13 @@ public class AddCategoryDialogFragment extends DialogFragment {
                                 }
                                 catch(InvalidTextException e) {
                                     Log.e("CategoryDialogFragment", e.getMessage());
-
                                     e.printStackTrace();
                                     Toast.makeText(getActivity().getApplicationContext(),
                                             "Categoria inválida.", Toast.LENGTH_SHORT).show();
 
-
                                 }
                                 catch(Exception e) {
-                                    Log.e("CategoryDialogFragment", e.getMessage()); 
-
+                                    Log.e("CategoryDialogFragment", e.getMessage());
                                     e.printStackTrace();
                                 }
                             }
@@ -105,6 +102,7 @@ public class AddCategoryDialogFragment extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
     }
 }
 //#endif

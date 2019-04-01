@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#ifdef staticCategory
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
@@ -123,7 +123,6 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 
 	public void onItemClick(AdapterView<? extends Object> adapterView, View view, int position, long id) {
 		notifyListeners(adapter.getItem(position));
-
 	}
 
 	//#ifdef manageCategory
@@ -146,14 +145,15 @@ public class FilterListFragment extends Fragment implements OnItemClickListener 
 		if (item.getGroupId() == R.id.context_menu_category) {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			Category category = ((CategoryFilter) lvFilters.getAdapter().getItem(info.position)).getCategory();
+
 			switch (item.getItemId()) {
 			case R.id.edit:
 				DialogFragment newFragment = EditCategoryDialogFragment.newInstance(category);
 				newFragment.show(getFragmentManager(), "" + R.string.dialog_editcategory_title);
 				updateListView();
 				return true;
-			case R.id.delete: 
-				try {
+			case R.id.delete:
+				try
 					Controller.instance(getActivity().getApplicationContext()).deleteReminderByCategory(category);
 					Controller.instance(getActivity().getApplicationContext()).deleteCategory(category);
 					updateListView();

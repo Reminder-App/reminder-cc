@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.model.db;
 
 public class DBConstants {
@@ -8,11 +8,18 @@ public class DBConstants {
 			//#endif
 	};
 	public static String CREATE_TABLE_STATEMENTS[] = { "CREATE TABLE REMINDER ( "
-			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL," + "DETAILS VARCHAR(50) NULL,"
 			//#if staticCategory || manageCategory
 			+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE,"
 			//#endif
-			+ "DATE CHAR(10) NULL," + "HOUR CHAR(5) NULL," + "DONE INTEGER NOT NULL);"
+			//#ifdef fixedDate
+			+ "DATE CHAR(10) NULL,"
+			+ "HOUR CHAR(5) NULL,"
+			//#endif
+			//#ifdef done
+			+ "DONE INTEGER NOT NULL,"
+			//#endif
+			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL," + "DETAILS VARCHAR(50) NULL,"
+			+ ");"
 			//#if staticCategory || manageCategory
 			, "CREATE TABLE CATEGORY(" + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, "
 					+ "LOCKED INT NOT NULL);"
@@ -23,9 +30,13 @@ public class DBConstants {
 	public static String REMINDER_PK_COLUMN = "PK";
 	public static String REMINDER_TEXT_COLUMN = "TEXT";
 	public static String REMINDER_DETAILS_COLUMN = "DETAILS";
+	//#ifdef fixedDate
 	public static String REMINDER_DATE_COLUMN = "DATE";
 	public static String REMINDER_HOUR_COLUMN = "HOUR";
+	//#endif
+	//#ifdef done
 	public static String REMINDER_DONE_COLUMN = "DONE";
+	//#endif
 
 	//#if staticCategory || manageCategory
 	public static final String SELECT_CATEGORIES = "SELECT PK, NAME FROM CATEGORY";

@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef fixedDate
 package util;
 
 import java.text.ParseException;

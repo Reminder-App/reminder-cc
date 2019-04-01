@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef create
 package br.unb.cic.reminders.view;
 
 import android.app.Activity;
@@ -11,7 +11,9 @@ import android.widget.EditText;
 
 import android.widget.Toast;
 import br.unb.cic.reminders.controller.Controller;
+//#ifdef fixedDate
 import br.unb.cic.reminders.model.InvalidDateException;
+//#endif
 import br.unb.cic.reminders.model.InvalidFormatException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
@@ -25,7 +27,10 @@ import android.widget.AdapterView.OnItemSelectedListener;
 //#endif
 
 public class ReminderAddActivity extends Activity {
-	private EditText edtReminder, edtDetails, edtDate, edtHour;
+	private EditText edtReminder, edtDetails;
+	//#ifdef fixedDate
+	private EditText edtDate, edtHour;
+	//#endif
 	private Button btnSave, btnCancel;
 	private boolean editingReminder;
 	private Long previewReminderId;
@@ -42,7 +47,7 @@ public class ReminderAddActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-				 
+
 			}
 		});
 	}
@@ -142,8 +147,10 @@ public class ReminderAddActivity extends Activity {
 
 	private Reminder createReminderAux() {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		reminder.setDate(edtDate.getText().toString());
 		reminder.setHour(edtHour.getText().toString());
+		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory(selectedCategory);
 		//#endif
@@ -167,10 +174,12 @@ public class ReminderAddActivity extends Activity {
 
 	private Reminder createReminderExisting(Intent intent) {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
 		//#if staticCategory || manageCategory
 		String categoryName = intent.getStringExtra("category_name");
 		String categoryId = intent.getStringExtra("category_id");
@@ -202,10 +211,12 @@ public class ReminderAddActivity extends Activity {
 
 	private Reminder createReminderIntent(Intent intent) {
 		Reminder reminder = new Reminder();
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
 		//#if staticCategory || manageCategory
 	    String category = intent.getStringExtra("category");
 	    Category auxCategory = new Category();
@@ -240,8 +251,10 @@ public class ReminderAddActivity extends Activity {
 	private void updateFieldsFromReminder(Reminder reminder) throws Exception {
 		edtReminder.setText(reminder.getText());
 		edtDetails.setText(reminder.getDetails());
+		//#ifdef fixedDate
 		edtDate.setText(reminder.getDate());
 		edtHour.setText(reminder.getHour());
+		//#endif
 		//#if staticCategory || manageCategory
 	    spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 	    //#endif

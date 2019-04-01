@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.model;
 
 import java.util.regex.Matcher;
@@ -20,12 +20,16 @@ public class Reminder {
 	private String text;
 	@Column(column = "DETAILS", type = DBTypes.TEXT)
 	private String details;
+	//#ifdef fixedDate
 	@Column(column = "DATE", type = DBTypes.TEXT)
 	private String date;
 	@Column(column = "HOUR", type = DBTypes.TEXT)
 	private String hour;
+	//#endif
+	//#ifdef done
 	@Column(column = "DONE", type = DBTypes.INT)
 	private boolean done;
+	//#endif
 
 	//#if staticCategory || manageCategory
 	@Column(column = "FK_CATEGORY", type = DBTypes.LONG)
@@ -72,6 +76,7 @@ public class Reminder {
 		}
 	}
 
+	//#ifdef fixedDate
 	public String getDate() {
 		return date;
 	}
@@ -99,6 +104,7 @@ public class Reminder {
 		Matcher m = p.matcher(date);
 		return m.matches();
 	}
+	//#endif
 
 	//#if staticCategory || manageCategory
 	public Category getCategory() {
@@ -111,13 +117,17 @@ public class Reminder {
 	//#endif
 
 	public boolean isValid() {
-		return (text != null && date != null && hour != null
+		return (text != null
+		//#ifdef fixedDate
+				&& date != null && hour != null
+		//#endif
 		//#if staticCategory || manageCategory
 				&& category != null
 		//#endif
 		);
 	}
 
+	//#ifdef done
 	public boolean isDone() {
 		return done;
 	}
@@ -133,5 +143,6 @@ public class Reminder {
 	public void setDone(int done) {
 		this.done = (done == 0 ? false : true);
 	}
+	//#endif
 }
 //#endif

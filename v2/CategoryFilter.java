@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#if manageCategory || staticCategory
 package br.unb.cic.reminders.controller;
 
 import android.content.Context;

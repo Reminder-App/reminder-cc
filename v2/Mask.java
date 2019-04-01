@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package util;
 
 import android.text.Editable;

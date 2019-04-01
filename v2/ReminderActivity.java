@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
@@ -19,7 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+//#ifdef fixedDate
 import br.unb.cic.reminders.model.InvalidDateException;
+//#endif
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;
 import br.unb.cic.reminders2.R;
@@ -30,9 +32,12 @@ import br.unb.cic.reminders.controller.Controller;
 
 public abstract class ReminderActivity extends Activity {
 	protected Reminder reminder;
+	//#ifdef fixedDate
 	protected Calendar date, time;
-	protected EditText edtReminder, edtDetails, edtDate, edtTime;
 	protected Spinner spinnerDate, spinnerTime;
+	protected EditText edtDate, edtTime;
+	//#endif
+	protected EditText edtReminder, edtDetails;
 	private Button btnSave, btnCancel;
 
 	//#if staticCategory || manageCategory
@@ -50,7 +55,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
- 
+				 
 			}
 		});
 	}
@@ -66,7 +71,7 @@ public abstract class ReminderActivity extends Activity {
 
 		spinner.setAdapter(adapter);
 
-		//#ifdef manageCategory
+		  //#ifdef manageCategory
 	    Category temp = new Category();
 	    temp.setName("+ Category");
 	    adapter.add(temp);
@@ -106,8 +111,10 @@ public abstract class ReminderActivity extends Activity {
 		btnCancel = (Button) findViewById(R.id.btnCancel);
 		edtReminder = (EditText) findViewById(R.id.edtReminder);
 		edtDetails = (EditText) findViewById(R.id.edtDetails);
+		//#ifdef fixedDate
 		spinnerDate = getSpinnerDate();
 		spinnerTime = getSpinnerTime();
+		//#endif
 		//#if staticCategory || manageCategory
 		try {
 			spinnerCategory = getSpinnerCategory();
@@ -120,8 +127,10 @@ public abstract class ReminderActivity extends Activity {
 	private void initializeListeners() {
 		addListenerToBtnSave();
 		addListenerToBtnCancel();
+		//#ifdef fixedDate
 		addListenerToSpinnerDate();
 		addListenerToSpinnerTime();
+		//#endif
 		//#if staticCategory || manageCategory
 		addListenerToSpinnerCategory();
 		//#endif
@@ -220,6 +229,7 @@ public abstract class ReminderActivity extends Activity {
 		});
 	}
 
+	//#ifdef create
 	private void createReminder() {
 		try {
 			reminder.setText(edtReminder.getText().toString());
@@ -235,15 +245,19 @@ public abstract class ReminderActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Serious error.", Toast.LENGTH_SHORT).show();
 		}
 	}
+	//#endif
 
 	private void setValuesOnReminder() throws Exception {
+		//#ifdef fixedDate
 		reminder.setDate(dateToString());
 		reminder.setHour(timeToString());
+		//#endif
 		//#if staticCategory || manageCategory
 		reminder.setCategory((Category) spinnerCategory.getSelectedItem());
 		//#endif
 	}
 
+	//#ifdef fixedDate
 	private String dateToString() {
 		if (date == null)
 			return null;
@@ -335,6 +349,7 @@ public abstract class ReminderActivity extends Activity {
 		spinner.setAdapter(adapterTimeGenerator.getSpinnerAdapter(items, this));
 		return spinner;
 	}
+	//#endif
 
 	protected abstract void persist(Reminder reminder);
 }

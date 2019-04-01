@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef create
 package br.unb.cic.reminders.view;
 
 import android.content.Intent;
@@ -97,10 +97,12 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 	}
 
 	private void reminderFromIntent(Intent intent) throws Exception {
+		//#ifdef fixedDate
 		String date = intent.getStringExtra("date");
 		String hour = intent.getStringExtra("hour");
 		reminder.setDate(date);
 		reminder.setHour(hour);
+		//#endif
 		//#if staticCategory || manageCategory
 		setNewCategory(intent);
 		reminder.setCategory(newCategory);
@@ -121,10 +123,12 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 	}
 
 	private void initialize() throws Exception {
+		//#ifdef fixedDate
 		updateSpinnerDateHour(spinnerDate, reminder.getDate());
 		updateDateFromString(reminder.getDate());
 		updateSpinnerDateHour(spinnerTime, reminder.getHour());
 		updateTimeFromString(reminder.getHour());
+		//#endif
 		//#if staticCategory || manageCategory
 		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		//#endif

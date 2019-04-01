@@ -1,9 +1,11 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
+//#ifdef fixedDate
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+//#endif
 import java.util.List;
 import util.Utility;
 import android.app.Fragment;
@@ -28,7 +30,12 @@ import br.unb.cic.reminders2.R;
 
 public class ReminderListFragment extends Fragment implements FiltersListChangeListener {
 	private static String TAG = "reminder fragment list";
-	private ListView lvReminderLate, lvReminderToday, lvReminderNextDays, lvReminderNoDate;
+	//#ifdef view
+	private ListView lvReminderLate, lvReminderToday, lvReminderNextDays;
+	//#endif
+	//#ifdef fixedDate
+	private ListView lvReminderNoDate;
+	//#endif
 	private ReminderArrayAdapter adapter;
 	private ReminderArrayAdapter contextMenuAdapter;
 	private View view;
@@ -88,8 +95,10 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 
 	private Intent editIntent(Reminder reminder) {
 		Intent editIntent = new Intent(getActivity().getApplicationContext(), EditReminderActivity.class);
+		//#ifdef fixedDate
 		editIntent.putExtra("date", reminder.getDate());
 		editIntent.putExtra("hour", reminder.getHour());
+		//#endif
 		//#if staticCategory || manageCategory
 	    editIntent.putExtra("category_name", reminder.getCategory().getName());
 	    editIntent.putExtra("category_id", Long.toString(reminder.getCategory().getId()));
@@ -98,17 +107,26 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 	}
 
 	public void createUI() {
+		//#ifdef view
 		lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
 		lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
 		lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
+		//#endif
+		//#ifded fixedDate
 		lvReminderNoDate = (ListView) view.findViewById(R.id.lvRemindersNoDate);
+		//#endif
+		//#ifdef view
 		updateListView(null);
 		registerForContextMenu(lvReminderLate);
 		registerForContextMenu(lvReminderToday);
 		registerForContextMenu(lvReminderNextDays);
+		//#endif
+		//#ifdef fixedDate
 		registerForContextMenu(lvReminderNoDate);
+		//#endif
 	}
 
+	//#ifdef view
 	public void updateListView(ReminderFilter filter) {
 		if (filter == null)
 			filter = new AllRemindersFilter(getActivity());
@@ -118,7 +136,9 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		List<Reminder> remindersLate = new ArrayList<Reminder>();
 		List<Reminder> remindersToday = new ArrayList<Reminder>();
 		List<Reminder> remindersNextDays = new ArrayList<Reminder>();
+		//#ifdef fixedDate
 		List<Reminder> remindersNoDate = new ArrayList<Reminder>();
+		//#endif
 		for (int i = 0; i < adapter.getCount(); ++i) {
 			r = adapter.getItem(i);
 			if (r.getDate() != null) {
@@ -143,9 +163,12 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 					remindersToday.add(r);
 				else
 					remindersNextDays.add(r);
-			} else {
+			}
+			//#ifdef fixedDate
+			else {
 				remindersNoDate.add(r);
 			}
+			//#endif
 		}
 		adapterLate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersLate,
 				Color.rgb(0xED, 0x1C, 0x24), ReminderArrayAdapter.LATE);
@@ -153,17 +176,22 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 				Color.rgb(0x33, 0xB5, 0xE5), ReminderArrayAdapter.TODAY);
 		adapterNextDays = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNextDays,
 				Color.rgb(0x99, 0x99, 0x99), ReminderArrayAdapter.NEXT_DAYS);
+		//#ifdef fixedDate
 		adapterNoDate = new ReminderArrayAdapter(getActivity().getApplicationContext(), remindersNoDate,
 				Color.rgb(0x00, 0x00, 0x00), ReminderArrayAdapter.NO_DATE);
+		//#endif
 		lvReminderLate.setAdapter(adapterLate);
 		Utility.setListViewHeightBasedOnChildren(lvReminderLate);
 		lvReminderToday.setAdapter(adapterToday);
 		Utility.setListViewHeightBasedOnChildren(lvReminderToday);
 		lvReminderNextDays.setAdapter(adapterNextDays);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
+		//#ifdef fixedDate
 		lvReminderNoDate.setAdapter(adapterNoDate);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNoDate);
+		//#endif
 	}
+	//#endif
 
 	public void onSelectedFilterChanged(ReminderFilter filter) {
 		updateListView(filter);

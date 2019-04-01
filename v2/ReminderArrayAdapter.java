@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.Calendar;
@@ -27,7 +27,9 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 	public static final int LATE = 0;
 	public static final int TODAY = 1;
 	public static final int NEXT_DAYS = 2;
+	//#ifdef fixedDate
 	public static final int NO_DATE = 3;
+	//#endif
 
 	public ReminderArrayAdapter(Context context, List<Reminder> objects) {
 		super(context, R.layout.reminder_row, objects);
@@ -56,8 +58,11 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 			reminderRow = (LinearLayout) convertView;
 		}
 		TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
+		//#ifdef fixedDate
 		TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 		TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
+		//#endif
+		//#ifdef done
 		CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
 		tvDone.setTag(position);
 		tvDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -71,16 +76,22 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 				}
 			}
 		});
+		//#endif
 		tvReminder.setTextColor(rowColor);
 		tvReminder.setText(getItem(position).getText());
+		//#ifdef fixedDate
 		tvDateFirst.setTextColor(rowColor);
 		tvDateFirst.setText(getDateFirst(position));
 		tvDateSecond.setTextColor(rowColor);
 		tvDateSecond.setText(getDateSecond(position));
+		//#endif
+		//#ifdef done
 		tvDone.setChecked(getItem(position).isDone());
+		//#endif
 		return reminderRow;
 	}
 
+	//#ifdef fixedDate
 	private String getDateFirst(int position) {
 		if (getItem(position).getDate() == null) {
 			return "";
@@ -151,6 +162,7 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		else
 			return getItem(position).getHour().substring(0, 2) + "h";
 	}
+	//#endif
 
 	public int getRowColor() {
 		return rowColor;
