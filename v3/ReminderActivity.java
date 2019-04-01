@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> parent) {
-
+				// well... do nothing
 			}
 		});
 	}
@@ -294,7 +294,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-
+				// Well, do nothing...
 			}
 
 		});
@@ -332,7 +332,7 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-
+				// Well, do nothing...
 			}
 
 		});
@@ -445,12 +445,13 @@ public abstract class ReminderActivity extends Activity {
 			}
 
 			public void onNothingSelected(AdapterView<? extends Object> arg0) {
-
+				// Well, do nothing...
 			}
 		});
 		//#endif
 	}
 
+	//#ifdef create
 	private void createReminder() {
 		try {
 			reminder.setText(edtReminder.getText().toString());
@@ -466,6 +467,7 @@ public abstract class ReminderActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Serious error.", Toast.LENGTH_SHORT).show();
 		}
 	}
+	//#endif
 
 	private void setValuesOnReminder() throws Exception {
 		//#ifdef fixedDate
@@ -492,6 +494,7 @@ public abstract class ReminderActivity extends Activity {
 		//#endif
 	}
 
+	//#if fixedDate || dateRange
 	private String dateToString(
 			//#ifdef dateRange
 			Calendar date
@@ -526,6 +529,7 @@ public abstract class ReminderActivity extends Activity {
 			sTime = "0" + sTime;
 		return sTime;
 	}
+	//#endif
 
 	protected void updateDateFromString(String sDate
 			//#ifdef dateRange
@@ -613,6 +617,7 @@ public abstract class ReminderActivity extends Activity {
 		//#endif
 	}
 
+	//#if fixedDate || dateRange
 	@SuppressWarnings("unchecked")
 	protected void updateSpinnerDateHour(Spinner spinner, String dateOrHour) {
 		if (dateOrHour == null)
@@ -626,6 +631,7 @@ public abstract class ReminderActivity extends Activity {
 		adapter.add(dateOrHour);
 		spinner.setSelection(2);
 	}
+	//#endif
 
 	//#ifdef fixedDate
 	private Spinner getSpinnerDate() {
@@ -656,7 +662,6 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-
 		items.add("No date");
 		items.add("+ Select");
 
@@ -671,7 +676,6 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-
 		items.add("No time");
 		items.add("+ Select");
 
@@ -686,7 +690,6 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterDateGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-
 		items.add("No date");
 		items.add("+ Select");
 
@@ -701,7 +704,6 @@ public abstract class ReminderActivity extends Activity {
 		SpinnerAdapterGenerator<String> adapterTimeGenerator = new SpinnerAdapterGenerator<String>();
 
 		List<String> items = new ArrayList<String>();
-	 
 		items.add("No time");
 		items.add("+ Select");
 

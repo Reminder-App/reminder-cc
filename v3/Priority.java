@@ -30,6 +30,5 @@ public enum Priority {
     public String toString() {
         return description;
     }
-
 }
 //#endif

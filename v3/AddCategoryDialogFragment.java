@@ -35,8 +35,11 @@ public class AddCategoryDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         builder.setTitle(R.string.dialog_addcategory_title);
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         final View view = inflater.inflate(R.layout.category_dialog, null);
@@ -45,7 +48,6 @@ public class AddCategoryDialogFragment extends DialogFragment {
                         DialogInterface.OnClickListener() {
                             @SuppressWarnings("unchecked")
                             public void onClick(DialogInterface dialog, int which) {
-
                                 EditText edtCategoryName = ( EditText )
                                         view.findViewById(R.id.dialog_category);
 
@@ -75,7 +77,6 @@ public class AddCategoryDialogFragment extends DialogFragment {
                                 }
                                 catch(InvalidTextException e) {
                                     Log.e("CategoryDialogFragment", e.getMessage());
-
                                     e.printStackTrace();
                                     Toast.makeText(getActivity().getApplicationContext(),
                                             "Categoria inválida.", Toast.LENGTH_SHORT).show();

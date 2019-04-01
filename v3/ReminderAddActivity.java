@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef create
 package br.unb.cic.reminders.view;
 
 import android.app.Activity;
@@ -11,7 +11,9 @@ import android.widget.EditText;
 
 import android.widget.Toast;
 import br.unb.cic.reminders.controller.Controller;
+//#if fixedDate || dateRange
 import br.unb.cic.reminders.model.InvalidDateException;
+//#endif
 import br.unb.cic.reminders.model.InvalidFormatException;
 import br.unb.cic.reminders.model.InvalidTextException;
 import br.unb.cic.reminders.model.Reminder;

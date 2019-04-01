@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.Calendar;
@@ -67,6 +67,7 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		TextView tvReminder = (TextView) reminderRow.findViewById(R.id.txtReminder);
 		TextView tvDateFirst = (TextView) reminderRow.findViewById(R.id.txtDateFirst);
 		TextView tvDateSecond = (TextView) reminderRow.findViewById(R.id.txtDateSecond);
+		//#ifdef done
 		CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
 		tvDone.setTag(position);
 		tvDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -80,6 +81,7 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 				}
 			}
 		});
+		//#endif
 		//#ifdef priority
 		if (getItem(position).getPriority() == 1)
 			ivPriority.setImageResource(R.drawable.important);
@@ -91,11 +93,15 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		//#endif
 		tvReminder.setTextColor(rowColor);
 		tvReminder.setText(getItem(position).getText());
+		//#if fixedDate || dateRange
 		tvDateFirst.setTextColor(rowColor);
 		tvDateFirst.setText(getDateFirst(position));
 		tvDateSecond.setTextColor(rowColor);
 		tvDateSecond.setText(getDateSecond(position));
+		//#endif
+		//#ifdef done
 		tvDone.setChecked(getItem(position).isDone());
+		//#endif
 		return reminderRow;
 	}
 

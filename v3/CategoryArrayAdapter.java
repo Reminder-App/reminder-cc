@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#ifdef staticCategory
 package br.unb.cic.reminders.view;
 
 import java.util.List;
@@ -26,6 +26,7 @@ public class CategoryArrayAdapter extends ArrayAdapter<Category> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LinearLayout categoryRow;
 
+		// Inflate the view
 		if (convertView == null) {
 			categoryRow = new LinearLayout(getContext());
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -42,6 +43,5 @@ public class CategoryArrayAdapter extends ArrayAdapter<Category> {
 
 		return categoryRow;
 	}
-
 }
 //#endif

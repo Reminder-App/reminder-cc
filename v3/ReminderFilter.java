@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.controller;
 
 import java.util.ArrayList;
@@ -7,13 +7,16 @@ import android.content.Context;
 import br.unb.cic.reminders.model.Reminder;
 
 public abstract class ReminderFilter {
+	//#ifdef view
 	private List<Reminder> reminders;
+	//#endif
 	private Context context;
 
 	public ReminderFilter(Context context) {
 		this.context = context;
 	}
 
+	//#ifdef view
 	public List<Reminder> getReminderList() {
 		updateReminders();
 		return reminders;
@@ -39,6 +42,9 @@ public abstract class ReminderFilter {
 		}
 	}
 
+	abstract protected boolean selectReminder(Reminder r);
+	//#endif
+
 	//#ifdef search
 	public List<Reminder> getReminders(String search) {
 		updateReminders();
@@ -55,8 +61,6 @@ public abstract class ReminderFilter {
 		return values;
 	}
 	//#endif
-
-	abstract protected boolean selectReminder(Reminder r);
 
 	abstract public String getName();
 }

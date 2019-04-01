@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#ifdef staticCategory
 package br.unb.cic.reminders.model;
 
 import br.unb.cic.framework.persistence.DBTypes;

@@ -33,8 +33,11 @@ public class EditCategoryDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         builder.setTitle(R.string.dialog_editcategory_title);
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         final View view = inflater.inflate(R.layout.category_dialog, null);
@@ -47,7 +50,6 @@ public class EditCategoryDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.dialog_editcategory_save, new
                         DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
                                 EditText edtCategoryName = ( EditText )
                                         view.findViewById(R.id.dialog_category);
                                 try {
@@ -56,19 +58,16 @@ public class EditCategoryDialogFragment extends DialogFragment {
                                 }
                                 catch(InvalidTextException e) {
                                     Log.e("CategoryDialogFragment", e.getMessage());
-
                                     e.printStackTrace();
                                     Toast.makeText(getActivity().getApplicationContext(),
                                             "Categoria inválida.", Toast.LENGTH_SHORT).show();
                                 }
                                 catch(DBException e) {
                                     Log.e("CategoryDialogFragment", e.getMessage());
-
                                     e.printStackTrace();
                                 }
                                 catch(Exception e) {
                                     Log.e("CategoryDialogFragment", e.getMessage());
-
                                     e.printStackTrace();
                                 }
                             }
@@ -88,6 +87,5 @@ public class EditCategoryDialogFragment extends DialogFragment {
         super.onDestroy();
         getActivity().recreate();
     }
-
 }
 //#endif

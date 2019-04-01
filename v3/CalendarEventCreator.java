@@ -25,7 +25,7 @@ public class CalendarEventCreator {
 			Calendars.ACCOUNT_NAME,
 			Calendars.CALENDAR_DISPLAY_NAME,
 			Calendars.OWNER_ACCOUNT,
-			Calendars.CALENDAR_TIME_ZONE  
+			Calendars.CALENDAR_TIME_ZONE 
 	};
 
 	private void initializer() {

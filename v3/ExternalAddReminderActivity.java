@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef create
 package br.unb.cic.reminders.view;
 
 import android.content.Intent;
@@ -147,15 +147,15 @@ public class ExternalAddReminderActivity extends ReminderActivity {
 		updateTimeFromString(reminder.getHour());
 		//#endif
 		//#ifdef dateRange
-	    updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
-	    updateDateFromString(reminder.getDateStart(), false);
-	    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourStart());
-	    updateTimeFromString(reminder.getHourStart(), false);
-	    updateSpinnerDateHour(spinnerDateStart, reminder.getDateFinal());
-	    updateDateFromString(reminder.getDateFinal(), true);
-	    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
-	    updateTimeFromString(reminder.getHourFinal(), true);
-	    //#endif
+    updateSpinnerDateHour(spinnerDateStart, reminder.getDateStart());
+    updateDateFromString(reminder.getDateStart(), false);
+    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourStart());
+    updateTimeFromString(reminder.getHourStart(), false);
+    updateSpinnerDateHour(spinnerDateStart, reminder.getDateFinal());
+    updateDateFromString(reminder.getDateFinal(), true);
+    updateSpinnerDateHour(spinnerTimeStart, reminder.getHourFinal());
+    updateTimeFromString(reminder.getHourFinal(), true);
+	  //#endif
 		//#if staticCategory || manageCategory
 		spinnerCategory.setSelection(categoryToIndex(reminder.getCategory()));
 		//#endif

@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.model.cp;
 
 import android.content.ContentProvider;

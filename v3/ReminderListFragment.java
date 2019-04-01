@@ -1,9 +1,11 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
+//#if fixedDate || dateRange
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+//#endif
 import java.util.List;
 import util.Utility;
 import android.app.Fragment;
@@ -28,7 +30,9 @@ import br.unb.cic.reminders2.R;
 
 public class ReminderListFragment extends Fragment implements FiltersListChangeListener {
 	private static String TAG = "reminder fragment list";
+	//#ifdef view
 	private ListView lvReminderLate, lvReminderToday, lvReminderNextDays;
+	//#endif
 	//#ifdef fixedDate
 	private ListView lvReminderNoDate;
 	//#endif
@@ -112,21 +116,26 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 	}
 
 	public void createUI() {
+		//#ifdef view
 		lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
 		lvReminderToday = (ListView) view.findViewById(R.id.lvRemindersToday);
 		lvReminderNextDays = (ListView) view.findViewById(R.id.lvRemindersNextDays);
+		//#endif
 		//#ifdef fixedDate
 		lvReminderNoDate = (ListView) view.findViewById(R.id.lvRemindersNoDate);
 		//#endif
+		//#ifdef view
 		updateListView(null);
 		registerForContextMenu(lvReminderLate);
 		registerForContextMenu(lvReminderToday);
 		registerForContextMenu(lvReminderNextDays);
+		//#endif
 		//#ifdef fixedDate
 		registerForContextMenu(lvReminderNoDate);
 		//#endif
 	}
 
+	//#ifdef view
 	public void updateListView(ReminderFilter filter) {
 		if (filter == null)
 			filter = new AllRemindersFilter(getActivity());
@@ -230,6 +239,7 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		lvReminderNextDays.setAdapter(adapterNextDays);
 		Utility.setListViewHeightBasedOnChildren(lvReminderNextDays);
 	}
+	//#endif
 
 	public void onSelectedFilterChanged(ReminderFilter filter) {
 		updateListView(filter);
