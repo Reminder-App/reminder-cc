@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 //#if fixedDate || dateRange
@@ -91,6 +91,7 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		//#ifdef dateRepeat
 		TextView tvHour = (TextView) reminderRow.findViewById(R.id.txtHour);
 		//#endif
+		//#ifdef done
 		CheckBox tvDone = (CheckBox) reminderRow.findViewById(R.id.cbDone);
 		tvDone.setTag(position);
 		tvDone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -104,6 +105,7 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 				}
 			}
 		});
+		//#endif
 		//#ifdef priority
 		if (getItem(position).getPriority() == 1)
 			ivPriority.setImageResource(R.drawable.important);
@@ -125,7 +127,9 @@ public class ReminderArrayAdapter extends ArrayAdapter<Reminder> {
 		tvHour.setTextColor(rowColor);
 		tvHour.setText(getDatesHour(position));
 		//#endif
+		//#ifdef done
 		tvDone.setChecked(getItem(position).isDone());
+		//#endif
 		return reminderRow;
 	}
 

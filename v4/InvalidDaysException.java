@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef dateRepeat
 package br.unb.cic.reminders.model;
 
 public class InvalidDaysException extends InvalidFormatException {

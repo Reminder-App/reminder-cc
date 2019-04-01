@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#if manageCategory || staticCategory
 package br.unb.cic.reminders.controller;
 
 import android.content.Context;
@@ -27,6 +27,5 @@ public class CategoryFilter extends ReminderFilter {
 	public String getName() {
 		return category.getName();
 	}
-
 }
 //#endif

@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
@@ -476,6 +476,7 @@ public abstract class ReminderActivity extends Activity {
 		//#endif
 	}
 
+	//#ifdef create
 	private void createReminder() {
 		try {
 			reminder.setText(edtReminder.getText().toString());

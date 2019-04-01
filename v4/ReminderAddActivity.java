@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef create
 package br.unb.cic.reminders.view;
 
 import android.app.Activity;

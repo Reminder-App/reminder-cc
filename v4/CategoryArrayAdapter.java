@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory
+//#ifdef staticCategory
 package br.unb.cic.reminders.view;
 
 import java.util.List;
@@ -42,6 +42,5 @@ public class CategoryArrayAdapter extends ArrayAdapter<Category> {
 
 		return categoryRow;
 	}
-
 }
 //#endif

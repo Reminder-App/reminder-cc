@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.model.db;
 
 public class DBConstants {
@@ -8,7 +8,6 @@ public class DBConstants {
 			//#endif
 	};
 	public static String CREATE_TABLE_STATEMENTS[] = { "CREATE TABLE REMINDER ( "
-			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL," + "DETAILS VARCHAR(50) NULL,"
 			//#if staticCategory || manageCategory
 			+ "FK_CATEGORY INTEGER NOT NULL REFERENCES CATEGORY ON DELETE CASCADE,"
 			//#endif
@@ -21,6 +20,9 @@ public class DBConstants {
 			//#if fixedDate || dateRepeat
 			+ "HOUR CHAR(5) NULL,"
 			//#endif
+			//#ifdef done
+			+ "DONE INTEGER NOT NULL,"
+			//#endif
 			//#ifdef dateRepeat
 			+ "MONDAY INTEGER NOT NULL," + "TUESDAY INTEGER NOT NULL," + "WEDNESDAY INTEGER NOT NULL,"
 			+ "THURSDAY INTEGER NOT NULL," + "FRIDAY INTEGER NOT NULL," + "SATURDAY INTEGER NOT NULL,"
@@ -30,7 +32,7 @@ public class DBConstants {
 			+ "INITIAL_DATE CHAR(10) NOT NULL," + "INITIAL_HOUR CHAR(5) NULL," + "FINAL_DATE CHAR(10) NOT NULL,"
 			+ "FINAL_HOUR CHAR(5) NULL,"
 			//#endif
-			+ "DONE INTEGER NOT NULL);"
+			+ "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "TEXT VARCHAR(50) NOT NULL," + "DETAILS VARCHAR(50) NULL);"
 			//#if staticCategory || manageCategory
 			, "CREATE TABLE CATEGORY(" + "PK INTEGER PRIMARY KEY AUTOINCREMENT, " + "NAME VARCHAR(50) NOT NULL, "
 					+ "LOCKED INT NOT NULL);"

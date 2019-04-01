@@ -84,6 +84,5 @@ public class EditCategoryDialogFragment extends DialogFragment {
         super.onDestroy();
         getActivity().recreate();
     }
-
 }
 //#endif

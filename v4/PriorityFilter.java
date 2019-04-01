@@ -23,6 +23,5 @@ public class PriorityFilter extends ReminderFilter {
     public String getName() {
         return priority.toString();
     }
-
 }
 //#endif

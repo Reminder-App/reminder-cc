@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && manageReminder
 package br.unb.cic.reminders.model;
 
 import java.util.regex.Matcher;
@@ -59,8 +59,10 @@ public class Reminder {
 	private boolean sunday;
 	//#endif
 
+	//#ifdef done
 	@Column(column = "DONE", type = DBTypes.INT)
 	private boolean done;
+	//#endif
 
 	//#if staticCategory || manageCategory
 	@Column(column = "FK_CATEGORY", type = DBTypes.LONG)
@@ -361,6 +363,7 @@ public class Reminder {
     }
 	//#endif
 
+	//#ifdef done
 	public boolean isDone() {
 		return done;
 	}
@@ -376,5 +379,6 @@ public class Reminder {
 	public void setDone(int done) {
 		this.done = (done == 0 ? false : true);
 	}
+	//#endif
 }
 //#endif

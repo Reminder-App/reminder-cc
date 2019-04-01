@@ -1,4 +1,4 @@
-//#if staticCategory || manageCategory || priority
+//#ifdef staticCategory
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#if reminder && gui
 package br.unb.cic.reminders.view;
 
 import java.util.ArrayList;
@@ -147,6 +147,7 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		return editIntent;
 	}
 
+	//#ifdef view
 	public void createUI() {
 		// #if fixedDate || dateRange
 		lvReminderLate = (ListView) view.findViewById(R.id.lvRemindersLate);
@@ -184,7 +185,9 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		registerForContextMenu(lvSunday);
 		// #endif
 	}
+	//#endif
 
+	//#ifdef view
 	public void updateListView(ReminderFilter filter) {
 		if (filter == null)
 			filter = new AllRemindersFilter(getActivity());
@@ -354,6 +357,7 @@ public class ReminderListFragment extends Fragment implements FiltersListChangeL
 		Utility.setListViewHeightBasedOnChildren(lvSunday);
 		// #endif
 	}
+	//#endif
 
 	public void onSelectedFilterChanged(ReminderFilter filter) {
 		updateListView(filter);

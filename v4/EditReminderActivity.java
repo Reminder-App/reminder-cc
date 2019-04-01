@@ -1,4 +1,4 @@
-//#ifdef reminder
+//#ifdef edit
 package br.unb.cic.reminders.view;
 
 import android.content.Intent;
